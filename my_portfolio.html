@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Ruchir Ganatra | Data Analyst, Developer & Tech Enthusiast</title>
+    
+    <meta name="description" content="Hi, I'm Ruchir Ganatra. I'm an IT student, Data Analyst, and Full Stack Developer passionate about solving real-world problems and continuous learning.">
+    <meta name="keywords" content="Ruchir Ganatra, Data Analyst Ahmedabad, IT Student Silver Oak, Python Developer, Team Player, Tech Enthusiast">
+    <meta name="author" content="Ruchir Ganatra">
+    <link rel="canonical" href="https://ruchirganatra.com/">
+
+    <!-- Social / Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ruchirganatra.com/">
+    <meta property="og:title" content="Ruchir Ganatra | Portfolio & Journey">
+    <meta property="og:description" content="Passionate about technology, data, and making a positive impact. View my projects, skills, and journey.">
+    <meta property="og:image" content="https://ruchirganatra.com/assets/og-profile.webp">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Comprehensive SEO Schema -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://ruchirganatra.com/#person",
+        "name": "Ruchir Ganatra",
+        "jobTitle": "Data Analyst & IT Student",
+        "url": "https://ruchirganatra.com",
+        "image": "https://ruchirganatra.com/assets/profile.jpg",
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Silver Oak University"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ahmedabad",
+          "addressRegion": "Gujarat",
+          "addressCountry": "India"
+        },
+        "sameAs": [
+          "https://linkedin.com/in/ruchirganatra",
+          "https://github.com/ruchirganatra",
+          "https://medium.com/@ruchirganatra"
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ruchirganatra.com/"
+        }]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{
+          "@type": "Question",
+          "name": "What is Ruchir Ganatra currently studying?",
+          "acceptedAnswer": { "@type": "Answer", "text": "I am currently pursuing a Diploma in Information Technology at Silver Oak University in Ahmedabad." }
+        }, {
+          "@type": "Question",
+          "name": "What are Ruchir Ganatra's core skills?",
+          "acceptedAnswer": { "@type": "Answer", "text": "My core technical skills include Python, SQL, Power BI, Java, and Full Stack Web Development, complemented by strong soft skills like leadership, teamwork, and communication." }
+        }]
+      }
+    ]
+    </script>
+
+    <style>
+        /* =======================================================
+           1. CORE VARIABLES & THEMING
+           ======================================================= */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-base: #050505;
+            --bg-surface: #111111;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4da6ff;
+            --btn-bg: #ffffff;
+            --btn-text: #000000;
+            --progress-bar: #4da6ff;
+        }
+
+        [data-theme="light"] {
+            --bg-base: #fafafa;
+            --bg-surface: #ffffff;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --border-glass: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.2);
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --accent: #0066cc;
+            --btn-bg: #111111;
+            --btn-text: #ffffff;
+            --progress-bar: #0066cc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body, html {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: var(--progress-bar); z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Typography */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
+        h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+        
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; color: var(--text-primary); }
+        .section-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 3rem; font-weight: 400; max-width: 600px; }
+        .text-body { font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem; }
+        
+        /* Layout & Grid */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        
+        section { padding: 6rem 0; border-bottom: 1px solid var(--border-glass); }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 1.5rem 5vw; display: flex; justify-content: space-between;
+            align-items: center; background: var(--bg-base); opacity: 0.95;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .logo { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text-primary); }
+        .nav-actions { display: flex; gap: 1.5rem; align-items: center; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.8rem 1.8rem; border-radius: 100px; font-weight: 600;
+            text-decoration: none; transition: transform 0.2s, background 0.2s;
+            cursor: pointer; border: none; font-size: 0.95rem;
+        }
+        .btn-primary { background: var(--btn-bg); color: var(--btn-text); }
+        .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-outline { border: 1px solid var(--border-glass); color: var(--text-primary); background: transparent; }
+        .btn-outline:hover { border-color: var(--text-primary); }
+
+        /* Cards & Bento Elements */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-glass);
+            border-radius: 24px; padding: 2.5rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+        
+        /* Badges & Tags */
+        .tag-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+        .tag {
+            padding: 0.4rem 1rem; border-radius: 100px; background: var(--bg-surface);
+            border: 1px solid var(--border-glass); font-size: 0.85rem; color: var(--text-primary);
+        }
+
+        /* Animated Skill Bars */
+        .skill-bar-container { margin-bottom: 1.5rem; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 500; }
+        .skill-track { width: 100%; height: 8px; background: var(--bg-surface); border-radius: 10px; overflow: hidden; }
+        .skill-fill { height: 100%; background: var(--accent); width: 0; transition: width 1.5s cubic-bezier(0.1, 0.7, 0.1, 1); }
+
+        /* Icons (SVG placeholders) */
+        .icon { width: 24px; height: 24px; fill: currentColor; }
+        
+        /* Stats Counters */
+        .stat-number { font-size: 3rem; font-weight: 800; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+        
+        /* Timeline */
+        .timeline-item { border-left: 2px solid var(--border-glass); padding-left: 2rem; position: relative; margin-bottom: 3rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -7px; top: 0; width: 12px; height: 12px;
+            border-radius: 50%; background: var(--accent);
+        }
+
+        /* Hero Profile Image */
+        .profile-img-wrap {
+            width: 180px; height: 180px; border-radius: 50%; padding: 4px;
+            background: linear-gradient(135deg, var(--accent), transparent);
+            margin-bottom: 2rem;
+        }
+        .profile-img { width: 100%; height: 100%; border-radius: 50%; background: var(--bg-surface); object-fit: cover; }
+
+    </style>
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <nav>
+        <a href="#" class="logo">Ruchir Ganatra.</a>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="btn btn-outline" style="padding: 0.5rem 1rem;">
+                <span id="theme-icon">☀️</span>
+            </button>
+            <a href="#contact" class="btn btn-primary">Say Hello</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="hero" style="min-height: 100vh; display: flex; align-items: center; padding-top: 80px;">
+            <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <div class="profile-img-wrap">
+                    <!-- Professional portrait placeholder -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23333'/%3E%3Ccircle cx='75' cy='60' r='35' fill='%23555'/%3E%3Cpath d='M20 150 Q 75 90 130 150' fill='%23555'/%3E%3C/svg%3E" alt="Ruchir Ganatra" class="profile-img">
+                </div>
+                <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem;">
+                    Hi, I'm Ruchir Ganatra 👋
+                </h1>
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--text-secondary); max-width: 700px; line-height: 1.6; margin-bottom: 2rem;">
+                    I believe technology should create a positive impact. I'm a Data Analyst and Full Stack Developer who loves solving real-world problems, collaborating with great teams, and learning every single day.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <a href="https://linkedin.com/in/ruchirganatra" target="_blank" class="btn btn-outline">LinkedIn</a>
+                    <a href="https://github.com/ruchirganatra" target="_blank" class="btn btn-outline">GitHub</a>
+                    <a href="https://medium.com/@ruchirganatra" target="_blank" class="btn btn-outline">Medium</a>
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME & MISSION -->
+        <section id="about">
+            <div class="container grid-2">
+                <div>
+                    <h2 class="section-title">My Story</h2>
+                    <p class="text-body">
+                        My journey into Information Technology started with a deep curiosity about how things work behind the screens. I chose IT because I enjoy taking on new challenges and I'm fascinated by how data can tell stories that drive meaningful decisions.
+                    </p>
+                    <p class="text-body">
+                        Based in Ahmedabad, I'm currently studying at Silver Oak University. For me, every project is an opportunity to grow. I'm always open to feedback and firmly believe that the best solutions come from strong teamwork and clear communication.
+                    </p>
+                    <p class="text-body">
+                        <strong>My Vision:</strong> To continuously aim to create solutions that are practical, meaningful, and genuinely help people.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">The Values I Bring</h3>
+                    <ul style="list-style: none; display: grid; gap: 1rem;">
+                        <li style="display: flex; gap: 1rem; align-items: center;"><span style="font-size: 1.5rem;">🌱</span> <span><strong>Growth Mindset:</strong> I enjoy learning new things daily.</span></li>
+                        <li style="display: flex; gap: 1rem; align-items: center;"><span style="font-size: 1.5rem;">🤝</span> <span><strong>Team Player:</strong> I enjoy collaborating with others.</span></li>
+                        <li style="display: flex; gap: 1rem; align-items: center;"><span style="font-size: 1.5rem;">🧩</span> <span><strong>Problem Solver:</strong> Turning complexity into simplicity.</span></li>
+                        <li style="display: flex; gap: 1rem; align-items: center;"><span style="font-size: 1.5rem;">💡</span> <span><strong>Curiosity:</strong> Staying curious about emerging tech.</span></li>
+                        <li style="display: flex; gap: 1rem; align-items: center;"><span style="font-size: 1.5rem;">🛡️</span> <span><strong>Responsibility:</strong> Valuing honesty and owning my work.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEARNING JOURNEY & CURRENTLY LEARNING -->
+        <section id="learning">
+            <div class="container">
+                <h2 class="section-title">Continuous Growth</h2>
+                <p class="section-subtitle">Showcasing my commitment to lifelong learning and adaptability.</p>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">Current Focus</h3>
+                        <div class="tag-wrap">
+                            <span class="tag">Diploma in IT (Silver Oak)</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Google AI Pro Workloads</span>
+                            <span class="tag">Cloud Architecture</span>
+                        </div>
+                        <p class="text-body" style="margin-top: 1.5rem;">
+                            Currently diving deep into AI integrations and refining my Python pipelines. I regularly read tech blogs to stay updated on the rapidly evolving tech landscape in India.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">Fun Facts</h3>
+                        <ul style="list-style: none; gap: 0.8rem; display: flex; flex-direction: column; color: var(--text-secondary);">
+                            <li>☕ Coffee enthusiast powering late-night coding sessions.</li>
+                            <li>🎨 Passionate about aesthetic grooming and sharp professional portrait photography.</li>
+                            <li>🛵 Exploring the streets of Ahmedabad via Rapido.</li>
+                            <li>📱 Avid reader of Webtoons (Big fan of <em>Lookism</em> and Samuel Seo's character arc!).</li>
+                            <li>📊 Organizing local community tech events.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS MATRIX -->
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-title">Skills Overview</h2>
+                <p class="section-subtitle">A balanced mix of technical capabilities and essential soft skills.</p>
+                
+                <div class="grid-3">
+                    <!-- Technical -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">Technical & Dev</h3>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Python</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>SQL / DB Architecture</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Java</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" data-width="75%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>HTML/CSS/JavaScript</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80%"></div></div></div>
+                    </div>
+                    
+                    <!-- Data -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">Data & Analytics</h3>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Power BI</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Pandas & NumPy</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Excel (Advanced)</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80%"></div></div></div>
+                        <div class="skill-bar-container"><div class="skill-header"><span>Data Visualization</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85%"></div></div></div>
+                    </div>
+
+                    <!-- Soft Skills -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">Soft Skills</h3>
+                        <div class="tag-wrap">
+                            <span class="tag">Teamwork</span>
+                            <span class="tag">Leadership</span>
+                            <span class="tag">Communication</span>
+                            <span class="tag">Time Management</span>
+                            <span class="tag">Problem Solving</span>
+                            <span class="tag">Critical Thinking</span>
+                            <span class="tag">Public Speaking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-title">Projects & Problem Solving</h2>
+                <p class="section-subtitle">Real-world applications built to learn, grow, and deliver impact.</p>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>CSR Beneficiary Data Analysis Platform</h3>
+                    <div class="tag-wrap" style="margin-bottom: 1.5rem;">
+                        <span class="tag">Python</span> <span class="tag">Pandas</span> <span class="tag">Data Cleaning</span>
+                    </div>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>The Problem:</strong> Non-profits struggled to track the effectiveness of community support nodes due to highly unstructured, messy data profiles.</p>
+                            <p><strong>The Solution:</strong> Built a data cleaning pipeline that normalized records, mapped delivery rates, and output clear trend visualizations.</p>
+                            <p><strong>Challenges & Lessons:</strong> Handling missing/null variables in real-world sets taught me the importance of robust data imputation over simply dropping rows. I learned how to prioritize data integrity.</p>
+                        </div>
+                        <div style="background: var(--bg-surface); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+                            <p><strong>Future Improvements:</strong> Integrating real-time web scraping to automatically update demographic baseline data.</p>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <a href="#" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem 1rem;">GitHub Repo</a>
+                                <a href="#" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE, LEADERSHIP & COMMUNITY -->
+        <section id="experience">
+            <div class="container grid-2">
+                <div>
+                    <h2 class="section-title">Experience & Action</h2>
+                    <p class="section-subtitle">Internships, volunteering, and leading by example.</p>
+                    
+                    <div class="timeline-item">
+                        <span style="font-size: 0.85rem; color: var(--accent);">2026</span>
+                        <h4>Data Science Internship</h4>
+                        <p class="text-body" style="font-size: 0.95rem;">Completed a 3-month intensive role utilizing Python, Machine Learning, SQL, and Power BI. Focused on extracting actionable insights for business logic.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span style="font-size: 0.85rem; color: var(--accent);">2026</span>
+                        <h4>CSR Social Impact Projects</h4>
+                        <p class="text-body" style="font-size: 0.95rem;">Conducted data trend assessments for beneficiaries, ensuring tech serves the community effectively.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title">Leadership</h2>
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <h4>Buckeye Tree Club & Community Organizing</h4>
+                        <p class="text-body" style="margin-top: 0.5rem;">Active leader managing teams, coordinating speakers, and facilitating smooth operations for community gatherings and tech meetups.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Tech Event Management</h4>
+                        <p class="text-body" style="margin-top: 0.5rem;">Played a vital role in organizing and participating in the Startup Mini Meetup Ahmedabad, Ahmedabad Innovation Summit, and the FITAG Tech Expo 2026.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATISTICS & ACHIEVEMENTS -->
+        <section id="stats" style="background: var(--bg-surface);">
+            <div class="container">
+                <h2 class="section-title" style="text-align: center;">By The Numbers</h2>
+                <div class="grid-3" style="text-align: center; margin-top: 3rem;">
+                    <div>
+                        <div class="stat-number" data-target="15">0</div>
+                        <p class="text-secondary">Projects Completed</p>
+                    </div>
+                    <div>
+                        <div class="stat-number" data-target="4">0</div>
+                        <p class="text-secondary">Hackathons & Events</p>
+                    </div>
+                    <div>
+                        <div class="stat-number" data-target="800">0</div>
+                        <p class="text-secondary">Hours of Coding</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG / ARTICLES -->
+        <section id="blog">
+            <div class="container">
+                <h2 class="section-title">Insights & Writing</h2>
+                <p class="section-subtitle">Documenting my learning journey, tutorials, and career thoughts.</p>
+                
+                <div class="grid-2">
+                    <a href="#" class="card" style="text-decoration: none; color: inherit;">
+                        <span style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">Data Analytics</span>
+                        <h3 style="margin: 0.5rem 0;">Why Clean Data is the Foundation of Good AI</h3>
+                        <p class="text-body">Exploring my lessons from the CSR Data Assessment project and why handling null values is an art form.</p>
+                        <span style="font-size: 0.85rem; font-weight: 600; text-decoration: underline;">Read Article</span>
+                    </a>
+                    <a href="#" class="card" style="text-decoration: none; color: inherit;">
+                        <span style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">Career Journey</span>
+                        <h3 style="margin: 0.5rem 0;">From Curious Student to Data Enthusiast</h3>
+                        <p class="text-body">Reflecting on my time at Silver Oak University and what it takes to organize successful local tech summits in Ahmedabad.</p>
+                        <span style="font-size: 0.85rem; font-weight: 600; text-decoration: underline;">Read Article</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials">
+            <div class="container">
+                <h2 class="section-title">What People Say</h2>
+                <div class="grid-2">
+                    <div class="card" style="position: relative;">
+                        <span style="font-size: 3rem; position: absolute; top: 1rem; right: 1.5rem; opacity: 0.1;">"</span>
+                        <p class="text-body" style="font-style: italic;">"Ruchir is an incredibly fast learner. During our group projects, he consistently showcased a positive attitude and was always open to receiving and implementing feedback. A true team player."</p>
+                        <p style="font-weight: 600; margin-top: 1rem;">— Faculty Recommendation</p>
+                    </div>
+                    <div class="card" style="position: relative;">
+                        <span style="font-size: 3rem; position: absolute; top: 1rem; right: 1.5rem; opacity: 0.1;">"</span>
+                        <p class="text-body" style="font-style: italic;">"Organizing the Tech Expo with Ruchir was seamless. His ability to coordinate teams and manage event logistics while keeping everyone motivated is a rare leadership quality."</p>
+                        <p style="font-weight: 600; margin-top: 1rem;">— Event Co-organizer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" style="border-bottom: none; text-align: center; padding-bottom: 10rem;">
+            <div class="container">
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="text-body" style="margin: 0 auto 2rem auto; max-width: 600px;">
+                    I'm currently seeking new opportunities and collaborations. Whether you have a question about my work, want to discuss a potential project, or just want to say hi, my inbox is always open!
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+                    <a href="mailto:contact@ruchirganatra.com" class="btn btn-primary">Email Me</a>
+                    <a href="#" class="btn btn-outline">Download Resume</a>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 2rem; border-top: 1px solid var(--border-glass); padding-top: 3rem;">
+                    <a href="https://linkedin.com/in/ruchirganatra" class="text-body" style="text-decoration: none;">LinkedIn</a>
+                    <a href="https://github.com/ruchirganatra" class="text-body" style="text-decoration: none;">GitHub</a>
+                    <a href="https://medium.com/@ruchirganatra" class="text-body" style="text-decoration: none;">Medium</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Theme Toggle Logic
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme');
+                themeIcon.textContent = '☀️';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+            }
+        });
+
+        // 2. Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        });
+
+        // 3. Animated Skill Bars (Intersection Observer)
+        const skillFills = document.querySelectorAll('.skill-fill');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.getAttribute('data-width');
+                    entry.target.style.width = width;
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        skillFills.forEach(fill => skillObserver.observe(fill));
+
+        // 4. Animated Stats Counters
+        const stats = document.querySelectorAll('.stat-number');
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = +entry.target.getAttribute('data-target');
+                    let count = 0;
+                    const speed = target / 50; // Adjust speed
+                    const updateCount = () => {
+                        count += speed;
+                        if (count < target) {
+                            entry.target.innerText = Math.ceil(count);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            entry.target.innerText = target + "+";
+                        }
+                    };
+                    updateCount();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        stats.forEach(stat => statsObserver.observe(stat));
+    </script>
+</body>
+</html>
