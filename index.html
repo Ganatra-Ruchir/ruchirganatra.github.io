@@ -26,6 +26,27 @@
     --radius:10px;
     --mono: 'JetBrains Mono', ui-monospace, monospace;
     --sans: 'Inter', system-ui, sans-serif;
+    --grid-op:0.5;
+    --grid-line:rgba(45,212,200,0.035);
+    --terminal-btn-off:#3a4453;
+  }
+  html[data-theme="light"]{
+    --bg-0:#f4f7f8;
+    --bg-1:#eef2f3;
+    --bg-panel:#ffffff;
+    --bg-panel-hi:#eef4f4;
+    --line:rgba(15,120,110,0.14);
+    --line-strong:rgba(15,120,110,0.32);
+    --text-hi:#0e1b1f;
+    --text-mid:#4a5a60;
+    --text-dim:#8a9599;
+    --cyan:#0f9d8f;
+    --cyan-dim:rgba(15,157,143,0.10);
+    --amber:#b9791f;
+    --red-soft:#c85a51;
+    --grid-op:0.35;
+    --grid-line:rgba(15,157,143,0.06);
+    --terminal-btn-off:#c7d2d4;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -40,6 +61,7 @@
     font-family:var(--sans);
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    transition:background .3s ease, color .3s ease;
   }
   ::selection{background:var(--cyan); color:#03110f;}
 
@@ -57,12 +79,13 @@
 
   /* background grid texture */
   .grid-veil{
-    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:var(--grid-op);
     background-image:
-      linear-gradient(rgba(45,212,200,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45,212,200,0.035) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size:42px 42px;
     mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+    transition:opacity .3s ease;
   }
 
   /* ---------- NAV ---------- */
@@ -96,6 +119,19 @@
   }
   @media (max-width:760px){ .navlinks, .status-pill{display:none;} }
 
+  .theme-toggle{
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:8px; border:1px solid var(--line-strong);
+    background:transparent; cursor:pointer; position:relative; flex-shrink:0;
+    transition:border-color .2s, transform .15s ease;
+  }
+  .theme-toggle:hover{border-color:var(--cyan); transform:translateY(-1px);}
+  .theme-toggle span{position:absolute; font-size:15px; transition:opacity .25s ease, transform .25s ease;}
+  .theme-toggle .icon-light{opacity:0; transform:rotate(-40deg) scale(0.7);}
+  .theme-toggle .icon-dark{opacity:1; transform:rotate(0) scale(1);}
+  html[data-theme="light"] .theme-toggle .icon-dark{opacity:0; transform:rotate(40deg) scale(0.7);}
+  html[data-theme="light"] .theme-toggle .icon-light{opacity:1; transform:rotate(0) scale(1);}
+
   /* ---------- HERO ---------- */
   .hero{padding-top:76px; padding-bottom:70px; overflow:hidden;}
   #particle-canvas{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:0.55;}
@@ -118,6 +154,16 @@
   .type-cursor{display:inline-block; width:8px; height:15px; background:var(--cyan); vertical-align:-2px; animation:blink 0.9s steps(1) infinite;}
 
   .hero-copy h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin-bottom:14px;}
+  .avatar-wrap{
+    width:76px; height:76px; border-radius:50%; margin-bottom:20px;
+    border:2px solid var(--line-strong); padding:3px; position:relative;
+  }
+  .avatar-wrap::after{
+    content:""; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--line);
+    animation:ringPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes ringPulse{0%,100%{opacity:0.4; transform:scale(1);}50%{opacity:0.9; transform:scale(1.05);}}
+  .avatar-img{width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; background:var(--bg-panel-hi);}
   .hero-copy h1 .accent{color:var(--cyan);}
   .hero-copy p.lead{font-size:16.5px; color:var(--text-mid); max-width:52ch;}
   .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-top:26px;}
@@ -142,7 +188,7 @@
   .reveal.in{opacity:1; transform:translateY(0);}
 
   /* ---------- ABOUT ---------- */
-  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
   @media (max-width:820px){ .about-grid{grid-template-columns:1fr;} }
   .values{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:14px;}
   .values li{display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:var(--text-mid);}
@@ -170,8 +216,10 @@
   @media (max-width:820px){ .two-col-timelines{grid-template-columns:1fr;} }
 
   /* ---------- SKILLS ---------- */
-  .skills-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:40px 56px; margin-top:30px;}
-  @media (max-width:760px){ .skills-grid{grid-template-columns:1fr;} }
+  .skills-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:40px 44px; margin-top:30px; align-items:start;}
+  @media (max-width:900px){ .skills-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .skills-grid{grid-template-columns:1fr;} }
+  .soft-skills-block{margin-top:40px; padding-top:32px; border-top:1px solid var(--line);}
   .skill-cat h3{font-family:var(--mono); font-size:13px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:18px;}
   .skill-row{margin-bottom:16px;}
   .skill-head{display:flex; justify-content:space-between; font-family:var(--mono); font-size:13px; margin-bottom:7px;}
@@ -197,8 +245,19 @@
   .proj-block p{margin-bottom:0; font-size:14.5px;}
   .project-links{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;}
 
+  .mini-projects-head{margin-top:44px; margin-bottom:20px;}
+  .mini-projects-head h3{font-size:16px; margin-bottom:6px;}
+  .mini-projects-head p{margin-bottom:0;}
+  .mini-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:700px){ .mini-grid{grid-template-columns:1fr;} }
+  .mini-card{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px; transition:border-color .2s;}
+  .mini-card:hover{border-color:var(--line-strong);}
+  .mini-card h4{font-family:var(--mono); font-size:14.5px; margin:0 0 8px; color:var(--text-hi);}
+  .mini-card p{font-size:13.5px; margin-bottom:12px;}
+  .mini-card .stack-row{margin:0;}
+
   /* ---------- LEADERSHIP ---------- */
-  .lead-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:30px;}
+  .lead-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:30px; align-items:start;}
   @media (max-width:760px){ .lead-grid{grid-template-columns:1fr;} }
   .lead-card{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px;}
   .lead-card h3{font-size:16px; margin-bottom:8px;}
@@ -212,7 +271,7 @@
   .stat .lbl{font-family:var(--mono); font-size:12px; color:var(--text-mid); margin-top:6px; letter-spacing:0.03em;}
 
   /* ---------- WRITING ---------- */
-  .writing-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:30px;}
+  .writing-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:30px; align-items:start;}
   @media (max-width:760px){ .writing-grid{grid-template-columns:1fr;} }
   .article-card{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; position:relative;}
   .article-card .cat{font-family:var(--mono); font-size:11px; color:var(--cyan); margin-bottom:10px; display:block;}
@@ -221,7 +280,7 @@
   .soon{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); border:1px dashed var(--line-strong); padding:3px 9px; border-radius:100px;}
 
   /* ---------- TESTIMONIALS ---------- */
-  .quote-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:30px;}
+  .quote-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:30px; align-items:start;}
   @media (max-width:760px){ .quote-grid{grid-template-columns:1fr;} }
   .quote-card{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:26px; position:relative;}
   .quote-mark{font-family:var(--mono); font-size:34px; color:var(--cyan); line-height:1; opacity:0.5;}
@@ -262,6 +321,9 @@
       <li><a href="#contact">./contact</a></li>
     </ul>
     <div class="status-pill"><span class="dot"></span>Open to opportunities</div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Switch between dark and light theme" title="Toggle theme">
+      <span class="icon-dark">🌙</span><span class="icon-light">☀️</span>
+    </button>
   </nav>
 </header>
 
@@ -269,9 +331,12 @@
   <canvas id="particle-canvas"></canvas>
   <div class="wrap hero-inner">
     <div class="hero-copy">
+      <div class="avatar-wrap">
+        <img src="ruchir-ganatra.png" alt="Ruchir Ganatra" class="avatar-img" onerror="this.parentElement.style.display='none'">
+      </div>
       <div class="eyebrow">DATA ANALYST · FULL-STACK DEVELOPER · AHMEDABAD, IN</div>
       <h1>Hi, I'm Ruchir <span class="accent">Ganatra</span>.</h1>
-      <p class="lead">I turn messy data and half-formed ideas into things that work — dashboards, pipelines, and full-stack tools built with equal parts curiosity and discipline. Currently a Data Analyst at Elixir Foundation, and a B.Tech IT student at Silver Oak.</p>
+      <p class="lead">Raw data and half-built ideas come to me messy — I leave them working. Dashboards that hold up under real use, pipelines that don't break at 2am, full-stack tools built with equal parts curiosity and discipline. Currently a Data Analyst at Elixir Foundation, and a B.Tech IT student at Silver Oak.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View my work <span class="arrow">→</span></a>
         <a href="#contact" class="btn btn-ghost">Say hello</a>
@@ -292,8 +357,8 @@
     <div>
       <div class="eyebrow">ABOUT</div>
       <h2>My story</h2>
-      <p>My journey into Information Technology started with a deep curiosity about how things work behind the screens. I chose IT because I enjoy taking on new challenges, and I'm fascinated by how data can tell stories that drive meaningful decisions.</p>
-      <p>Based in Ahmedabad, I'm currently pursuing my B.Tech in IT at A Silver Oak Institute of Technology, after completing my Diploma in IT in 2026. I now work as a Data Analyst at Elixir Foundation, where I get to apply that same curiosity to real community impact. For me, every project is a chance to grow — I stay open to feedback and believe the best solutions come from strong teamwork and clear communication.</p>
+      <p>What pulled me into IT wasn't the syllabus — it was wanting to know what's actually happening behind the screen. That same instinct is what makes data interesting to me: a spreadsheet full of numbers is just noise until you find the story it's telling, and then it's a decision someone can actually act on.</p>
+      <p>Based in Ahmedabad, I'm currently pursuing my B.Tech in IT at Aditya Silver Oak Institute of Technology, after completing my Diploma in IT in 2026. I now work as a Data Analyst at Elixir Foundation, applying that same instinct to real community impact instead of practice datasets. Every project is still a chance to get better at this — I'd rather hear the hard feedback early than ship something half-right.</p>
       <p><strong style="color:var(--text-hi)">My vision:</strong> to keep building solutions that are practical, meaningful, and genuinely help people.</p>
       <div class="tag-row">
         <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">React</span><span class="tag">Cybersecurity</span>
@@ -326,14 +391,14 @@
       <div class="tl-item current">
         <div class="tl-meta">2026 — PRESENT <span class="badge-current">CURRENT</span></div>
         <h3>B.Tech in Information Technology</h3>
-        <div class="tl-org">A Silver Oak Institute of Technology (ASOIT)</div>
+        <div class="tl-org">Aditya Silver Oak Institute of Technology (ASOIT)</div>
         <p>Continuing on from my diploma, going deeper into software systems, data, and the fundamentals that sit under the tools I already use day to day.</p>
       </div>
       <div class="tl-item">
-        <div class="tl-meta">COMPLETED 2026</div>
+        <div class="tl-meta">2023 — 2026 · COMPLETED</div>
         <h3>Diploma in Information Technology</h3>
-        <div class="tl-org">Silver Oak University</div>
-        <p>Built my foundation in programming, databases, and data analysis — where the CSR beneficiary data project and my first real Python pipelines came from.</p>
+        <div class="tl-org">Aditya Silver Oak Institute of Technology (ASOIT)</div>
+        <p>Coursework in data structures, database management, statistics, machine learning, data mining, and web development — the foundation the CSR beneficiary data project and my first real Python pipelines came from.</p>
       </div>
     </div>
   </div>
@@ -362,6 +427,12 @@
         <div class="tl-org">Independent / volunteer work</div>
         <p>Ran data trend assessments for beneficiaries, making sure the tech actually served the community rather than just looking good on a dashboard.</p>
       </div>
+      <div class="tl-item current">
+        <div class="tl-meta">2024 — PRESENT <span class="badge-current">ONGOING</span></div>
+        <h3>Data Analyst — Projects &amp; Freelance</h3>
+        <div class="tl-org">Self-Employed, Ahmedabad</div>
+        <p>Independent dashboards, SQL analysis, and Kaggle competitions on the side — where a lot of my Pandas, Seaborn, and query-optimization instincts got built through repetition.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -370,7 +441,7 @@
   <div class="wrap reveal">
     <div class="eyebrow">SKILLS</div>
     <h2>Skills overview</h2>
-    <p style="max-width:60ch;">A balanced mix of technical capability and the soft skills that make the technical stuff usable by other people.</p>
+    <p style="max-width:60ch;">Solid on the technical side, but none of it matters if I can't explain a finding to someone who doesn't touch SQL. Both halves get equal attention.</p>
     <div class="skills-grid">
       <div class="skill-cat">
         <h3>Technical &amp; Dev</h3>
@@ -387,17 +458,37 @@
         <div class="skill-row" data-pct="85"><div class="skill-head"><span>Data Visualization</span><span class="pct">85%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
       </div>
       <div class="skill-cat">
-        <h3>Security &amp; Backend</h3>
+        <h3>ML &amp; Tools</h3>
+        <div class="skill-row" data-pct="75"><div class="skill-head"><span>scikit-learn / Streamlit</span><span class="pct">75%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
+        <div class="skill-row" data-pct="80"><div class="skill-head"><span>MySQL</span><span class="pct">80%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
         <div class="skill-row" data-pct="70"><div class="skill-head"><span>Flask / FastAPI</span><span class="pct">70%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-        <div class="skill-row" data-pct="65"><div class="skill-head"><span>Network &amp; Vulnerability Scanning</span><span class="pct">65%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
         <div class="skill-row" data-pct="75"><div class="skill-head"><span>Git / GitHub</span><span class="pct">75%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
       </div>
-      <div class="skill-cat">
-        <h3>Soft Skills</h3>
-        <div class="soft-skills">
-          <span class="tag">Teamwork</span><span class="tag">Leadership</span><span class="tag">Communication</span>
-          <span class="tag">Time Management</span><span class="tag">Problem Solving</span><span class="tag">Critical Thinking</span>
-          <span class="tag">Public Speaking</span>
+    </div>
+
+    <div class="soft-skills-block">
+      <h3 style="font-family:var(--mono); font-size:13px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Soft Skills</h3>
+      <div class="soft-skills">
+        <span class="tag">Teamwork</span><span class="tag">Leadership</span><span class="tag">Communication</span>
+        <span class="tag">Time Management</span><span class="tag">Problem Solving</span><span class="tag">Critical Thinking</span>
+        <span class="tag">Public Speaking</span>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;">
+      <h3 style="font-family:var(--mono); font-size:13px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:18px;">Certifications</h3>
+      <div class="lead-grid">
+        <div class="lead-card">
+          <h3 style="font-size:15px;">Python Certification</h3>
+          <p style="font-family:var(--mono); font-size:12px; color:var(--cyan); margin-bottom:6px;">Kaggle · 2025</p>
+        </div>
+        <div class="lead-card">
+          <h3 style="font-size:15px;">AI Tools &amp; ChatGPT</h3>
+          <p style="font-family:var(--mono); font-size:12px; color:var(--cyan); margin-bottom:6px;">be10X · 2025</p>
+        </div>
+        <div class="lead-card">
+          <h3 style="font-size:15px;">Elements of AI</h3>
+          <p style="font-family:var(--mono); font-size:12px; color:var(--cyan); margin-bottom:6px;">University of Helsinki &amp; MinnaLearn · 2025</p>
         </div>
       </div>
     </div>
@@ -408,7 +499,7 @@
   <div class="wrap reveal">
     <div class="eyebrow">PROJECTS</div>
     <h2>Projects &amp; problem solving</h2>
-    <p style="max-width:60ch;">Real-world applications built to learn, grow, and deliver impact.</p>
+    <p style="max-width:60ch;">Two I'd put in front of anyone, and a handful of smaller builds below where I go to sharpen a specific skill.</p>
 
     <div class="project-card" data-tilt>
       <div class="project-head">
@@ -459,6 +550,33 @@
       <div class="proj-block">
         <div class="lbl">Lessons</div>
         <p>Handling missing values in real-world sets taught me the importance of robust data imputation over simply dropping rows — this project is part of what led me into my current role at Elixir Foundation.</p>
+      </div>
+    </div>
+
+    <div class="mini-projects-head">
+      <h3>Also on the workbench</h3>
+      <p style="font-size:14px;">Smaller, self-directed builds — mostly where I practice a technique until it sticks.</p>
+    </div>
+    <div class="mini-grid">
+      <div class="mini-card">
+        <h4>Data Visualization Dashboard</h4>
+        <p>Bar plots, heatmaps, and scatter plots turning multi-source datasets into something a non-technical stakeholder can act on.</p>
+        <div class="stack-row"><span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">Pandas</span></div>
+      </div>
+      <div class="mini-card">
+        <h4>SQL Data Analysis</h4>
+        <p>Multi-table business problems solved with joins, window functions, and CTEs — delivering query-ready datasets for reporting.</p>
+        <div class="stack-row"><span class="chip">SQL</span><span class="chip">MySQL</span></div>
+      </div>
+      <div class="mini-card">
+        <h4>Kaggle Competitions</h4>
+        <p>Classification and regression pipelines — cleaning, feature selection, and cross-validation, tuned iteratively for accuracy.</p>
+        <div class="stack-row"><span class="chip">scikit-learn</span><span class="chip">Python</span></div>
+      </div>
+      <div class="mini-card">
+        <h4>Streamlit Analytics App</h4>
+        <p>Upload a dataset, explore it, and get a report back — real-time EDA for people who don't want to touch a notebook.</p>
+        <div class="stack-row"><span class="chip">Streamlit</span><span class="chip">Python</span></div>
       </div>
     </div>
   </div>
@@ -540,9 +658,9 @@
       <h2>Let's build something.</h2>
       <p>I'm currently seeking new opportunities and collaborations. Whether you have a question about my work, want to discuss a project, or just want to say hi — my inbox is always open.</p>
       <div class="contact-actions">
-        <a href="mailto:ruchirthakker044@gmail.com" class="btn btn-primary">Email me <span class="arrow">→</span></a>
+        <a href="mailto:thakkerruchir044@gmail.com" class="btn btn-primary">Email me <span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/in/ganatra-ruchir-61a2a2358/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
-        <span class="btn btn-disabled" title="Resume coming soon">Resume (coming soon)</span>
+        <a href="./Ruchir_Ganatra_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Download Resume <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
@@ -563,6 +681,25 @@
 <script>
 (function(){
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- theme toggle ---------- */
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+    var saved = null;
+    try{ saved = localStorage.getItem('portfolio-theme'); }catch(e){}
+    if(saved === 'light' || saved === 'dark'){
+      root.setAttribute('data-theme', saved);
+    } else if(window.matchMedia('(prefers-color-scheme: light)').matches){
+      root.setAttribute('data-theme', 'light');
+    }
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      var next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try{ localStorage.setItem('portfolio-theme', next); }catch(e){}
+    });
+  })();
 
   /* ---------- terminal typing sequence ---------- */
   var lines = [
@@ -689,6 +826,18 @@
     var heroSection = document.querySelector('.hero');
     var w, h, particles = [];
     var COUNT = 42;
+    var cyanRGB = '45,212,200';
+    function refreshCyan(){
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim();
+      var tmp = document.createElement('div');
+      tmp.style.color = v;
+      document.body.appendChild(tmp);
+      var rgb = getComputedStyle(tmp).color.match(/\d+/g);
+      document.body.removeChild(tmp);
+      if(rgb && rgb.length >= 3) cyanRGB = rgb[0]+','+rgb[1]+','+rgb[2];
+    }
+    refreshCyan();
+    document.getElementById('theme-toggle').addEventListener('click', function(){ setTimeout(refreshCyan, 50); });
 
     function resize(){
       w = canvas.width = heroSection.clientWidth;
@@ -718,7 +867,7 @@
           var dx = a.x-b.x, dy = a.y-b.y;
           var dist = Math.sqrt(dx*dx+dy*dy);
           if(dist < 130){
-            ctx.strokeStyle = 'rgba(45,212,200,' + (0.16*(1-dist/130)) + ')';
+            ctx.strokeStyle = 'rgba(' + cyanRGB + ',' + (0.16*(1-dist/130)) + ')';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
@@ -729,7 +878,7 @@
       for(var i=0;i<particles.length;i++){
         ctx.beginPath();
         ctx.arc(particles[i].x, particles[i].y, 1.6, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(45,212,200,0.5)';
+        ctx.fillStyle = 'rgba(' + cyanRGB + ',0.5)';
         ctx.fill();
       }
       requestAnimationFrame(tick);
