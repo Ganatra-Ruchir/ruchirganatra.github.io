@@ -138,32 +138,60 @@
   .hero-inner{position:relative; z-index:2; display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;}
   @media (max-width:820px){ .hero-inner{grid-template-columns:1fr;} }
 
-  .terminal{
+  .id-badge{
     background:var(--bg-panel); border:1px solid var(--line-strong); border-radius:var(--radius);
     box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);
     overflow:hidden; font-family:var(--mono);
+    transform-style:preserve-3d; will-change:transform;
+    transition:transform .1s ease;
   }
-  .terminal-bar{display:flex; align-items:center; gap:7px; padding:11px 14px; background:var(--bg-panel-hi); border-bottom:1px solid var(--line);}
-  .terminal-bar span{width:10px; height:10px; border-radius:50%; display:inline-block; background:#3a4453;}
-  .terminal-bar .tlabel{margin-left:8px; font-size:11.5px; color:var(--text-dim);}
-  .terminal-body{padding:22px 22px 26px; font-size:14.5px; min-height:210px;}
-  .terminal-body .line{margin-bottom:10px; white-space:pre-wrap; word-break:break-word;}
+  .id-badge-photo{
+    position:relative; width:100%; aspect-ratio:16/10; overflow:hidden;
+    background:linear-gradient(135deg, var(--bg-panel-hi), var(--bg-0));
+    border-bottom:1px solid var(--line);
+  }
+  .id-photo{width:100%; height:100%; object-fit:cover; display:block; position:relative; z-index:1;}
+  .id-initials{
+    display:none; position:absolute; inset:0; align-items:center; justify-content:center;
+    font-size:56px; font-weight:800; color:var(--line-strong); letter-spacing:0.04em;
+  }
+  .id-badge-photo.no-photo .id-initials{display:flex;}
+  .scan-line{
+    position:absolute; left:0; right:0; height:2px; top:0; z-index:2;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow:0 0 10px 1px var(--cyan);
+    animation:scanSweep 3.6s ease-in-out infinite;
+    opacity:0.85;
+  }
+  @keyframes scanSweep{
+    0%{ top:0%; opacity:0; }
+    8%{ opacity:0.85; }
+    50%{ top:100%; opacity:0.85; }
+    58%{ opacity:0; }
+    100%{ top:100%; opacity:0; }
+  }
+  .corner{position:absolute; width:18px; height:18px; z-index:3; border:2px solid var(--cyan); opacity:0.85;}
+  .corner.tl{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .corner.tr{top:10px; right:10px; border-left:none; border-bottom:none;}
+  .corner.bl{bottom:10px; left:10px; border-right:none; border-top:none;}
+  .corner.br{bottom:10px; right:10px; border-left:none; border-top:none;}
+  .id-badge-body{padding:20px 22px 6px;}
+  .id-name{font-size:15px; font-weight:700; letter-spacing:0.03em; color:var(--text-hi);}
+  .id-role{font-size:11.5px; color:var(--cyan); margin-top:3px; letter-spacing:0.04em;}
+  .id-divider{height:1px; background:var(--line); margin:16px 0;}
+  .terminal-body{padding:0 22px 22px; font-size:13.5px; min-height:150px;}
+  .terminal-body .line{margin-bottom:9px; white-space:pre-wrap; word-break:break-word;}
   .terminal-body .prompt-sym{color:var(--cyan); margin-right:8px;}
   .terminal-body .out{color:var(--text-hi);}
   .terminal-body .muted{color:var(--text-dim);}
   .type-cursor{display:inline-block; width:8px; height:15px; background:var(--cyan); vertical-align:-2px; animation:blink 0.9s steps(1) infinite;}
+  .id-footer{
+    display:flex; align-items:center; gap:8px; padding:12px 22px;
+    background:var(--bg-panel-hi); border-top:1px solid var(--line);
+    font-size:11px; letter-spacing:0.08em; color:var(--cyan);
+  }
 
   .hero-copy h1{font-size:clamp(30px,4.4vw,46px); line-height:1.12; margin-bottom:14px;}
-  .avatar-wrap{
-    width:76px; height:76px; border-radius:50%; margin-bottom:20px;
-    border:2px solid var(--line-strong); padding:3px; position:relative;
-  }
-  .avatar-wrap::after{
-    content:""; position:absolute; inset:-6px; border-radius:50%; border:1px solid var(--line);
-    animation:ringPulse 2.4s ease-in-out infinite;
-  }
-  @keyframes ringPulse{0%,100%{opacity:0.4; transform:scale(1);}50%{opacity:0.9; transform:scale(1.05);}}
-  .avatar-img{width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; background:var(--bg-panel-hi);}
   .hero-copy h1 .accent{color:var(--cyan);}
   .hero-copy p.lead{font-size:16.5px; color:var(--text-mid); max-width:52ch;}
   .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-top:26px;}
@@ -303,6 +331,26 @@
   .footer-links a{text-decoration:none; color:var(--text-mid); transition:color .2s;}
   .footer-links a:hover{color:var(--cyan);}
   footer .fine{font-family:var(--mono); font-size:11.5px; color:var(--text-dim);}
+
+  /* ---------- BOT MASCOT ---------- */
+  .bot-mascot{position:fixed; bottom:22px; right:22px; z-index:80; display:flex; flex-direction:column; align-items:flex-end; gap:10px;}
+  .bot-avatar{
+    width:64px; height:64px; border-radius:50%; background:var(--bg-panel); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;
+    box-shadow:0 12px 28px -10px rgba(0,0,0,0.5); transition:transform .2s ease, border-color .2s ease;
+  }
+  .bot-avatar:hover{transform:translateY(-3px) scale(1.04); border-color:var(--cyan);}
+  .bot-avatar:active{transform:translateY(-1px) scale(0.98);}
+  .bot-bubble{
+    max-width:min(260px, calc(100vw - 64px)); background:var(--bg-panel); border:1px solid var(--line-strong); border-radius:12px 12px 4px 12px;
+    padding:12px 14px; font-family:var(--mono); font-size:12.5px; color:var(--text-hi); line-height:1.5;
+    box-shadow:0 14px 30px -12px rgba(0,0,0,0.55);
+    opacity:0; transform:translateY(8px) scale(0.96); transform-origin:bottom right;
+    transition:opacity .28s ease, transform .28s ease; pointer-events:none;
+  }
+  .bot-bubble.show{opacity:1; transform:translateY(0) scale(1);}
+  .bot-bubble .bcursor{display:inline-block; width:6px; height:12px; background:var(--cyan); vertical-align:-1px; animation:blink 0.9s steps(1) infinite;}
+  @media (max-width:600px){ .bot-mascot{bottom:16px; right:16px;} .bot-avatar{width:54px; height:54px;} .bot-avatar svg{width:46px; height:46px;} }
 </style>
 </head>
 <body>
@@ -331,23 +379,29 @@
   <canvas id="particle-canvas"></canvas>
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <div class="avatar-wrap">
-        <img src="ruchir-ganatra.png" alt="Ruchir Ganatra" class="avatar-img" onerror="this.parentElement.style.display='none'">
-      </div>
       <div class="eyebrow">DATA ANALYST · FULL-STACK DEVELOPER · AHMEDABAD, IN</div>
-      <h1>Hi, I'm Ruchir <span class="accent">Ganatra</span>.</h1>
+      <h1>Hi, I'm Ruchir <span class="accent" id="scramble-name">Ganatra</span>.</h1>
       <p class="lead">Raw data and half-built ideas come to me messy — I leave them working. Dashboards that hold up under real use, pipelines that don't break at 2am, full-stack tools built with equal parts curiosity and discipline. Currently a Data Analyst at Elixir Foundation, and a B.Tech IT student at Silver Oak.</p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">View my work <span class="arrow">→</span></a>
-        <a href="#contact" class="btn btn-ghost">Say hello</a>
+        <a href="#projects" class="btn btn-primary" data-magnetic>View my work <span class="arrow">→</span></a>
+        <a href="#contact" class="btn btn-ghost" data-magnetic>Say hello</a>
       </div>
     </div>
-    <div class="terminal">
-      <div class="terminal-bar">
-        <span style="background:#e2685f"></span><span style="background:#f2a83c"></span><span style="background:#2dd4c8"></span>
-        <span class="tlabel">ruchir.sh — profile</span>
+
+    <div class="id-badge" id="id-badge" data-tilt>
+      <div class="id-badge-photo" id="id-photo-wrap">
+        <img src="ruchir-ganatra.png" alt="Ruchir Ganatra" class="id-photo" onerror="this.style.display='none'; document.getElementById('id-photo-wrap').classList.add('no-photo');">
+        <div class="id-initials">RG</div>
+        <div class="scan-line"></div>
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
       </div>
-      <div class="terminal-body" id="terminal-body"></div>
+      <div class="id-badge-body">
+        <div class="id-name">RUCHIR GANATRA</div>
+        <div class="id-role">DATA ANALYST · AHMEDABAD</div>
+        <div class="id-divider"></div>
+        <div class="terminal-body" id="terminal-body"></div>
+      </div>
+      <div class="id-footer"><span class="dot"></span>ACCESS GRANTED</div>
     </div>
   </div>
 </section>
@@ -678,6 +732,31 @@
   </div>
 </footer>
 
+<div class="bot-mascot" id="bot-mascot">
+  <div class="bot-bubble" id="bot-bubble"><span id="bot-text"></span></div>
+  <button class="bot-avatar" id="bot-avatar" aria-label="Say hello to the site bot" title="Say hello">
+    <svg id="bot-svg" viewBox="0 0 100 100" width="54" height="54" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="16" width="40" height="30" rx="10" fill="var(--bg-panel-hi)" stroke="var(--cyan)" stroke-width="3"/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="50" cy="5" r="3.4" fill="var(--cyan)">
+        <animate attributeName="opacity" values="1;0.35;1" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <ellipse cx="41" cy="31" rx="3.4" ry="3.4" fill="var(--cyan)">
+        <animate attributeName="ry" values="3.4;3.4;0.4;3.4" keyTimes="0;0.9;0.95;1" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="59" cy="31" rx="3.4" ry="3.4" fill="var(--cyan)">
+        <animate attributeName="ry" values="3.4;3.4;0.4;3.4" keyTimes="0;0.9;0.95;1" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <rect x="26" y="48" width="48" height="32" rx="11" fill="var(--bg-panel-hi)" stroke="var(--cyan)" stroke-width="3"/>
+      <rect x="14" y="54" width="10" height="20" rx="5" fill="none" stroke="var(--cyan)" stroke-width="3"/>
+      <rect x="76" y="52" width="10" height="20" rx="5" fill="none" stroke="var(--cyan)" stroke-width="3">
+        <animateTransform attributeName="transform" type="rotate" values="0 81 52;0 81 52;-32 81 52;8 81 52;0 81 52;0 81 52" keyTimes="0;0.62;0.74;0.84;0.92;1" dur="4.4s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="38" y="60" width="24" height="4" rx="2" fill="var(--cyan)" opacity="0.85"/>
+    </svg>
+  </button>
+</div>
+
 <script>
 (function(){
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -698,6 +777,96 @@
       var next = current === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
       try{ localStorage.setItem('portfolio-theme', next); }catch(e){}
+    });
+  })();
+
+  /* ---------- name scramble reveal ---------- */
+  (function(){
+    var el = document.getElementById('scramble-name');
+    if(!el || reduceMotion) return;
+    var target = el.textContent;
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&$*';
+    var frame = 0, totalFrames = 16;
+    var revealEvery = Math.ceil(totalFrames / target.length);
+    function tick(){
+      var out = '';
+      for(var i=0;i<target.length;i++){
+        out += (frame >= (i+1)*revealEvery) ? target[i] : chars[Math.floor(Math.random()*chars.length)];
+      }
+      el.textContent = out;
+      frame++;
+      if(frame <= totalFrames){ setTimeout(tick, 45); } else { el.textContent = target; }
+    }
+    setTimeout(tick, 250);
+  })();
+
+  /* ---------- magnetic buttons ---------- */
+  if(window.matchMedia('(hover: hover)').matches && !reduceMotion){
+    document.querySelectorAll('[data-magnetic]').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width/2;
+        var y = e.clientY - r.top - r.height/2;
+        btn.style.transform = 'translate(' + (x*0.16).toFixed(1) + 'px,' + (y*0.32 - 2).toFixed(1) + 'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+    });
+  }
+
+  /* ---------- bot mascot ---------- */
+  (function(){
+    var avatar = document.getElementById('bot-avatar');
+    var bubble = document.getElementById('bot-bubble');
+    var textEl = document.getElementById('bot-text');
+    var svg = document.getElementById('bot-svg');
+    if(!avatar || !bubble || !textEl) return;
+    if(reduceMotion && svg && svg.pauseAnimations){ try{ svg.pauseAnimations(); }catch(e){} }
+
+    var greetings = [
+      "Hey! I'm Ruchir's site bot. Scroll down — the projects are worth it.",
+      "Looking for the good stuff? Try the Projects section 👇",
+      "Data, dashboards, and one very real cybersecurity dashboard. Dig in!",
+      "Psst — the resume download is in the Contact section."
+    ];
+    var used = -1;
+    var typing = false;
+
+    function typeText(str){
+      typing = true;
+      textEl.textContent = '';
+      var cursor = document.createElement('span');
+      cursor.className = 'bcursor';
+      var i = 0;
+      function step(){
+        textEl.textContent = str.slice(0, i);
+        textEl.appendChild(cursor);
+        i++;
+        if(i <= str.length){ setTimeout(step, 22); }
+        else { cursor.remove(); typing = false; }
+      }
+      step();
+    }
+
+    function showGreeting(){
+      if(typing) return;
+      used = (used + 1) % greetings.length;
+      var msg = greetings[used];
+      bubble.classList.add('show');
+      if(reduceMotion){ textEl.textContent = msg; }
+      else{ typeText(msg); }
+    }
+
+    function hideGreeting(){
+      bubble.classList.remove('show');
+    }
+
+    avatar.addEventListener('click', function(){
+      if(bubble.classList.contains('show')){ hideGreeting(); } else { showGreeting(); }
+    });
+
+    window.addEventListener('load', function(){
+      setTimeout(showGreeting, 1600);
+      setTimeout(hideGreeting, 6200);
     });
   })();
 
