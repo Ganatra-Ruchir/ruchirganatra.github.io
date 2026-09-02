@@ -634,6 +634,108 @@
     color:#04211c;
   }
   .linktree-caption{ color:#6b7686; }
+
+  /* ============================================================
+     STRUCTURAL LAYOUT PASS — v3
+     Real composition changes (not just color): sidebar nav,
+     recomposed hero, bento project grid, unified stats bar,
+     overlapping testimonial cards, split contact layout.
+     Linktree card markup/behavior is untouched.
+     ============================================================ */
+
+  /* ---- sidebar navigation (desktop) ---- */
+  @media (min-width:1000px){
+    body{ padding-left:230px; }
+    header{
+      position:fixed; top:0; left:0; bottom:0; width:230px; height:100vh;
+      border-bottom:none; border-right:1px solid var(--line);
+      padding:36px 0; overflow-y:auto;
+    }
+    header nav.wrap{
+      flex-direction:column; align-items:flex-start; justify-content:flex-start;
+      gap:40px; padding:0 26px; height:100%; min-height:calc(100vh - 72px);
+    }
+    header .navlinks{ flex-direction:column; align-items:flex-start; gap:8px; width:100%; }
+    header .navlinks a{ display:block; width:100%; padding:9px 12px; border-radius:10px; }
+    header .navlinks a:hover{ background:var(--cyan-dim); }
+    header .navlinks a::after{ display:none; }
+    header .status-pill{ margin-top:auto; }
+  }
+
+  /* ---- hero: single centered column, badge as a tilted floating card ---- */
+  @media (min-width:821px){
+    .hero-inner{ grid-template-columns:1fr; justify-items:center; text-align:center; gap:36px; }
+    .hero-copy{ max-width:700px; }
+    .hero-copy p.lead{ margin-left:auto; margin-right:auto; }
+    .hero-actions{ justify-content:center; }
+    .id-badge{ width:300px; transform:rotate(-2deg); }
+    .id-badge:hover{ transform:rotate(0deg); }
+  }
+
+  /* ---- projects: bento grid (flagship full-width, rest paired) ---- */
+  @media (min-width:900px){
+    #projects .reveal{ display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    #projects .reveal > *{ grid-column:1 / -1; }
+    #projects .reveal > .project-card:nth-of-type(1){ grid-column:1 / -1; }
+    #projects .reveal > .project-card:nth-of-type(2){ grid-column:1 / 2; }
+    #projects .reveal > .project-card:nth-of-type(3){ grid-column:2 / 3; }
+    #projects .reveal .project-card{ margin-bottom:0; }
+  }
+
+  /* ---- skills: chunkier meter pills + asymmetric grid ---- */
+  .bar-track{ height:18px; border-radius:999px; }
+  .bar-fill{ border-radius:999px; position:relative; }
+  .bar-fill::after{
+    content:""; position:absolute; right:-1px; top:50%; transform:translateY(-50%);
+    width:12px; height:12px; border-radius:50%; background:#fff;
+    box-shadow:0 0 10px var(--cyan-dim);
+  }
+  @media (min-width:900px){
+    .skills-grid{ grid-template-columns:1fr 1fr; }
+    .skill-cat:nth-child(3){ grid-column:1 / -1; }
+    .skill-cat:nth-child(3) .skill-row{ display:inline-block; width:calc(50% - 22px); margin-right:20px; vertical-align:top; }
+  }
+
+  /* ---- stats: one unified glass bar instead of three separate cards ---- */
+  @media (min-width:640px){
+    .stats-row{
+      display:flex; background:var(--bg-panel); border:1px solid var(--line);
+      border-radius:var(--radius); overflow:hidden; gap:0;
+    }
+    .stat{ background:transparent; border:none; border-radius:0; flex:1; box-shadow:none !important; }
+    .stat:not(:last-child){ border-right:1px solid var(--line); }
+  }
+
+  /* ---- testimonials: overlapping offset stack instead of side-by-side ---- */
+  @media (min-width:701px){
+    .quote-grid{ grid-template-columns:1fr; max-width:620px; margin:30px auto 0; gap:0; }
+    .quote-card:nth-child(1){ transform:rotate(-2deg); position:relative; z-index:2; }
+    .quote-card:nth-child(2){ transform:rotate(2deg); margin:-22px 0 0 48px; position:relative; z-index:1; }
+  }
+
+  /* ---- contact: split two-column layout (text left, linktree card right) ---- */
+  @media (min-width:820px){
+    .contact-panel{
+      display:grid; grid-template-columns:1.3fr 1fr; gap:8px 44px; align-items:center; text-align:left;
+    }
+    .contact-panel .eyebrow{ justify-content:flex-start; grid-column:1; }
+    .contact-panel h2{ grid-column:1; }
+    .contact-panel p{ grid-column:1; margin-left:0; margin-right:0; }
+    .contact-actions{ grid-column:1; justify-content:flex-start; }
+    .linktree-wrap{ grid-column:2; grid-row:1 / 5; margin-top:0; }
+  }
+
+  /* ---- footer: split layout instead of stacked-center ---- */
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; }
+  .footer-links{ margin-bottom:0; }
+  @media (max-width:600px){
+    footer .wrap{ flex-direction:column; gap:14px; text-align:center; }
+  }
+
+  /* ---- a little more breathing room between sections on the new layout ---- */
+  @media (min-width:1000px){
+    section{ padding:120px 0; }
+  }
 </style>
 </head>
 <body>
