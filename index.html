@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg-0:#080b10;
@@ -416,6 +417,40 @@
   .mini-card .mini-link .arrow{transition:transform .18s;}
   .mini-card .mini-link:hover .arrow{transform:translateX(3px);}
 
+  /* ---------- LIVE GITHUB PROJECTS ---------- */
+  .live-head{display:flex; align-items:center; gap:10px; margin-top:48px; margin-bottom:8px;}
+  .live-head h3{font-size:16px; margin:0;}
+  .live-dot{width:8px; height:8px; border-radius:50%; background:#3ddc84; flex-shrink:0; box-shadow:0 0 0 0 rgba(61,220,132,0.6); animation:pulseDot 2s infinite;}
+  .live-status{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); margin-bottom:18px;}
+  .live-status a{color:var(--cyan);}
+  .live-updated{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); margin-top:10px;}
+  .live-skeleton{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px; height:150px; position:relative; overflow:hidden;}
+  .live-skeleton::after{content:""; position:absolute; inset:0; background:linear-gradient(90deg, transparent, var(--cyan-dim), transparent); transform:translateX(-100%); animation:shimmer 1.5s infinite;}
+  @keyframes shimmer{100%{transform:translateX(100%);}}
+
+  /* ---------- LINKTREE 3D SPINNING CARD ---------- */
+  .linktree-wrap{display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:36px;}
+  .linktree-scene{perspective:1100px; width:220px; height:140px;}
+  .linktree-card{
+    position:relative; display:block; width:100%; height:100%; text-decoration:none;
+    transform-style:preserve-3d; animation:linktreeSpin 13s linear infinite;
+  }
+  .linktree-scene:hover .linktree-card{animation-play-state:paused;}
+  .linktree-face{
+    position:absolute; inset:0; border-radius:16px; backface-visibility:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    border:1px solid var(--line-strong); box-shadow:0 20px 44px -18px rgba(0,0,0,0.55);
+    font-family:var(--mono); text-align:center; padding:12px;
+  }
+  .linktree-front{background:linear-gradient(145deg, var(--bg-panel-hi), var(--bg-panel)); color:var(--text-hi);}
+  .linktree-back{background:linear-gradient(145deg, var(--cyan), #1fa89c); color:#04211c; transform:rotateY(180deg);}
+  .linktree-logo{font-size:26px; line-height:1;}
+  .linktree-title{font-size:13.5px; font-weight:700; letter-spacing:0.03em;}
+  .linktree-sub{font-size:10.5px; opacity:0.75;}
+  @keyframes linktreeSpin{ from{transform:rotateY(0deg);} to{transform:rotateY(360deg);} }
+  @media (prefers-reduced-motion: reduce){ .linktree-card{animation:none;} }
+  .linktree-caption{font-family:var(--mono); font-size:11px; color:var(--text-dim);}
+
   /* ---------- TESTIMONIALS ---------- */
   .quote-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:30px; align-items:start;}
   @media (max-width:760px){ .quote-grid{grid-template-columns:1fr;} }
@@ -460,9 +495,149 @@
   .bot-bubble.show{opacity:1; transform:translateY(0) scale(1);}
   .bot-bubble .bcursor{display:inline-block; width:6px; height:12px; background:var(--cyan); vertical-align:-1px; animation:blink 0.9s steps(1) infinite;}
   @media (max-width:600px){ .bot-mascot{bottom:16px; right:16px;} .bot-avatar{width:54px; height:54px;} .bot-avatar svg{width:46px; height:46px;} }
+
+  /* ============================================================
+     AURORA GLASS REDESIGN — v2 theme override
+     (Everything below wins the cascade over the rules above.
+     Linktree card is deliberately re-pinned to its original
+     hardcoded colors further down, so it stays "as it is".)
+     ============================================================ */
+  :root{
+    --bg-0:#0b0714;
+    --bg-1:#120a24;
+    --bg-panel:rgba(255,255,255,0.055);
+    --bg-panel-hi:rgba(255,255,255,0.095);
+    --line:rgba(255,255,255,0.09);
+    --line-strong:rgba(255,255,255,0.22);
+    --text-hi:#f6f3ff;
+    --text-mid:#bcb3dd;
+    --text-dim:#7d739e;
+    --cyan:#7c5cff;
+    --cyan-dim:rgba(124,92,255,0.20);
+    --amber:#ffb545;
+    --red-soft:#ff6b9d;
+    --radius:22px;
+    --mono:'Space Grotesk', ui-monospace, monospace;
+    --sans:'Plus Jakarta Sans', system-ui, sans-serif;
+    --grid-op:1;
+    --accent-a:#ff5ec4;
+    --accent-b:#7c5cff;
+    --accent-c:#22d3ee;
+  }
+  html[data-theme="light"]{
+    --bg-0:#f6f3ff;
+    --bg-1:#efe9ff;
+    --bg-panel:rgba(255,255,255,0.55);
+    --bg-panel-hi:rgba(255,255,255,0.8);
+    --line:rgba(90,60,180,0.14);
+    --line-strong:rgba(90,60,180,0.30);
+    --text-hi:#1c1030;
+    --text-mid:#564a75;
+    --text-dim:#8b7fae;
+    --cyan:#6d3fd6;
+    --cyan-dim:rgba(109,63,214,0.14);
+    --amber:#c9791a;
+    --red-soft:#d1477a;
+  }
+
+  body{ background:radial-gradient(120% 100% at 50% -10%, var(--bg-1), var(--bg-0) 60%); }
+
+  /* aurora blob background (reuses the existing .grid-veil element) */
+  .grid-veil{
+    opacity:1;
+    background:
+      radial-gradient(38% 38% at 15% 20%, rgba(255,94,196,0.32), transparent 60%),
+      radial-gradient(42% 42% at 85% 15%, rgba(34,211,238,0.28), transparent 60%),
+      radial-gradient(46% 46% at 50% 95%, rgba(124,92,255,0.32), transparent 60%);
+    background-size:200% 200%;
+    animation:auroraDrift 24s ease-in-out infinite;
+    mask-image:none;
+    filter:blur(46px);
+  }
+  @keyframes auroraDrift{
+    0%,100%{ background-position:0% 0%, 100% 0%, 50% 100%; }
+    50%{ background-position:30% 40%, 70% 30%, 40% 60%; }
+  }
+
+  /* glass panels everywhere */
+  .project-card,.mini-card,.lead-card,.quote-card,.article-card,.stat,
+  .contact-panel,.id-badge,.live-skeleton,.bot-bubble,.bot-avatar{
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 8px 40px -14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .contact-panel{ border-radius:28px; }
+  .project-card,.mini-card,.lead-card,.quote-card,.article-card,.stat{
+    transition:box-shadow .3s ease, border-color .3s ease, transform .1s ease;
+  }
+  .project-card:hover,.mini-card:hover,.lead-card:hover,.quote-card:hover,.article-card:hover,.stat:hover{
+    box-shadow:0 16px 56px -12px var(--cyan-dim), inset 0 1px 0 rgba(255,255,255,0.1);
+    border-color:var(--line-strong);
+  }
+
+  header{ background:rgba(11,7,20,0.55); }
+  html[data-theme="light"] header{ background:rgba(246,243,255,0.6); }
+
+  /* gradient text accents */
+  .hero-copy h1 .accent, .logo .prompt{
+    background:linear-gradient(120deg, var(--accent-a), var(--accent-b) 45%, var(--accent-c));
+    background-size:200% auto;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gradientShift 6s ease infinite;
+  }
+  @keyframes gradientShift{
+    0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;}
+  }
+
+  .btn-primary{
+    background:linear-gradient(120deg, var(--accent-a), var(--accent-b));
+    color:#fff; border:none;
+  }
+  .btn-primary:hover{ box-shadow:0 14px 32px -8px rgba(124,92,255,0.55); }
+
+  .tag,.chip{ border-radius:999px; }
+
+  .bar-fill{ background:linear-gradient(90deg, var(--accent-a), var(--accent-b), var(--accent-c)); }
+
+  .dot{ box-shadow:0 0 0 0 var(--cyan-dim); }
+  @keyframes pulseDot{
+    0%{ box-shadow:0 0 0 0 var(--cyan-dim); }
+    70%{ box-shadow:0 0 0 8px rgba(124,92,255,0); }
+    100%{ box-shadow:0 0 0 0 rgba(124,92,255,0); }
+  }
+
+  #boot-screen{ background:var(--bg-0); }
+  .boot-box{ color:var(--text-hi); font-family:var(--mono); }
+  .boot-box .bline .ok{ color:var(--cyan); }
+  .boot-skip{ color:var(--text-dim); border-color:var(--line-strong); }
+  .boot-skip:hover{ color:var(--cyan); border-color:var(--cyan); }
+
+  /* scroll progress bar (new feature) */
+  #scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:300;
+    background:linear-gradient(90deg, var(--accent-a), var(--accent-b), var(--accent-c));
+    box-shadow:0 0 12px var(--cyan-dim);
+    transition:width .1s linear;
+  }
+
+  /* ---- Linktree card: pinned to its original look, unaffected by the theme above ---- */
+  .linktree-face{
+    border:1px solid rgba(45,212,200,0.32);
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+  }
+  .linktree-front{
+    background:linear-gradient(145deg, #16212d, #111a24);
+    color:#e9eef4;
+  }
+  .linktree-back{
+    background:linear-gradient(145deg, #2dd4c8, #1fa89c);
+    color:#04211c;
+  }
+  .linktree-caption{ color:#6b7686; }
 </style>
 </head>
 <body>
+<div id="scroll-progress"></div>
 
 <div id="boot-screen">
   <div class="boot-box" id="boot-lines"></div>
@@ -785,6 +960,17 @@
         <a href="https://github.com/Ganatra-Ruchir/COVID-19-analysis-using-Kaggle-data" target="_blank" rel="noopener" class="mini-link">GitHub Repo <span class="arrow">→</span></a>
       </div>
     </div>
+
+    <div class="live-head">
+      <span class="live-dot"></span>
+      <h3>Live from GitHub</h3>
+    </div>
+    <p class="live-status" id="live-repo-status">Pulling latest activity from github.com/Ganatra-Ruchir…</p>
+    <div class="mini-grid" id="live-repo-grid">
+      <div class="live-skeleton"></div>
+      <div class="live-skeleton"></div>
+      <div class="live-skeleton"></div>
+    </div>
   </div>
 </section>
 
@@ -811,9 +997,10 @@
     <h2>A quick snapshot</h2>
     <div class="stats-row">
       <div class="stat spot" data-tilt data-tilt-soft><div class="num" data-count="3">0</div><div class="lbl">FEATURED PROJECTS</div></div>
-      <div class="stat spot" data-tilt data-tilt-soft><div class="num" data-count="21">0</div><div class="lbl">GITHUB REPOSITORIES</div></div>
-      <div class="stat spot" data-tilt data-tilt-soft><div class="num" data-count="36">0</div><div class="lbl">GITHUB STARS</div></div>
+      <div class="stat spot" data-tilt data-tilt-soft><div class="num" id="stat-github-repos" data-count="21">0</div><div class="lbl">GITHUB REPOSITORIES</div></div>
+      <div class="stat spot" data-tilt data-tilt-soft><div class="num" id="stat-github-stars" data-count="36">0</div><div class="lbl">GITHUB STARS</div></div>
     </div>
+    <p style="text-align:center; margin-top:16px; font-family:var(--mono); font-size:11px; color:var(--text-dim);">Repo &amp; star counts sync live from GitHub on page load.</p>
   </div>
 </section>
 
@@ -894,6 +1081,24 @@
         <a href="mailto:thakkerruchir044@gmail.com" class="btn btn-primary">Email me <span class="arrow">→</span></a>
         <a href="https://www.linkedin.com/in/ganatra-ruchir-61a2a2358/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
         <a href="./Ruchir_Ganatra_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Download Resume <span class="arrow">→</span></a>
+      </div>
+
+      <div class="linktree-wrap">
+        <div class="linktree-scene">
+          <a class="linktree-card" href="https://linktr.ee/ruchir.ganatra" target="_blank" rel="noopener" aria-label="All my links on Linktree" data-magnetic-skip>
+            <div class="linktree-face linktree-front">
+              <div class="linktree-logo">🔗</div>
+              <div class="linktree-title">LINKTREE</div>
+              <div class="linktree-sub">all my links, one place</div>
+            </div>
+            <div class="linktree-face linktree-back">
+              <div class="linktree-logo">🌐</div>
+              <div class="linktree-title">@ruchir.ganatra</div>
+              <div class="linktree-sub">tap to open →</div>
+            </div>
+          </a>
+        </div>
+        <span class="linktree-caption">Hover to pause · click to open</span>
       </div>
     </div>
   </div>
@@ -1197,7 +1402,7 @@
       if(e.isIntersecting){
         var el = e.target;
         var target = parseInt(el.getAttribute('data-count'), 10);
-        if(reduceMotion){ el.textContent = target; cio.unobserve(el); return; }
+        if(reduceMotion){ el.textContent = target; el.setAttribute('data-observed','1'); cio.unobserve(el); return; }
         var startTime = null;
         var duration = 1200;
         function step(ts){
@@ -1205,7 +1410,7 @@
           var progress = Math.min((ts - startTime) / duration, 1);
           var eased = 1 - Math.pow(1 - progress, 3);
           el.textContent = Math.floor(eased * target);
-          if(progress < 1){ requestAnimationFrame(step); } else { el.textContent = target; }
+          if(progress < 1){ requestAnimationFrame(step); } else { el.textContent = target; el.setAttribute('data-observed','1'); }
         }
         requestAnimationFrame(step);
         cio.unobserve(el);
@@ -1215,31 +1420,104 @@
   counters.forEach(function(el){ cio.observe(el); });
 
   /* ---------- card tilt (3D) ---------- */
-  if(!reduceMotion && window.matchMedia('(hover: hover)').matches){
-    document.querySelectorAll('[data-tilt]').forEach(function(card){
-      var deg = card.hasAttribute('data-tilt-soft') ? 2.5 : 4;
-      card.addEventListener('mousemove', function(e){
-        var r = card.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - 0.5;
-        var y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = 'perspective(900px) rotateY(' + (x*deg) + 'deg) rotateX(' + (-y*deg) + 'deg) translateY(-2px)';
-      });
-      card.addEventListener('mouseleave', function(){
-        card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)';
-      });
+  var tiltEnabled = !reduceMotion && window.matchMedia('(hover: hover)').matches;
+  function attachTilt(card){
+    if(!tiltEnabled || card.__tiltBound) return;
+    card.__tiltBound = true;
+    var deg = card.hasAttribute('data-tilt-soft') ? 2.5 : 4;
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'perspective(900px) rotateY(' + (x*deg) + 'deg) rotateX(' + (-y*deg) + 'deg) translateY(-2px)';
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)';
     });
   }
+  document.querySelectorAll('[data-tilt]').forEach(attachTilt);
 
   /* ---------- spotlight hover glow (mouse-following border) ---------- */
-  if(window.matchMedia('(hover: hover)').matches){
-    document.querySelectorAll('.spot').forEach(function(card){
-      card.addEventListener('mousemove', function(e){
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-      });
+  var spotEnabled = window.matchMedia('(hover: hover)').matches;
+  function attachSpot(card){
+    if(!spotEnabled || card.__spotBound) return;
+    card.__spotBound = true;
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   }
+  document.querySelectorAll('.spot').forEach(attachSpot);
+
+  /* ---------- live GitHub projects (real-time) ---------- */
+  (function(){
+    var grid = document.getElementById('live-repo-grid');
+    var statusEl = document.getElementById('live-repo-status');
+    if(!grid || !statusEl) return;
+    var EXCLUDE = {'ruchirganatra.github.io':1, 'Ruchir-Ganatra-':1, 'ruchir-ganatra':1};
+
+    function timeAgo(iso){
+      var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      var units = [[31536000,'y'],[2592000,'mo'],[604800,'w'],[86400,'d'],[3600,'h'],[60,'m']];
+      for(var i=0;i<units.length;i++){
+        var v = Math.floor(diff / units[i][0]);
+        if(v >= 1) return v + units[i][1] + ' ago';
+      }
+      return 'just now';
+    }
+    function esc(s){
+      return String(s || '').replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
+    function updateStat(id, value){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.setAttribute('data-count', value);
+      if(el.getAttribute('data-observed') === '1'){ el.textContent = value; }
+    }
+
+    fetch('https://api.github.com/users/Ganatra-Ruchir/repos?sort=pushed&per_page=100')
+      .then(function(r){ if(!r.ok) throw new Error('github api error'); return r.json(); })
+      .then(function(repos){
+        if(!Array.isArray(repos)) throw new Error('unexpected response');
+        var list = repos.filter(function(r){ return !r.fork && !r.private && !EXCLUDE[r.name]; })
+          .sort(function(a,b){ return new Date(b.pushed_at) - new Date(a.pushed_at); })
+          .slice(0,6);
+
+        if(!list.length){
+          statusEl.textContent = 'No public repositories found right now.';
+          return;
+        }
+
+        grid.innerHTML = list.map(function(r){
+          var lang = r.language ? '<span class="chip">'+esc(r.language)+'</span>' : '';
+          var stars = r.stargazers_count ? '<span class="chip">★ '+r.stargazers_count+'</span>' : '';
+          var desc = r.description ? esc(r.description) : 'No description yet — check the repo for details.';
+          return '<div class="mini-card spot" data-tilt data-tilt-soft>'
+            + '<h4>'+esc(r.name)+'</h4>'
+            + '<p>'+desc+'</p>'
+            + '<div class="stack-row">'+lang+stars+'</div>'
+            + '<a href="'+r.html_url+'" target="_blank" rel="noopener" class="mini-link">View on GitHub <span class="arrow">→</span></a>'
+            + '<div class="live-updated">Updated '+timeAgo(r.pushed_at)+'</div>'
+            + '</div>';
+        }).join('');
+
+        statusEl.innerHTML = 'Synced just now from <a href="https://github.com/Ganatra-Ruchir" target="_blank" rel="noopener">github.com/Ganatra-Ruchir</a> — most recently updated repos, live.';
+
+        grid.querySelectorAll('[data-tilt]').forEach(attachTilt);
+        grid.querySelectorAll('.spot').forEach(attachSpot);
+
+        var totalStars = repos.reduce(function(sum, r){ return sum + (r.stargazers_count || 0); }, 0);
+        updateStat('stat-github-repos', repos.length);
+        updateStat('stat-github-stars', totalStars);
+      })
+      .catch(function(){
+        statusEl.textContent = 'Live sync unavailable right now (GitHub API limit) — showing the highlights above instead.';
+        grid.querySelectorAll('.live-skeleton').forEach(function(el){ el.remove(); });
+      });
+  })();
 
   /* ---------- global cursor glow ---------- */
   if(!reduceMotion && window.matchMedia('(hover: hover)').matches){
@@ -1349,6 +1627,22 @@
     init();
     requestAnimationFrame(tick);
   }
+})();
+</script>
+<script>
+(function(){
+  var bar = document.getElementById('scroll-progress');
+  if(!bar) return;
+  function update(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (scrolled / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 </body>
