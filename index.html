@@ -1258,30 +1258,34 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         </div>
       </article>
 
-      <!-- PANEL 4 — CSR -->
+      <!-- PANEL 4 — Backstop -->
       <article class="panel">
         <span class="panel-ghost" aria-hidden="true">04</span>
         <div class="panel-copy">
           <div class="panel-top">
             <span class="panel-i">P/04</span>
-            <span class="panel-flag">Field work</span>
+            <span class="panel-flag">Machine learning</span>
           </div>
-          <h3>CSR Beneficiary Platform</h3>
-          <div class="sub">Data cleaning &amp; impact tracking for community programmes</div>
-          <p class="txt"><strong>The problem:</strong> non-profits couldn't tell which community support nodes were actually working, because the beneficiary records were unstructured and inconsistent across sources.</p>
-          <p class="txt"><strong>The build:</strong> a cleaning pipeline that normalised records, mapped delivery rates and output trend visualisations the team could read without a data background. Handling missing values in genuinely messy field data is what taught me to reach for robust imputation instead of dropping rows — and this project is a large part of what led into my current role at Elixir Foundation.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Data cleaning</span><span class="chip">Impact metrics</span></div>
+          <h3>Backstop</h3>
+          <div class="sub">Card-fraud decisioning, graded on the future and priced in euros</div>
+          <p class="txt"><strong>The problem:</strong> a fraud model has to decide in milliseconds on 0.17% prevalence, and then justify the decision. Almost every published model on this data is graded on a random split — trained on Tuesday, tested on Monday — which flatters it by 0.072 of average precision it will never see in production.</p>
+          <p class="txt"><strong>The build:</strong> an end-to-end system on 283,726 real transactions. Eleven models compared across expanding time windows, the threshold chosen by expected euro cost under a review-capacity constraint, SHAP reasons on every alert, PSI drift monitoring, and a FastAPI service that answers in 2.1&nbsp;ms and provably reproduces the offline scores. <strong>65 of 97 frauds caught for one false alarm</strong>, avoiding &euro;7,071 of &euro;11,596 exposure — on a window the model had never seen.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">XGBoost</span><span class="chip">scikit-learn</span><span class="chip">SHAP</span><span class="chip">FastAPI</span><span class="chip">Docker</span></div>
           <div class="panel-links">
-            <a class="btn" href="#trajectory" data-mag><span class="t">See the role</span><span class="ar">↗</span></a>
+            <a class="btn solid" href="https://github.com/Ganatra-Ruchir/backstop" target="_blank" rel="noopener" data-mag><span class="t">Source &amp; case study</span><span class="ar">&#8599;</span></a>
+            <a class="btn" href="https://github.com/Ganatra-Ruchir/backstop/blob/main/docs/MODEL_CARD.md" target="_blank" rel="noopener" data-mag><span class="t">Model card</span></a>
           </div>
         </div>
         <div class="win">
-          <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">internal · Elixir Foundation &amp; CSR partners</span></div>
+          <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">held-out test window &middot; 73,434 transactions</span></div>
           <div class="win-view">
-            <div class="win-static">
-              <span class="big">Not public</span>
-              <span class="sm">Beneficiary data — kept private by design</span>
-              <span class="sm" style="color:var(--accent)">Methodology available on request</span>
+            <div class="win-static bs-metrics">
+              <div class="bs-row"><span class="bs-k">Average precision</span><span class="bs-v">0.798</span></div>
+              <div class="bs-row"><span class="bs-k">Frauds caught</span><span class="bs-v">65 / 97</span></div>
+              <div class="bs-row"><span class="bs-k">False alarms</span><span class="bs-v">1</span></div>
+              <div class="bs-row"><span class="bs-k">Loss avoided</span><span class="bs-v">&euro;7,071</span></div>
+              <div class="bs-row"><span class="bs-k">Response time</span><span class="bs-v">2.1 ms</span></div>
+              <div class="bs-foot">temporal split &middot; scored once &middot; 85 tests</div>
             </div>
           </div>
         </div>
@@ -1329,7 +1333,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       <button data-i="0"><span class="wn-n">P/01</span><span class="wn-t">DocuSense AI</span><span class="wn-s">Client-side RAG · live</span></button>
       <button data-i="1"><span class="wn-n">P/02</span><span class="wn-t">SkyRecon</span><span class="wn-s">IOC dashboard</span></button>
       <button data-i="2"><span class="wn-n">P/03</span><span class="wn-t">Literacy Gap Analysis</span><span class="wn-s">UDISE data · live</span></button>
-      <button data-i="3"><span class="wn-n">P/04</span><span class="wn-t">CSR Beneficiary Platform</span><span class="wn-s">Field data</span></button>
+      <button data-i="3"><span class="wn-n">P/04</span><span class="wn-t">Backstop</span><span class="wn-s">Fraud ML &middot; production</span></button>
       <button data-i="4"><span class="wn-n">P/05</span><span class="wn-t">PDFly</span><span class="wn-s">File toolkit · live</span></button>
     </div>
 
@@ -1590,6 +1594,20 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 @keyframes tkScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .ticker-track.css-run{animation:tkScroll 34s linear infinite;}
 .ticker:hover .ticker-track.css-run{animation-play-state:paused;}
+
+/* ── P/04 Backstop metrics readout ─────────────────────────── */
+.bs-metrics{display:flex;flex-direction:column;justify-content:center;gap:0;
+  width:100%;height:100%;padding:clamp(18px,4vw,38px)}
+.bs-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:clamp(9px,1.6vw,14px) 0;border-bottom:1px solid rgba(192,138,78,.14)}
+.bs-row:last-of-type{border-bottom:0}
+.bs-k{font-family:var(--mono,ui-monospace,monospace);font-size:clamp(10px,1.15vw,12px);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--dim,#9a8b7d)}
+.bs-v{font-family:var(--mono,ui-monospace,monospace);
+  font-size:clamp(16px,2.3vw,26px);font-weight:600;color:var(--accent,#c08a4e);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.bs-foot{margin-top:clamp(12px,2vw,20px);font-family:var(--mono,ui-monospace,monospace);
+  font-size:clamp(9.5px,1vw,11px);letter-spacing:.06em;color:var(--dim,#9a8b7d);opacity:.75}
 </style>
 
 <script>
