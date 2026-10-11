@@ -827,11 +827,15 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 .tree-face .ss{font-size:10px; opacity:.8; letter-spacing:0.06em;}
 @keyframes treeSpin{to{transform:rotateY(360deg);}}
 @media (prefers-reduced-motion: reduce){ .tree-card{animation:none;} }
+/* Contact wordmark sits behind the contact content instead of taking up height. */
+.contact > .shell{position:relative; isolation:isolate;}
+.contact > .shell > :not(.footword){position:relative; z-index:1;}
 .footword{
+  position:absolute; z-index:0; left:0; right:0; bottom:clamp(4px,1.2vw,18px);
   font-family:var(--display); text-transform:uppercase; line-height:0.78;
   font-size:clamp(70px,20vw,300px); color:transparent;
   -webkit-text-stroke:1.7px rgba(36,22,16,.34);
-  text-align:center; margin-top:clamp(30px,6vh,80px); user-select:none; pointer-events:none;
+  text-align:center; margin:0; user-select:none; pointer-events:none;
 }
 html[data-theme="dark"] .footword{-webkit-text-stroke:1.5px rgba(244,239,230,.32);}
 /* Subtle outlined surname behind the opening hero, never over foreground copy. */
