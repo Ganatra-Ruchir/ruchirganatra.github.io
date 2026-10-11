@@ -828,10 +828,11 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 @keyframes treeSpin{to{transform:rotateY(360deg);}}
 @media (prefers-reduced-motion: reduce){ .tree-card{animation:none;} }
 /* Contact wordmark sits behind the contact content instead of taking up height. */
-.contact > .shell{position:relative; isolation:isolate;}
-.contact > .shell > :not(.footword){position:relative; z-index:1;}
+.contact > .shell{position:relative;}
+.contact-row{position:relative; isolation:isolate;}
+.contact-row > :not(.footword){position:relative; z-index:1;}
 .footword{
-  position:absolute; z-index:0; left:0; right:0; bottom:clamp(4px,1.2vw,18px);
+  position:absolute; z-index:0; left:0; right:0; top:0;
   font-family:var(--display); text-transform:uppercase; line-height:0.78;
   font-size:clamp(70px,20vw,300px); color:transparent;
   -webkit-text-stroke:1.7px rgba(36,22,16,.34);
@@ -1754,6 +1755,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     </div>
     <p class="lede contact-sub" data-rv="up">I'm available for small fixed-price freelance tasks and limited weekly project support — spreadsheet cleanup, dashboards, SQL, Google Sheets automation and reporting. I'm also happy to talk through a dataset you're stuck on. My inbox is genuinely open.</p>
     <div class="contact-row">
+      <div class="footword" aria-hidden="true">GANATRA</div>
       <div data-rv="up">
         <div class="label" style="margin-bottom:12px;">Direct</div>
         <a class="mr-t" style="font-size:clamp(17px,2.2vw,30px); font-family:var(--head); font-weight:600; display:inline-block; margin-bottom:22px;" href="mailto:thakkerruchir044@gmail.com">thakkerruchir044@gmail.com</a>
@@ -1770,7 +1772,6 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         </a>
       </div>
     </div>
-    <div class="footword" aria-hidden="true">GANATRA</div>
   </div>
 </section>
 
