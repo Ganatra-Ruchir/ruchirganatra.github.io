@@ -936,6 +936,33 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   .mark-badge { width:35px; height:35px; }
   .angel-mark { width:28px; height:28px; }
 }
+
+/* Spacing pass: keep cinematic typography and motion, remove empty scroll. */
+@media (min-width: 701px) {
+  .band { padding-block:clamp(66px,8vh,112px); }
+  .hero { padding-bottom:58px; }
+}
+@media (max-width: 700px) {
+  .hero { padding-top:112px; padding-bottom:40px; }
+  .hero-meta { gap:7px 12px; padding-bottom:15px; margin-bottom:20px; }
+  .hero-bottom { margin-top:23px; gap:16px; }
+  .hero-cta { margin-top:0; }
+  .scroll-cue { margin-top:22px; }
+  .band { padding-top:48px; padding-bottom:48px; }
+  .band .sec-head { margin-bottom:26px; }
+  .about-cols { gap:18px; }
+  .work .shell { padding-top:30px !important; }
+  .work [style*="margin-top:clamp(50px,8vh,110px)"] { margin-top:24px !important; }
+  .work-nav { margin-top:16px; }
+  .work-prog { margin-top:16px; }
+  .fact { padding-block:14px; }
+  .vlist li { padding-block:16px; }
+  .ov-foot { margin-top:26px; }
+}
+@media (max-width:390px) {
+  .hero { padding-top:104px; }
+  .band { padding-block:42px; }
+}
 </style>
 </head>
 <body>
