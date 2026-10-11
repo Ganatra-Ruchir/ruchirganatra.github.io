@@ -1011,6 +1011,24 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   .cert{grid-template-columns:35px minmax(0,1fr);gap:5px 10px;padding:14px 12px;}
 }
 
+/* Compact hero: size to its actual content rather than reserving a full screen. */
+@media (min-width:701px) {
+  .hero {
+    min-height:0;
+    justify-content:flex-start;
+    padding-top:clamp(124px,13vh,150px);
+    padding-bottom:clamp(54px,7vh,76px);
+  }
+  .hero-meta { margin-bottom:clamp(18px,2.5vh,28px); padding-bottom:clamp(14px,2vh,22px); gap:12px 22px; }
+  .hero-bottom { margin-top:clamp(20px,3vh,30px); gap:clamp(20px,3vw,40px); align-items:center; }
+  .hero-cta { align-self:center; }
+  .scroll-cue,.hero-index { bottom:16px; }
+}
+@media (max-width:700px) {
+  .hero { min-height:0; justify-content:flex-start; padding-top:98px; padding-bottom:40px; }
+  .hero-bottom { margin-top:20px; }
+}
+
 /* Site-wide compact section rhythm: no oversized empty transition bands.
    Maintain readable spacing inside components and pinned gallery behavior. */
 .band { padding-block:clamp(24px,3.5vw,44px); }
