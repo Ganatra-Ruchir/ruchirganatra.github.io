@@ -937,10 +937,32 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   .angel-mark { width:28px; height:28px; }
 }
 
-/* Spacing pass: keep cinematic typography and motion, remove empty scroll. */
+/* Desktop rhythm: avoid doubled whitespace where About meets Toolkit.
+   Keep the independent <=700px mobile layout and its existing overrides. */
 @media (min-width: 701px) {
-  .band { padding-block:clamp(66px,8vh,112px); }
+  .band { padding-block:clamp(42px,5.2vh,72px); }
+  .band .sec-head { margin-bottom:clamp(24px,3vw,40px); }
+  #about { padding-bottom:clamp(22px,3.2vh,40px); }
+  #toolkit { padding-top:clamp(22px,3.2vh,40px); }
+  #toolkit .sec-head { margin-bottom:clamp(22px,2.7vw,34px); }
+  #toolkit .soft-wrap { margin-top:clamp(24px,3.4vw,42px); padding-top:clamp(18px,2.1vw,30px); }
   .hero { padding-bottom:58px; }
+}
+@media (min-width: 941px) {
+  #toolkit .skills-top {
+    max-width:1160px;
+    margin-inline:auto;
+    grid-template-columns:minmax(0,420px) minmax(0,1fr);
+    gap:clamp(28px,3.3vw,52px);
+    align-items:center;
+  }
+  #toolkit .orbit { width:min(408px,100%); --R:min(179px,18vw); }
+  #toolkit .skill-tabs { margin-bottom:18px; }
+  #toolkit .meters { gap:clamp(14px,1.8vw,25px); }
+}
+@media (min-width: 701px) and (max-width: 940px) {
+  #toolkit .skills-top { gap:clamp(24px,4vw,36px); }
+  #toolkit .orbit { width:min(390px,76vw); --R:min(168px,30vw); }
 }
 @media (max-width: 700px) {
   .hero { padding-top:112px; padding-bottom:40px; }
