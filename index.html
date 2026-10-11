@@ -829,7 +829,7 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 @media (prefers-reduced-motion: reduce){ .tree-card{animation:none;} }
 /* Contact wordmark sits behind the contact content instead of taking up height. */
 .contact > .shell{position:relative;}
-.contact-row{position:relative; isolation:isolate;}
+.contact-row{position:relative; isolation:isolate; min-height:clamp(235px,19vw,315px); padding-bottom:clamp(55px,6vw,95px);}
 .contact-row > :not(.footword){position:relative; z-index:1;}
 .footword{
   position:absolute; z-index:0; left:0; right:0; top:0;
