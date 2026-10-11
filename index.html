@@ -835,22 +835,10 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
   position:absolute; z-index:0; left:0; right:0; top:0;
   font-family:var(--display); text-transform:uppercase; line-height:0.78;
   font-size:clamp(70px,20vw,300px); color:transparent;
-  -webkit-text-stroke:1.7px rgba(36,22,16,.34);
+  -webkit-text-stroke:1.3px rgba(36,22,16,.17);
   text-align:center; margin:0; user-select:none; pointer-events:none;
 }
-html[data-theme="dark"] .footword{-webkit-text-stroke:1.5px rgba(244,239,230,.32);}
-/* Subtle outlined surname behind the opening hero, never over foreground copy. */
-.hero-word{
-  position:absolute; right:var(--gut); bottom:clamp(24px,5vh,70px);
-  font-family:var(--display); font-size:clamp(100px,17vw,270px);
-  line-height:.8; letter-spacing:.01em; text-transform:uppercase; white-space:nowrap;
-  color:transparent; -webkit-text-stroke:1.25px rgba(36,22,16,.18);
-  opacity:.68; pointer-events:none; user-select:none; z-index:1;
-}
-html[data-theme="dark"] .hero-word{-webkit-text-stroke:1.25px rgba(244,239,230,.23);}
-@media(max-width:700px){
-  .hero-word{font-size:clamp(60px,19vw,145px); right:var(--gut); bottom:54px; opacity:.4;}
-}
+html[data-theme="dark"] .footword{-webkit-text-stroke:1.3px rgba(244,239,230,.20);}
 footer{border-top:1px solid var(--hair); padding:26px 0 34px;}
 .foot-in{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center;}
 .foot-links{display:flex; gap:22px; font-family:var(--mono); font-size:12px; letter-spacing:0.08em;}
@@ -1158,7 +1146,6 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 <section class="hero" id="hero">
   <canvas id="signal" aria-hidden="true"></canvas>
   <div class="hero-glow" aria-hidden="true"></div>
-  <div class="hero-word" aria-hidden="true">GANATRA</div>
   <div class="shell">
     <div class="hero-meta" id="heroMeta">
       <span class="pill"><span class="live-dot"></span>Open to opportunities</span>
