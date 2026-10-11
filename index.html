@@ -968,6 +968,19 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 .orbit-core .orbit-angel{width:clamp(42px,7vw,74px);height:clamp(42px,7vw,74px);color:var(--accent);filter:drop-shadow(0 3px 12px var(--accent-soft));flex-shrink:0}
 .orbit-core .orbit-core-label{display:block;font-family:var(--mono);font-size:clamp(11px,1.3vw,16px);letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim)}
 .orbit-core:has(.orbit-angel){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
+
+/* Mobile certification cards: keep desktop's elegant editorial rows. */
+@media (max-width:700px){
+  .cert-list{margin-top:18px;border-top:0;display:grid;gap:10px;}
+  .cert{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-areas:"number title" "number issuer";column-gap:14px;row-gap:7px;align-items:start;padding:17px 16px;border:1px solid var(--hair);border-radius:16px;background:var(--bg-elev);min-width:0;transition:border-color .25s ease,transform .3s var(--ease);}
+  .cert .ci{grid-area:number;align-self:start;font-size:10px;letter-spacing:.04em;padding-top:4px;color:var(--accent);}
+  .cert .cn{grid-area:title;font-size:clamp(14px,3.8vw,17px);line-height:1.38;min-width:0;overflow-wrap:break-word;hyphens:auto;}
+  .cert .cw{grid-area:issuer;font-size:clamp(10px,2.8vw,12px);line-height:1.5;letter-spacing:.02em;text-align:left;min-width:0;overflow-wrap:anywhere;}
+  .cert:hover{border-color:var(--hair-strong);transform:translateY(-2px);}
+}
+@media(max-width:370px){
+  .cert{grid-template-columns:35px minmax(0,1fr);gap:5px 10px;padding:14px 12px;}
+}
 </style>
 </head>
 <body>
