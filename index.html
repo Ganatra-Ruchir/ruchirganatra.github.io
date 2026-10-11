@@ -963,6 +963,11 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   .hero { padding-top:104px; }
   .band { padding-block:42px; }
 }
+
+/* Branded skill-orbit centerpiece */
+.orbit-core .orbit-angel{width:clamp(42px,7vw,74px);height:clamp(42px,7vw,74px);color:var(--accent);filter:drop-shadow(0 3px 12px var(--accent-soft));flex-shrink:0}
+.orbit-core .orbit-core-label{display:block;font-family:var(--mono);font-size:clamp(11px,1.3vw,16px);letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim)}
+.orbit-core:has(.orbit-angel){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
 </style>
 </head>
 <body>
@@ -1175,7 +1180,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     <div class="skills-top">
       <div data-rv="fade">
         <div class="orbit">
-          <div class="orbit-core"><b>RG</b>stack</div>
+          <div class="orbit-core"><svg class="angel-mark orbit-angel" viewBox="0 0 64 64" role="img" aria-label="Winged monogram logo" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M31 24C24 12 14 11 5 9c3 7 8 11 15 15-6-2-12-2-17-1 5 6 12 9 20 10-5 0-9 2-12 4 6 4 13 4 19-1" stroke-width="2.6"/><path d="M33 24C40 12 50 11 59 9c-3 7-8 11-15 15 6-2 12-2 17-1-5 6-12 9-20 10 5 0 9 2 12 4-6 4-13 4-19-1" stroke-width="2.6"/><ellipse cx="32" cy="12" rx="10" ry="3.5" stroke-width="2.4"/><path d="M32 25v19m-8-8 8 8 8-8m-8 8v8" stroke-width="2.8"/></g><path d="M32 52l-3-5h6z" fill="currentColor"/></svg><span class="orbit-core-label">skills</span></div>
           <div class="ring r2">
             <span class="orb" style="--a:0deg;"><i data-fb="PY" class="devicon-python-plain colored"></i></span>
             <span class="orb" style="--a:51deg;"><i data-fb="SQL" class="devicon-mysql-plain colored"></i></span>
