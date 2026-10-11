@@ -1016,7 +1016,16 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 #work > .shell { padding-top:clamp(22px,3vw,40px) !important; }
 #work .work-head { margin-bottom:clamp(12px,2vw,24px); }
 #work .work-pin { margin-top:0; }
-#work.horiz .work-pin { align-items:flex-start; padding-top:clamp(12px,2vw,24px); }
+/* The pinned gallery must fit its cards, not reserve a full viewport of blank space.
+   ScrollTrigger still pins the actual gallery while horizontal panels advance. */
+#work.horiz .work-pin {
+  height:auto;
+  min-height:0;
+  align-items:stretch;
+  padding-block:clamp(8px,1.2vw,16px);
+}
+#work.horiz .work-track { align-items:stretch; }
+#work.horiz .panel { min-height:min(600px,72svh); }
 #work .work-nav { margin-top:clamp(14px,2vw,24px); }
 #work [style*="margin-top:clamp(50px,8vh,110px)"] { margin-top:clamp(20px,3vw,36px) !important; }
 @media (max-width:700px) {
