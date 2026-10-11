@@ -872,6 +872,18 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   html.anim [data-rv]{opacity:1 !important; transform:none !important;}
   html.anim .line-mask > span, html.anim .char-mask .ch{transform:none !important;}
 }
+
+/* Portfolio refinement: tighter rhythm and less work on touch devices */
+@media (max-width: 768px) {
+  .band { padding-top: 64px; padding-bottom: 64px; }
+  .hero { min-height: auto; }
+  .work .shell { padding-top: 54px !important; }
+  .work [style*="margin-top:clamp(50px,8vh,110px)"] { margin-top: 44px !important; }
+  .work .win iframe { pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 </style>
 </head>
 <body>
@@ -1163,7 +1175,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <span class="sec-num">03</span>
         <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Selected work</h2></div>
       </div>
-      <p class="body-sm" style="max-width:38ch;">Five builds I'd put in front of anyone. Four are deployed — the preview windows are the real sites, click one to open it.</p>
+      <p class="body-sm" style="max-width:38ch;">Featured builds plus live data systems and field reporting tools below. Open a project to see the working application.</p>
     </div>
   </div>
 
@@ -1389,6 +1401,24 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/08</span>
+          <span class="mr-t">Sashakt Salon Impact Dashboard</span>
+          <span class="mr-desc">Live impact reporting dashboard for salon beneficiary income, performance and operational KPIs.</span>
+          <span class="mr-go"><a href="https://sashakt-salon-dashboard.antideploy.com/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/Sashakt-Salon-Dashboard-" target="_blank" rel="noopener">Code</a></span>
+        </div>
+        <div class="mini-row" data-rv="up">
+          <span class="mr-i">/09</span>
+          <span class="mr-t">Sashakt Daily Activity Log</span>
+          <span class="mr-desc">Digital activity capture workflow for field teams, with structured daily reporting.</span>
+          <span class="mr-go"><a href="https://beognis.vercel.app/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/beognis" target="_blank" rel="noopener">Code</a></span>
+        </div>
+        <div class="mini-row" data-rv="up">
+          <span class="mr-i">/10</span>
+          <span class="mr-t">Salon Beneficiary Income Tracker</span>
+          <span class="mr-desc">Live beneficiary income-entry system supporting structured field reporting.</span>
+          <span class="mr-go"><a href="https://diva-salon-beneficiary-income-track.vercel.app/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/Diva-Salon---Beneficiary-Income-Tracker-Narol-form-" target="_blank" rel="noopener">Code</a></span>
+        </div>
+        <div class="mini-row" data-rv="up">
+          <span class="mr-i">/11</span>
           <span class="mr-t">Live from GitHub</span>
           <span class="mr-desc" id="liveRepoNote">Fetching most recently pushed repositories…</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir" target="_blank" rel="noopener">Profile ↗</a></span>
