@@ -981,6 +981,21 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 @media(max-width:370px){
   .cert{grid-template-columns:35px minmax(0,1fr);gap:5px 10px;padding:14px 12px;}
 }
+
+/* Consistent compact mobile cards for Workbench and Writing. */
+@media(max-width:700px){
+  .mini-row,.wrow{display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:12px;row-gap:8px;align-items:start;padding:16px 14px;border:1px solid var(--hair);border-radius:15px;background:var(--bg-elev);min-width:0;}
+  .mini-row + .mini-row,.wrow + .wrow{margin-top:10px;}
+  .mini-row .mr-i,.wrow .wi{grid-column:1;grid-row:1 / span 3;align-self:start;padding-top:3px;font-size:10px;color:var(--accent);}
+  .mini-row .mr-t,.wrow .wt{grid-column:2;grid-row:1;font-size:clamp(16px,4.2vw,19px);line-height:1.35;overflow-wrap:break-word;min-width:0;}
+  .mini-row .mr-desc{grid-column:2;grid-row:2;font-size:clamp(12px,3.4vw,14px);line-height:1.55;color:var(--fg-dim);}
+  .mini-row .mr-go{grid-column:2;grid-row:3;gap:18px;flex-wrap:wrap;font-size:10px;}
+  .wrow .wcat{grid-column:2;grid-row:2;justify-self:start;font-size:10px;letter-spacing:.09em;}
+  .wrow .wdate{grid-column:2;grid-row:3;justify-self:start;text-align:left;min-width:0;font-size:11px;}
+  .wrow:hover .wt,.mini-row:hover .mr-t{transform:none;}
+  .writing-list{border-top:0;}
+  .writing-list .wrow:first-child{margin-top:0;}
+}
 </style>
 </head>
 <body>
