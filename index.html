@@ -887,6 +887,12 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 
 .ic .pixel-icon{width:24px;height:24px;display:block;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.24))}
 .fact .ic .pixel-icon{width:25px;height:25px}
+
+/* Winged halo identity: compact, high-contrast and scalable */
+.mark-badge{width:42px;height:42px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.16)}
+.angel-mark{width:33px;height:33px;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.mark:hover .angel-mark{transform:translateY(-2px) scale(1.08)}
+@media(max-width:480px){.mark-badge{width:38px;height:38px}.angel-mark{width:30px;height:30px}}
 </style>
 </head>
 <body>
@@ -918,7 +924,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 <!-- ============ TOP BAR ============ -->
 <header class="topbar" id="topbar">
   <a class="mark" href="#top" aria-label="Ruchir Ganatra — home">
-    <span class="mark-badge">RG</span>
+    <span class="mark-badge"><svg class="angel-mark" viewBox="0 0 64 64" role="img" aria-label="Winged monogram logo" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M31 24C24 12 14 11 5 9c3 7 8 11 15 15-6-2-12-2-17-1 5 6 12 9 20 10-5 0-9 2-12 4 6 4 13 4 19-1" stroke-width="2.6"/><path d="M33 24C40 12 50 11 59 9c-3 7-8 11-15 15 6-2 12-2 17-1-5 6-12 9-20 10 5 0 9 2 12 4-6 4-13 4-19-1" stroke-width="2.6"/><ellipse cx="32" cy="12" rx="10" ry="3.5" stroke-width="2.4"/><path d="M32 25v19m-8-8 8 8 8-8m-8 8v8" stroke-width="2.8"/></g><path d="M32 52l-3-5h6z" fill="currentColor"/></svg></span>
     <span class="mark-txt"><b>Ruchir Ganatra</b><br><span>Data & Digital Systems Analyst · Ahmedabad</span></span>
   </a>
   <div class="topbar-right">
