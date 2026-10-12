@@ -1,3 +1,5 @@
+> **V2 upgrade:** [feature ledger, usage and validation](V2_RELEASE.md).
+
 # Ruchir Ganatra — portfolio
 
 Data analysis, Python automation and web projects by Ruchir Ganatra, Ahmedabad, India.
