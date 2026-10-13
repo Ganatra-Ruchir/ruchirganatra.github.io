@@ -2236,7 +2236,7 @@ var sig = (function(){
     hero.addEventListener('mouseleave', function(){ mx = -999; my = -999; });
   }
   var running = false;
-  function play(){ if(!running && !RM){ running = true; raf = requestAnimationFrame(frame); } }
+  function play(){ const bounds=c.getBoundingClientRect(); if(!running && !RM && !document.hidden && bounds.bottom>0 && bounds.top<innerHeight){ running = true; raf = requestAnimationFrame(frame); } }
   function pause(){ running = false; if(raf){ cancelAnimationFrame(raf); raf = null; } }
   if(!RM){
     play();
