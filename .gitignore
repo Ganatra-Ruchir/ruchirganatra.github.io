@@ -1,0 +1,8 @@
+
+# Local browser test dependencies and reports
+node_modules/
+playwright-report/
+test-results/
+
+!package.json
+!package-lock.json
