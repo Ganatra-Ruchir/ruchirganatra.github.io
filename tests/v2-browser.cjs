@@ -12,5 +12,6 @@ await p.goto('http://127.0.0.1:'+server.address().port+'/',{waitUntil:'domconten
 
 const other=await context.newPage();await other.goto(p.url());await other.locator('#briefGoal').fill('A different project saved in another tab.');await other.locator('#saveDraft').click();await p.locator('#saveDraft').click();assert.match(await p.locator('#studioStatus').innerText(),/another tab/);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('rg.clientDraft.v1')).goal),'A different project saved in another tab.');await other.close();
 
+assert.doesNotMatch(await p.locator('body').innerText(),/[\u00c2\u00c3]|\u00e2[\u0080-\u00bf\u20ac\u2020\u20ac]/,'UTF-8 labels must render without mojibake');
 assert.deepEqual(errors,[],'Unexpected page errors');await p.setViewportSize({width:390,height:844});await p.waitForTimeout(200);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Mobile horizontal overflow');console.log('V2 workflow, exports, reload behavior and mobile checks passed.');
 }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}})().catch(e=>{console.error(e);process.exitCode=1;});
