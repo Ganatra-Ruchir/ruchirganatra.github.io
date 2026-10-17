@@ -83,7 +83,7 @@ document.head.appendChild(style);
 const progress=document.createElement('div');progress.id='v3-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
 let scheduled=false;
 function onScroll(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform='scaleX('+(max>0?Math.min(1,Math.max(0,scrollY/max)):0)+')';scheduled=false;updateRail()})}
-window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});onScroll();
+window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});
 const destinations=[['Home','home'],['About','about'],['Projects','work'],['Experience','experience'],['Writing','writing'],['Client studio','client-studio'],['Contact','contact']];
 const available=destinations.filter(([,id])=>document.getElementById(id));
 const rail=document.createElement('nav');rail.id='v3-rail';rail.setAttribute('aria-label','Section shortcuts');
@@ -91,7 +91,7 @@ rail.innerHTML=available.map(([title,id])=>'<a class="v3-rail-item" href="#'+id+
 document.body.appendChild(rail);
 const railLinks=Array.from(rail.querySelectorAll('a'));
 function updateRail(){let current=available[0]?.[1];for(const [,id] of available){if(document.getElementById(id).getBoundingClientRect().top<=innerHeight*.48)current=id}railLinks.forEach(a=>a.setAttribute('aria-current',String(a.dataset.v3Section===current)))}
-updateRail();
+updateRail();onScroll();
 const btn=document.createElement('button');btn.id='v3-command-btn';btn.type='button';btn.innerHTML='<span>⌘ Explore</span><kbd>Ctrl K</kbd>';btn.setAttribute('aria-label','Open quick navigation');document.body.appendChild(btn);
 const dialog=document.createElement('dialog');dialog.id='v3-command-dialog';dialog.setAttribute('aria-label','Quick navigation');
 dialog.innerHTML='<div class="v3-command-inner"><div class="v3-command-heading"><span>QUICK NAVIGATION / RG</span><button type="button" id="v3-command-close" aria-label="Close navigation">ESC ✕</button></div><input id="v3-command-search" type="search" placeholder="Jump to a section, find a project…" aria-label="Find portfolio content"><div id="v3-command-results"></div></div>';
@@ -113,10 +113,10 @@ document.querySelectorAll('.studio-card, .studio-intro, .studio-panel').forEach(
 document.querySelectorAll('.studio-panel').forEach(el=>el.classList.add('v3-spotlight'));
 if(fine.matches&&!reduced.matches){
 const glow=document.createElement('div');glow.id='v3-glow';document.body.appendChild(glow);
-let px=-1000,py=-1000,gx=-1000,gy=-1000,active=false;
-document.addEventListener('pointermove',e=>{px=e.clientX-190;py=e.clientY-190;active=true;const target=e.target.closest('.v3-spotlight');if(target){const r=target.getBoundingClientRect();target.style.setProperty('--v3-x',(e.clientX-r.left)+'px');target.style.setProperty('--v3-y',(e.clientY-r.top)+'px')}},{passive:true});
-function animate(){if(!active||document.body.classList.contains('motion-paused'))return;gx+=(px-gx)*.12;gy+=(py-gy)*.12;glow.style.transform='translate3d('+gx+'px,'+gy+'px,0)';requestAnimationFrame(animate)}
-document.addEventListener('pointerenter',()=>{if(!active)requestAnimationFrame(animate)},{once:true});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&active)requestAnimationFrame(animate)});
+let px=-1000,py=-1000,gx=-1000,gy=-1000,active=false,running=false;
+document.addEventListener('pointermove',e=>{px=e.clientX-190;py=e.clientY-190;active=true;if(!running){running=true;requestAnimationFrame(animate)}const target=e.target.closest('.v3-spotlight');if(target){const r=target.getBoundingClientRect();target.style.setProperty('--v3-x',(e.clientX-r.left)+'px');target.style.setProperty('--v3-y',(e.clientY-r.top)+'px')}},{passive:true});
+function animate(){if(!active||document.hidden||document.body.classList.contains('motion-paused')){running=false;return;}gx+=(px-gx)*.12;gy+=(py-gy)*.12;glow.style.transform='translate3d('+gx+'px,'+gy+'px,0)';requestAnimationFrame(animate)}
+
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&active&&!running){running=true;requestAnimationFrame(animate)}});
 }
 })();
