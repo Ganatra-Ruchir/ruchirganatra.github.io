@@ -202,3 +202,43 @@
   .vice-frame--garden{transform:rotate(-13deg)}
   .vice-frame--gallery{transform:rotate(11deg)}
 }
+
+/* Cascade protection: older industrial rules use !important. */
+.vice-hero .hero-meta .pill{
+  color:#fff0f5!important;border-color:rgba(255,231,240,.31)!important;
+  background:rgba(19,28,54,.34)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.19)!important
+}
+.vice-hero .hero-cta .btn{
+  background:rgba(18,28,52,.36)!important;color:#fff8f9!important;
+  border-color:rgba(255,241,243,.6)!important;
+  box-shadow:0 8px 25px rgba(12,13,35,.22),inset 0 1px rgba(255,255,255,.13)!important
+}
+.vice-hero .hero-cta .btn.solid{
+  background:linear-gradient(117deg,#ffbb89,#ff8ab5 55%,#ffc4cf)!important;
+  color:#2b1630!important;border-color:rgba(255,229,196,.65)!important;
+  box-shadow:0 10px 34px rgba(255,108,153,.33),inset 0 1px rgba(255,255,255,.75)!important
+}
+.vice-hero .hero-cta .btn.solid:hover{background:linear-gradient(117deg,#ffd0a0,#ffa6cb)!important}
+.vice-hero .hero-cta .btn:not(.solid):hover{background:rgba(103,49,91,.70)!important}
+#topbar.topbar::after{
+  opacity:.85;background:linear-gradient(90deg,#74dce6 0%,#fd86af 45%,#ffb87c 70%,transparent 100%)!important;
+  height:2px;box-shadow:0 0 10px rgba(249,122,174,.25)
+}
+#about,#toolkit,#trajectory{
+  background-image:radial-gradient(ellipse at 94% 12%,rgba(251,118,174,.065),transparent 42%),
+    radial-gradient(ellipse at 0% 88%,rgba(91,203,223,.064),transparent 44%),
+    repeating-linear-gradient(90deg,transparent 0 119px,rgba(132,166,205,.025) 119px 120px)!important
+}
+#contact.contact{
+  background-image:radial-gradient(ellipse at 94% 0%,rgba(255,128,176,.15),transparent 38%),
+    radial-gradient(ellipse at 4% 88%,rgba(74,190,218,.14),transparent 45%),
+    linear-gradient(135deg,var(--surface-sunken),var(--bg) 55%,var(--surface-raised))!important
+}
+#about .sec-title-wrap::after,#toolkit .sec-title-wrap::after,
+#trajectory .sec-title-wrap::after,#work .sec-title-wrap::after{
+  background:linear-gradient(90deg,#fa84a6,#7ee4eb,transparent);
+  box-shadow:0 0 15px rgba(253,119,178,.27)
+}
+#work .panel{border-color:rgba(198,136,175,.27)}
+#work .panel:hover{box-shadow:0 24px 75px rgba(11,15,29,.32),0 0 22px rgba(246,115,172,.13)}
