@@ -1,4 +1,7 @@
 /* PORTFOLIO EXPERIENCES — BOOK + CERTIFICATE ATELIER */
+/* Clip horizontal overflow without creating a body scroll container.
+   overflow-x:hidden turns overflow-y into auto and breaks the book's sticky stage. */
+body{overflow-x:clip;}
 #work .workbench-intro{padding-top:clamp(26px,4vw,52px);position:relative;}
 #work .workbench-intro .sec-head{margin-bottom:clamp(12px,2.2vw,28px);}
 #work .workbench-intro .sec-title-wrap{position:relative;padding-bottom:12px;}
