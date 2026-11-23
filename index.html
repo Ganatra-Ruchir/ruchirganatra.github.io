@@ -250,15 +250,21 @@ html.anim .char-mask.in .ch{ transform:translateY(0); }
   font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--fg-faint);
 }
 
-/* ---------- 6. CURSOR ---------- */
-.cur, .cur-ring{position:fixed; top:0; left:0; z-index:390; pointer-events:none; border-radius:50%; transform:translate(-50%,-50%);}
-.cur{width:6px; height:6px; background:var(--choco);}
-.cur-ring{
-  width:36px; height:36px; border:1px solid var(--hair-strong);
-  transition:width .22s var(--ease), height .22s var(--ease), background .22s ease, border-color .22s ease;
+/* ---------- 6. CURSOR: precise dot + compact focus ring ---------- */
+.cur, .cur-ring{
+  position:fixed; top:0; left:0; z-index:390; pointer-events:none;
+  border-radius:50%; transform:translate(-50%,-50%); opacity:0;
 }
-.cur-ring.hot{width:74px; height:74px; background:var(--accent-soft); border-color:var(--accent);}
-body.in-work .cur-ring{width:58px; height:58px; border-color:var(--accent);}
+html.cursor-active .cur, html.cursor-active .cur-ring{opacity:1;}
+.cur{width:5px; height:5px; background:var(--accent); box-shadow:0 0 0 1px var(--bg-elev);}
+.cur-ring{
+  width:22px; height:22px; border:1px solid var(--accent);
+  background:transparent;
+  transition:width .2s var(--ease), height .2s var(--ease), opacity .15s ease,
+    background .2s ease, border-color .2s ease;
+}
+.cur-ring.hot{width:34px; height:34px; background:var(--accent-soft); border-color:var(--accent);}
+body.in-work .cur-ring:not(.hot){width:26px; height:26px; border-color:var(--accent);}
 body.dragging{cursor:grabbing;}
 body.dragging .panel{transition:none;}
 .work.horiz .work-pin{cursor:grab;}
@@ -1041,16 +1047,33 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 #work > .shell { padding-top:clamp(22px,3vw,40px) !important; }
 #work .work-head { margin-bottom:clamp(12px,2vw,24px); }
 #work .work-pin { margin-top:0; }
-/* The pinned gallery must fit its cards, not reserve a full viewport of blank space.
-   ScrollTrigger still pins the actual gallery while horizontal panels advance. */
+/* The horizontal gallery uses a full viewport pin so project cards are vertically
+   balanced instead of sitting at the top above a large empty area. */
 #work.horiz .work-pin {
-  height:auto;
+  height:100svh;
   min-height:0;
-  align-items:stretch;
-  padding-block:clamp(8px,1.2vw,16px);
+  align-items:center;
+  padding-block:clamp(68px,9vh,104px);
+  box-sizing:border-box;
 }
-#work.horiz .work-track { align-items:stretch; }
-#work.horiz .panel { min-height:min(600px,72svh); }
+#work.horiz .work-track { align-items:center; }
+#work.horiz .panel {
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  align-items:center;
+  gap:clamp(26px,3vw,46px);
+  min-height:min(500px,68svh);
+  max-height:calc(100svh - 116px);
+  padding:clamp(22px,2.5vw,36px);
+}
+#work.horiz .panel-copy{min-width:0; max-width:100%; justify-content:center;}
+#work.horiz .win{width:100%; min-width:0; max-width:100%; justify-self:center;}
+@media (min-width:1024px) and (max-height:650px){
+  #work.horiz .work-pin{padding-block:48px;}
+  #work.horiz .panel{min-height:0; max-height:calc(100svh - 90px); padding:22px;}
+  #work.horiz .panel-copy{gap:9px;}
+  #work.horiz .panel .txt{font-size:13.5px; line-height:1.45;}
+  #work.horiz .chip{padding:4px 8px;}
+}
 #work .work-nav { margin-top:clamp(14px,2vw,24px); }
 #work [style*="margin-top:clamp(50px,8vh,110px)"] { margin-top:clamp(20px,3vw,36px) !important; }
 @media (max-width:700px) {
@@ -2378,11 +2401,8 @@ function initWork(){
           start:'right 68%', end:'right left', scrub:0.6 }
       });
 
-      /* inner parallax: the preview window and the ghost numeral drift at their own rates */
-      if(win) G.fromTo(win, { xPercent:7 }, {
-        xPercent:-7, ease:'none',
-        scrollTrigger:{ trigger:panel, containerAnimation:travel, start:'left right', end:'right left', scrub:true }
-      });
+      /* Keep previews squarely inside the card; only the background numeral drifts.
+         Horizontal preview parallax previously clipped the right-hand window. */
       if(ghost) G.fromTo(ghost, { xPercent:22, yPercent:6 }, {
         xPercent:-22, yPercent:-6, ease:'none',
         scrollTrigger:{ trigger:panel, containerAnimation:travel, start:'left right', end:'right left', scrub:true }
@@ -2656,13 +2676,19 @@ var Previews = (function(){
    ========================================================== */
 (function(){
   if(!CAN_HOVER || RM) return;
-  document.documentElement.classList.add('cursor-none');
   var dot = $('#cur'), ring = $('#curRing');
+  if(!dot || !ring) return;
+  document.documentElement.classList.add('cursor-none');
   var dx=0, dy=0, rx=0, ry=0;
   document.addEventListener('mousemove', function(e){
     dx = e.clientX; dy = e.clientY;
+    document.documentElement.classList.add('cursor-active');
     dot.style.transform = 'translate('+dx+'px,'+dy+'px) translate(-50%,-50%)';
     curKick();
+  });
+  document.addEventListener('mouseleave', function(){
+    document.documentElement.classList.remove('cursor-active');
+    ring.classList.remove('hot');
   });
   var curRaf = null;
   function curLoop(){
