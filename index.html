@@ -1311,6 +1311,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 <link rel="stylesheet" href="portfolio-metallic-shelf.css">
 <link rel="stylesheet" href="industrial-iron.css">
 <link rel="stylesheet" href="portfolio-industrial.css">
+<link rel="stylesheet" href="vice-cinematic.css">
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
@@ -1401,7 +1402,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 <main id="top">
 
 <!-- ============ HERO ============ -->
-<section class="hero" id="hero">
+<section class="hero vice-hero" id="hero">
   <canvas id="signal" aria-hidden="true"></canvas>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="shell">
@@ -1426,6 +1427,28 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <a class="btn solid" href="#work" data-mag><span class="t">See the work</span><span class="ar">↗</span></a>
         <a class="btn" href="#contact" data-mag><span class="t">Get in touch</span></a>
       </div>
+    </div>
+
+    <!-- Three personal portraits in an original cinematic, textured 3D composition -->
+    <div class="vice-scene" aria-label="Three portraits of Ruchir Ganatra in a cinematic layered presentation">
+      <span class="vice-orbit" aria-hidden="true"></span>
+      <figure class="vice-frame vice-frame--garden">
+        <img src="assets/portrait-garden.jpg" alt="Ruchir seated outdoors in a white shirt with leafy trees behind him" width="1229" height="1536" loading="lazy" decoding="async">
+        <figcaption>02 // Outdoors</figcaption>
+      </figure>
+      <figure class="vice-frame vice-frame--main">
+        <img src="assets/portrait-city.jpg" alt="Ruchir wearing glasses and a white shirt under warm lantern light" width="1300" height="1536" fetchpriority="high" decoding="async">
+        <figcaption>01 // The portrait</figcaption>
+      </figure>
+      <figure class="vice-frame vice-frame--gallery">
+        <img src="assets/portrait-gallery.jpg" alt="Ruchir in a beige kurta visiting a sculpture gallery" width="1152" height="1536" loading="lazy" decoding="async">
+        <figcaption>03 // Gallery</figcaption>
+      </figure>
+      <span class="vice-light-streak" aria-hidden="true"></span>
+      <span class="vice-serial" aria-hidden="true">RG // 2026</span>
+      <span class="vice-signature" aria-hidden="true">Ruchir Ganatra<small>Data · Design · Digital</small></span>
+      <span class="vice-spark vice-spark--a" aria-hidden="true"></span>
+      <span class="vice-spark vice-spark--b" aria-hidden="true"></span>
     </div>
   </div>
   <div class="scroll-cue"><span>Scroll</span><span class="cue-track"><i></i></span></div>
@@ -1461,7 +1484,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       <div class="about-sticky">
         <div class="idcard" data-rv="fade">
           <div class="idcard-photo" id="photoWrap">
-            <img src="ruchir-ganatra.png" alt="Ruchir Ganatra" onerror="this.style.display='none';document.getElementById('photoWrap').classList.add('noimg');">
+            <img src="assets/portrait-city.jpg" alt="Ruchir Ganatra, wearing glasses and a white shirt" loading="lazy" decoding="async" onerror="this.style.display='none';document.getElementById('photoWrap').classList.add('noimg');">
             <span class="initials">RG</span>
             <span class="scan"></span>
             <span class="frame-c fc-tl"></span><span class="frame-c fc-tr"></span><span class="frame-c fc-bl"></span><span class="frame-c fc-br"></span>
@@ -3182,5 +3205,6 @@ setTimeout(function(){
 <script src="portfolio-experiences.js" defer></script>
 <script src="industrial-accents.js" defer></script>
 <script src="portfolio-industrial.js" defer></script>
+<script src="vice-cinematic.js" defer></script>
 </body>
 </html>
