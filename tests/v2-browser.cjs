@@ -29,6 +29,31 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#workProg').count(),0,'Redundant project progress strip is removed');
   assert.equal(await p.locator('#miniList .mini-row').count(),11,'Original workbench source is preserved');
   assert.equal(await p.locator('#workbenchStory.wb-ready').count(),1,'Scroll-driven book is ready');
+  await p.evaluate(() => {
+    const story=document.querySelector('#workbenchStory');
+    window.scrollTo({top:scrollY+story.getBoundingClientRect().top+story.offsetHeight*.35,behavior:'instant'});
+  });
+  await p.waitForTimeout(350);
+  const bookBefore=await p.evaluate(() => ({
+    scrollY:window.scrollY,
+    position:document.querySelector('.wb-sticky').getBoundingClientRect().top,
+    chapter:document.querySelector('#wbCount').textContent
+  }));
+  assert.ok(bookBefore.position>=75&&bookBefore.position<=140,'Workbench stays pinned and visible while scrolling');
+  await p.locator('#wbNext').click();
+  await p.waitForTimeout(250);
+  const bookAfter=await p.evaluate(() => ({
+    scrollY:window.scrollY,
+    position:document.querySelector('.wb-sticky').getBoundingClientRect().top,
+    chapter:document.querySelector('#wbCount').textContent
+  }));
+  assert.notEqual(bookAfter.chapter,bookBefore.chapter,'Next arrow changes chapter');
+  assert.ok(Math.abs(bookAfter.scrollY-bookBefore.scrollY)<2,'Flipping a page must not scroll the document');
+  assert.ok(Math.abs(bookAfter.position-bookBefore.position)<2,'Book position stays fixed after a page turn');
+  await p.locator('#wbPrev').click();
+  await p.waitForTimeout(200);
+  assert.equal(await p.locator('#wbCount').textContent(),bookBefore.chapter,'Previous arrow restores chapter');
+  assert.ok(Math.abs(await p.evaluate(()=>window.scrollY)-bookBefore.scrollY)<2,'Previous page does not scroll the document');
   assert.equal(await p.locator('#certificateShelf .cw-sleeve').count(),10,'All imported credentials are available');
   await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
   await p.locator('#certificateShelf .cw-sleeve').first().click();
