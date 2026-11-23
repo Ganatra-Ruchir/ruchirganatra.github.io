@@ -8,105 +8,69 @@ function all(s,root){return Array.from((root||doc).querySelectorAll(s));}
 function canAnimate(){return !reduce.matches&&!doc.body.classList.contains('motion-paused');}
 function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0');}
 
-/* A closed book becomes an open archive as the visitor scrolls down.
-   Normal vertical scrolling is never intercepted or disabled. */
-(function initWorkbenchBook(){
-var story=$('#workbenchStory'),source=$('#miniList'),book=$('#wbBook'),contents=$('#wbContent'),turner=$('#wbTurner');
-var counter=$('#wbCount'),prev=$('#wbPrev'),next=$('#wbNext'),cover=$('#wbCover');
-if(!story||!source||!book||!contents)return;
-var items=all('.mini-row',source).filter(function(row){
- var title=$('.mr-t',row);return title&&title.textContent.trim()!=='Live from GitHub';
-}).map(function(row){
- return {
-  title:$('.mr-t',row).textContent.trim(),
-  desc:$('.mr-desc',row)?.textContent.trim()||'',
-  links:all('.mr-go a',row).map(function(a){return{href:a.href,label:a.textContent.trim(),target:a.target||'_blank'};})
- };
+/* Published articles live in a page-turning book beside the wardrobe.
+   Smaller builds remain a normal, accessible workbench list. */
+(function initArticleBook(){
+var root=$('#articleBook'),cover=$('#articleCover'),page=$('#articlePage');
+var source=$('#writingList'),turner=$('#articleTurner');
+var prev=$('#articlePrev'),next=$('#articleNext'),counter=$('#articleCount');
+if(!root||!cover||!page||!source)return;
+var items=all('.wrow',source).map(function(row){
+ var text=function(selector){var el=$(selector,row);return el?el.textContent.trim():'';};
+ return {title:text('.wt'),category:text('.wcat'),date:text('.wdate'),
+  desc:row.getAttribute('data-peek')||'',href:row.href};
 });
 if(!items.length)return;
-var state=0,raf=0,manualOffset=0;
-var total=items.length;
-function render(index){
- var item=items[index],num=String(index+1).padStart(2,'0');
- contents.replaceChildren();
- var kicker=doc.createElement('div');kicker.className='wb-page-num';kicker.textContent='CHAPTER '+num+' · '+String(total).padStart(2,'0');
+var index=-1;
+function render(){
+ var item=items[index],number=String(index+1).padStart(2,'0');
+ var kicker=doc.createElement('div');kicker.className='wb-page-num';
+ kicker.textContent='ARTICLE '+number+' / '+String(items.length).padStart(2,'0');
+ var category=doc.createElement('div');category.className='ab-category';
+ category.textContent=item.category+' · '+item.date;
  var title=doc.createElement('h4');title.className='wb-page-title';title.textContent=item.title;
  var desc=doc.createElement('p');desc.className='wb-page-desc';desc.textContent=item.desc;
- var links=doc.createElement('div');links.className='wb-page-links';
- item.links.forEach(function(entry){
-  var a=doc.createElement('a');a.href=entry.href;a.target='_blank';a.rel='noopener noreferrer';
-  a.textContent=entry.label.replace('↗','').trim()+' ↗';
-  links.appendChild(a);
- });
- var group=doc.createElement('div');group.append(kicker,title,desc,links);
- var meta=doc.createElement('div');meta.className='wb-page-meta';
- meta.innerHTML='<span>R. GANATRA / THE WORKBENCH</span><span>ARCHIVE '+num+'</span>';
- contents.append(group,meta);
+ var link=doc.createElement('a');link.href=item.href;link.target='_blank';
+ link.rel='noopener noreferrer';link.textContent='Read article ↗';
+ var links=doc.createElement('div');links.className='wb-page-links';links.appendChild(link);
+ var group=doc.createElement('div');group.append(kicker,category,title,desc,links);
+ var foot=doc.createElement('div');foot.className='wb-page-meta';
+ foot.append('R. GANATRA / MEDIUM','PUBLISHED '+item.date.toUpperCase());
+ page.replaceChildren(group,foot);
 }
-function apply(step){
- step=Math.max(0,Math.min(total,step));
- if(step===state)return;
- var previous=state;
- state=step;
- if(step>0){
-  render(step-1);
-  book.classList.add('is-open');
-  cover.setAttribute('aria-hidden','true');
-  if(previous>0&&canAnimate()){
-   turner.classList.remove('is-turning');void turner.offsetWidth;
+function setIndex(n){
+ n=Math.max(-1,Math.min(items.length-1,n));
+ if(n===index)return;
+ var wasOpen=index>=0;
+ index=n;
+ root.classList.toggle('is-open',n>=0);
+ cover.setAttribute('aria-hidden',String(n>=0));
+ cover.tabIndex=n>=0?-1:0;
+ if(n>=0){
+  render();
+  if(wasOpen&&canAnimate()&&turner){
+   turner.classList.remove('is-turning');
+   void turner.offsetWidth;
    turner.classList.add('is-turning');
   }
- } else {
-  book.classList.remove('is-open');cover.setAttribute('aria-hidden','false');
  }
- if(counter)counter.textContent=step===0?'COVER / '+numbered(0,total):'PAGE '+numbered(step,total);
- if(prev)prev.disabled=step===0;
- if(next)next.disabled=step===total;
+ counter.textContent=n<0?'COVER / '+numbered(0,items.length):'PAGE '+numbered(n+1,items.length);
+ prev.disabled=n<0;
+ next.disabled=n===items.length-1;
 }
-function setSize(){
- /* Long enough to show each turning chapter, but without any scroll lock. */
- var unit=Math.max(270,Math.min(440,window.innerHeight*.43));
- story.style.height=Math.ceil((total+1)*unit+window.innerHeight*.55)+'px';
-}
-function scrollChapter(){
- var rect=story.getBoundingClientRect(),vh=window.innerHeight;
- var start=window.scrollY+rect.top,travel=Math.max(1,story.offsetHeight-vh);
- var progress=Math.max(0,Math.min(1,(window.scrollY-start+vh*.12)/travel));
- return Math.max(0,Math.min(total,Math.floor(progress*(total+1))));
-}
-function updateFromScroll(){
- raf=0;
- var rect=story.getBoundingClientRect(),vh=window.innerHeight;
- if(rect.top>vh*1.1||rect.bottom < -vh*.2){
-  /* Returning to the book restores its normal scroll-based chapter position. */
-  manualOffset=0;
-  return;
- }
- apply(Math.max(0,Math.min(total,scrollChapter()+manualOffset)));
-}
-function kick(){if(!raf)raf=requestAnimationFrame(updateFromScroll);}
-function jump(step){
- /* Page arrows and keyboard navigation turn ONLY the book page.
-    Do not scroll the document or shift the sticky book out of view. */
- step=Math.max(0,Math.min(total,step));
- manualOffset=step-scrollChapter();
- apply(step);
-}
-prev?.addEventListener('click',function(){jump(state-1);});
-next?.addEventListener('click',function(){jump(state+1);});
-var view=story;
-view.addEventListener('keydown',function(e){
- if(e.target.closest('a,button,input,textarea,select'))return;
- if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();jump(state+1);}
- if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();jump(state-1);}
+cover.addEventListener('click',function(){setIndex(0);});
+prev.addEventListener('click',function(){setIndex(index-1);});
+next.addEventListener('click',function(){setIndex(index+1);});
+root.addEventListener('keydown',function(e){
+ if(e.target.closest('a')||e.altKey||e.ctrlKey||e.metaKey)return;
+ if(e.key==='ArrowRight'&&index<items.length-1){e.preventDefault();setIndex(index+1);}
+ if(e.key==='ArrowLeft'&&index>=0){e.preventDefault();setIndex(index-1);}
 });
-setSize();render(0);state=-1;apply(0);
-story.classList.add('wb-ready');
-window.addEventListener('scroll',kick,{passive:true});
-window.addEventListener('resize',function(){setSize();kick();},{passive:true});
-kick();
+setIndex(0);setIndex(-1);
+root.classList.add('ab-ready');
+source.classList.add('ab-hidden');
 })();
-
+ 
 /* The certificate wardrobe contains first-party, same-origin previews derived
    from the user's own verified Drive certificate files. Drive sharing is unchanged. */
 (function initCertificateWardrobe(){
