@@ -75,9 +75,9 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#cwFeaturedOpen').isEnabled(),true,'Certificate controls unlock only after opening');
   assert.equal(await p.locator('#cwFeaturedImage').evaluate(el=>el.complete&&el.naturalWidth>0),true,'True certificate image loads');
   await p.locator('#cwShelfNext').click();
-  assert.match(await p.locator('#cwFeaturedTitle').innerText(),/Ads Measurement/,'Shelf navigation chooses next certificate');
+  assert.match(await p.locator('#cwFeaturedTitle').innerText(),/Ads Measurement/i,'Shelf navigation chooses next certificate');
   await p.locator('#certificateShelf .cw-sleeve').nth(6).click();
-  assert.match(await p.locator('#cwFeaturedTitle').innerText(),/Data Visualization/,'Choosing a sleeve displays its full-sized image');
+  assert.match(await p.locator('#cwFeaturedTitle').innerText(),/Data Visualization/i,'Choosing a sleeve displays its full-sized image');
   await p.locator('#cwFeaturedOpen').click();
   assert.equal(await p.locator('#certificateViewer').evaluate(el=>el.open),true,'Large preview opens from selected certificate');
   await p.locator('#cwViewerPreview img').waitFor({state:'visible',timeout:10000});
