@@ -8,102 +8,110 @@ function all(s,root){return Array.from((root||doc).querySelectorAll(s));}
 function canAnimate(){return !reduce.matches&&!doc.body.classList.contains('motion-paused');}
 function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0');}
 
-/* One article per two-page spread: image/title on the left, description on the right.
-   Projects remain in the separate Workbench listing. */
-(function initArticleBook(){
-var root=$('#articleBook'),cover=$('#articleCover'),
- left=$('#articlePageLeft'),right=$('#articlePageRight'),source=$('#writingList'),
- turner=$('#articleTurner'),prev=$('#articlePrev'),next=$('#articleNext'),counter=$('#articleCount');
-if(!root||!cover||!left||!right||!source||!prev||!next||!counter)return;
-var items=all('.wrow',source).map(function(row){
- var text=function(selector){var el=$(selector,row);return el?el.textContent.trim():'';};
- return {
-  title:text('.wt'),category:text('.wcat'),date:text('.wdate'),
-  desc:row.getAttribute('data-description')||row.getAttribute('data-peek')||'',
-  hook:row.getAttribute('data-hook')||'',
-  image:row.getAttribute('data-image')||'',
-  alt:row.getAttribute('data-image-alt')||'Article illustration',
-  href:row.href
- };
-});
-if(!items.length)return;
-var index=-1;
-function element(tag,className,content){
- var node=doc.createElement(tag);
- if(className)node.className=className;
- if(content!==undefined)node.textContent=content;
- return node;
-}
-function render(){
- var item=items[index],number=String(index+1).padStart(2,'0');
- var kicker=element('span','wb-page-num','ARTICLE '+number+' / '+String(items.length).padStart(2,'0'));
- var pic=element('div','ab-picture');
- var img=element('img','ab-article-image');
- img.src=item.image;img.alt=item.alt;img.loading='eager';img.decoding='async';
- img.addEventListener('error',function(){
-  pic.classList.add('is-fallback');
-  img.remove();
-  pic.appendChild(element('span','ab-image-missing','ART / '+item.category));
- },{once:true});
- pic.appendChild(img);
- var title=element('h4','ab-article-title',item.title);
- var meta=element('div','ab-page-footer','R. GANATRA  ·  '+item.date);
- left.replaceChildren(kicker,pic,title,meta);
- var header=element('div','ab-right-header');
- header.append(element('span','ab-category',item.category),element('span','ab-page-date',item.date));
- var hook=element('h5','ab-article-hook',item.hook);
- var sectionLabel=element('span','ab-story-label','THE STORY');
- var sentences=item.desc.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[item.desc];
- var lead=element('p','ab-reading-lead',(sentences[0]||'').trim());
- var paragraphs=element('div','ab-reading-paragraphs');
- if(sentences.length>1){
-  var second=element('p','ab-article-summary',sentences.slice(1).join(' ').trim());
-  paragraphs.appendChild(second);
+/* DVD-inspired article collection: actual published stories from #writingList.
+   Each case is keyboard-accessible and opens a native, focus-trapped reader. */
+(function initArticleShelf(){
+ var rack=$('#dvdRack'),source=$('#writingList'),reader=$('#articleReader');
+ if(!rack||!source||!reader)return;
+ var image=$('#articleReaderImage'),fallback=$('#articleArtFallback'),
+  number=$('#articleReaderNumber'),count=$('#articleReaderCount'),
+  heading=$('#articleReaderTitle'),category=$('#articleReaderCategory'),
+  date=$('#articleReaderDate'),hook=$('#articleReaderHook'),
+  lead=$('#articleReaderLead'),description=$('#articleReaderDescription'),
+  link=$('#articleReaderLink'),previous=$('#articleReaderPrev'),
+  next=$('#articleReaderNext'),close=$('#articleReaderClose');
+ var items=all('.wrow',source).map(function(row){
+  function txt(selector){var el=$(selector,row);return el?el.textContent.trim():'';}
+  return {title:txt('.wt'),category:txt('.wcat'),date:txt('.wdate'),
+   desc:row.getAttribute('data-description')||row.getAttribute('data-peek')||'',
+   hook:row.getAttribute('data-hook')||'',image:row.getAttribute('data-image')||'',
+   alt:row.getAttribute('data-image-alt')||'',href:row.href};
+ });
+ if(!items.length)return;
+ var active=-1,lastCase=null;
+ var tones=['ochre','plum','sage','clay','midnight','teal'];
+ function node(tag,klass,txt){
+  var el=doc.createElement(tag);
+  if(klass)el.className=klass;
+  if(txt!==undefined)el.textContent=txt;
+  return el;
  }
- var source=element('p','ab-reading-source','Read the complete published story on Medium.');
- var link=element('a','ab-read-link','Continue to full article ↗');
- link.href=item.href;link.target='_blank';link.rel='noopener noreferrer';
- var body=element('div','ab-right-body');
- var reading=element('div','ab-reading-text');
- reading.append(sectionLabel,lead,paragraphs,source);
- body.append(header,hook,reading,link);
- var foot=element('div','ab-page-footer','ORIGINAL WRITING  ·  RUCHIR GANATRA');
- right.replaceChildren(body,foot);
- right.scrollTop=0;
-}
-function setIndex(n){
- n=Math.max(-1,Math.min(items.length-1,n));
- if(n===index)return;
- var wasOpen=index>=0;
- index=n;
- root.classList.toggle('is-open',n>=0);
- cover.setAttribute('aria-hidden',String(n>=0));
- cover.tabIndex=n>=0?-1:0;
- if(n>=0){
-  render();
-  if(wasOpen&&canAnimate()&&turner){
-   turner.classList.remove('is-turning');
-   void turner.offsetWidth;
-   turner.classList.add('is-turning');
+ items.forEach(function(item,i){
+  var button=node('button','dvd-case');
+  button.type='button';button.dataset.articleIndex=String(i);
+  button.setAttribute('aria-label','Pull out article '+(i+1)+': '+item.title);
+  button.setAttribute('aria-haspopup','dialog');
+  button.style.setProperty('--dvd-position',String(i));
+  button.classList.add('dvd-'+tones[i%tones.length]);
+  var edge=node('span','dvd-case-edge');
+  var serial=node('span','dvd-case-serial',String(i+1).padStart(2,'0')+' / 06');
+  var title=node('strong','dvd-case-title',item.title);
+  var footer=node('span','dvd-case-category',item.category);
+  edge.append(serial,title,footer);
+  var art=node('span','dvd-case-art');
+  if(item.image){
+   var img=doc.createElement('img');
+   img.src=item.image;img.alt='';img.loading='lazy';img.decoding='async';
+   img.onerror=function(){img.remove();art.classList.add('no-banner');};
+   art.appendChild(img);
   }
+  button.append(edge,art);
+  button.addEventListener('click',function(){
+   lastCase=button;
+   openArticle(i);
+  });
+  rack.appendChild(button);
+ });
+ function render(index){
+  active=(index+items.length)%items.length;
+  var item=items[active],num=String(active+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0');
+  heading.textContent=item.title;
+  category.textContent=item.category;
+  date.textContent=item.date;
+  hook.textContent=item.hook||item.category;
+  number.textContent=count.textContent=num;
+  var segments=item.desc.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[item.desc];
+  lead.textContent=(segments[0]||'').trim();
+  description.textContent=segments.slice(1).join(' ').trim();
+  description.hidden=!description.textContent;
+  link.href=item.href;
+  link.setAttribute('aria-label','Read the full original Medium article: '+item.title);
+  var src=item.image;
+  fallback.hidden=!!src;
+  image.hidden=!src;
+  if(src){
+   image.alt=item.alt||item.title+' article cover image';
+   image.onload=function(){fallback.hidden=true;};
+   image.onerror=function(){image.hidden=true;fallback.hidden=false;};
+   image.src=src;
+  }else image.removeAttribute('src');
+  all('.dvd-case',rack).forEach(function(b,i){
+   b.classList.toggle('is-selected',i===active);
+   b.setAttribute('aria-pressed',String(i===active));
+  });
  }
- counter.textContent=n<0?'COVER / '+numbered(0,items.length):'SPREAD '+numbered(n+1,items.length);
- prev.disabled=n<0;
- next.disabled=n===items.length-1;
-}
-cover.addEventListener('click',function(){setIndex(0);});
-prev.addEventListener('click',function(){setIndex(index-1);});
-next.addEventListener('click',function(){setIndex(index+1);});
-root.addEventListener('keydown',function(e){
- if(e.target.closest('a')||e.altKey||e.ctrlKey||e.metaKey)return;
- if(e.key==='ArrowRight'&&index<items.length-1){e.preventDefault();setIndex(index+1);}
- if(e.key==='ArrowLeft'&&index>=0){e.preventDefault();setIndex(index-1);}
-});
-setIndex(0);setIndex(-1);
-root.classList.add('ab-ready');
-source.classList.add('ab-hidden');
+ function openArticle(i){
+  render(i);
+  if(!reader.open)reader.showModal();
+ }
+ function navigate(d){render(active+d);}
+ previous.addEventListener('click',function(){navigate(-1);});
+ next.addEventListener('click',function(){navigate(1);});
+ close.addEventListener('click',function(){reader.close();});
+ reader.addEventListener('keydown',function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='ArrowRight'){e.preventDefault();navigate(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();navigate(-1);}
+ });
+ reader.addEventListener('click',function(e){if(e.target===reader)reader.close();});
+ reader.addEventListener('close',function(){
+  all('.dvd-case',rack).forEach(function(b){b.classList.remove('is-selected');b.setAttribute('aria-pressed','false');});
+  if(lastCase)lastCase.focus({preventScroll:true});
+ });
+ source.classList.add('ab-hidden');
+ rack.classList.add('dvd-ready');
 })();
- 
+
 /* The certificate wardrobe contains first-party, same-origin previews derived
    from the user's own verified Drive certificate files. Drive sharing is unchanged. */
 (function initCertificateWardrobe(){
@@ -126,6 +134,20 @@ var certificates=[
  {title:'Python',short:'Python',issuer:'Kaggle',date:'Feb 2026',path:'certificates/kaggle-python.pdf',type:'pdf'},
  {title:'AI Tools and ChatGPT Workshop',short:'AI Tools & ChatGPT',issuer:'be10X',date:'Jan 2026',path:'certificates/be10x-ai.pdf',type:'pdf'},
  {title:'Generative AI Essentials Badge',short:'Generative AI Badge',issuer:'IBM SkillsBuild',date:'2026',path:'certificates/ibm-genai-badge.pdf',type:'pdf'}
+];
+/* Skill and value statements describe what each credential represents;
+   they do not invent work history or claim demonstrated mastery. */
+var credentialStories=[
+ ['Understanding the people behind the numbers.','Analytics matters when behavior becomes a better decision—not simply another chart.'],
+ ['Measure results, not just activity.','The useful question is whether a campaign created value. Clear measurement keeps attention on outcomes.'],
+ ['Building AI with judgment.','Learning the foundations matters because useful systems must also be explainable, responsible and practical.'],
+ ['Thinking beyond the code.','Reliable software depends on infrastructure and thoughtful systems design, not just what happens on screen.'],
+ ['Turning language models into useful tools.','The exciting part is not a clever response; it is helping someone reach an answer they can verify.'],
+ ['Question the data before the result.','Good analysis earns trust through clean inputs, honest methods and decisions that make sense.'],
+ ['Make complex stories understandable.','A strong chart should invite questions and reveal what matters—even for someone who never writes SQL.'],
+ ['Small scripts. Real leverage.','Python is a foundation for saving repetitive effort and making everyday workflows more dependable.'],
+ ['Curiosity, applied with care.','New tools are worth learning when they solve actual problems, not simply because they are new.'],
+ ['Learning keeps moving forward.','A credential marks progress, but its real value comes from what gets built and improved afterwards.']
 ];
 var index=0,activeToken=0,lastButton=null;
 function previewPath(c){return 'certificates/previews/'+c.path.split('/').pop().replace(/\.(?:pdf|png)$/i,'.webp');}
@@ -188,6 +210,14 @@ function renderFeatured(){
  featureTitle.textContent=c.title;
  featureIssuer.textContent=c.issuer+' · '+numbered(index+1,certificates.length);
  featureBtn.setAttribute('aria-label','Open full-size certificate: '+c.title);
+ var story=credentialStories[index];
+ var storyNumber=$('#cwStoryNumber'),storyDate=$('#cwStoryDate'),
+ storyTakeaway=$('#cwStoryTakeaway'),storyValue=$('#cwStoryValue'),storyCounter=$('#cwStoryCounter');
+ if(storyNumber)storyNumber.textContent='CREDENTIAL '+numbered(index+1,certificates.length);
+ if(storyDate)storyDate.textContent=c.date.toUpperCase();
+ if(storyTakeaway)storyTakeaway.textContent=story[0];
+ if(storyValue)storyValue.textContent=story[1];
+ if(storyCounter)storyCounter.textContent=numbered(index+1,certificates.length);
  all('.cw-sleeve',shelf).forEach(function(b,i){b.setAttribute('aria-pressed',String(i===index));});
 }
 function selectCertificate(i){
