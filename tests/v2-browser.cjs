@@ -54,6 +54,9 @@ const server=http.createServer((req,res)=>{
   assert.ok(twoPageLayout.left.right<=twoPageLayout.right.left+3,'Left page sits beside the right page');
   assert.ok(twoPageLayout.left.width>100&&twoPageLayout.right.width>100,'Both article pages are visible');
   assert.equal(await p.locator('#certificateShelf .cw-sleeve').count(),10,'All imported credentials are available');
+  if(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open'))){
+    await p.locator('#cabinetToggle').click();
+  }
   assert.equal(await p.locator('#cwCabinetContent').evaluate(el=>el.inert),true,'Closed wardrobe is inert');
   assert.equal(await p.locator('#cwFeaturedOpen').isDisabled(),true,'Closed wardrobe prevents certificate access');
   const panelSizes=await p.evaluate(()=>{
@@ -67,8 +70,9 @@ const server=http.createServer((req,res)=>{
   assert.ok(Math.abs(panelSizes.paper-490)<3,'Article book retains original 490px paper');
   assert.equal(panelSizes.landscape,true,'Wardrobe is a horizontal rectangle');
   await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
+  await p.locator('#cabinetToggle').click();
   await p.waitForTimeout(450);
-  assert.equal(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open')),true,'Wardrobe opens on approach');
+  assert.equal(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open')),true,'Wardrobe reopens only when requested');
   assert.equal(await p.locator('#cwFeaturedOpen').isEnabled(),true,'Certificate controls unlock only after opening');
   assert.equal(await p.locator('#cwFeaturedImage').evaluate(el=>el.complete&&el.naturalWidth>0),true,'True certificate image loads');
   await p.locator('#cwShelfNext').click();
