@@ -91,6 +91,8 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   link.href=item.href;
   link.setAttribute('aria-label','Read the full original Medium article: '+item.title);
   var src=item.image;
+  /* No invented cover: use the real post's short title when Medium has no banner. */
+  fallback.textContent=item.spine||item.title;
   fallback.hidden=!!src;
   image.hidden=!src;
   if(src){
