@@ -28,8 +28,8 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#workNav').count(),0,'Redundant project navigation strip is removed');
   assert.equal(await p.locator('#workProg').count(),0,'Redundant project progress strip is removed');
   assert.equal(await p.locator('#miniList .mini-row').count(),11,'Original workbench source is preserved');
-  assert.equal(await p.locator('#writingList .wrow').count(),6,'Six original article links are retained');
-  assert.equal(await p.locator('#dvdRack .dvd-case').count(),6,'All six game cases rendered');
+  assert.equal(await p.locator('#writingList .wrow').count(),12,'Twelve verified Medium article links are retained');
+  assert.equal(await p.locator('#dvdRack .dvd-case').count(),12,'All twelve metallic cases render');
   const shelf=await p.evaluate(()=>{
     const rect=e=>e.getBoundingClientRect();
     const left=rect(document.querySelector('.dvd-filled-bay'));
@@ -38,19 +38,30 @@ const server=http.createServer((req,res)=>{
       cases:[...document.querySelectorAll('#dvdRack .dvd-case')].map(rect)};
   });
   assert.equal(shelf.emptyChildren,0,'Right shelf reserved and empty');
+  const allMedium=await p.locator('#writingList .wrow').evaluateAll(rows=>({
+    links:rows.map(r=>r.href),
+    titles:rows.map(r=>r.querySelector('.wt')?.textContent?.trim()),
+    caseTitles:[...document.querySelectorAll('#dvdRack .dvd-case-title')].map(n=>n.textContent)
+  }));
+  assert.equal(new Set(allMedium.links).size,12,'No duplicate Medium articles');
+  assert.ok(allMedium.links.every(x=>x.startsWith('https://ruchirganatra.medium.com/')),'Article shelf contains only verified Medium posts');
+  assert.equal(allMedium.caseTitles.length,12,'Every article has its own DVD spine');
+  const metallic=await p.locator('.dvd-cabinet').evaluate(el=>getComputedStyle(el).backgroundImage);
+  assert.match(metallic,/linear-gradient/,'Metallic brushed shelf finish is active');
+
   assert.ok(shelf.left.right<=shelf.right.left+11,'Filled bay is on the left');
-  assert.ok(shelf.cases.every(r=>r.left>=shelf.left.left-2&&r.right<=shelf.left.right+2),'All six articles remain visible inside left compartment');
-  assert.match(await p.locator('#dvdRack .dvd-case-title').nth(1).innerText(),/Static Dashboard/,'Readable DVD spine title');
+  assert.ok(shelf.cases.every(r=>r.left>=shelf.left.left-2&&r.right<=shelf.left.right+2),'All twelve articles stay inside the left compartment');
+  assert.match(await p.locator('#dvdRack .dvd-case-title').nth(1).innerText(),/Classrooms/,'Readable metallic case title');
   await p.locator('#dvdRack .dvd-case').first().click();
   assert.equal(await p.locator('#articleReader').evaluate(d=>d.open),true,'Selecting a case opens the article viewer');
-  assert.match(await p.locator('#articleReaderTitle').innerText(),/Classrooms/i,'Selected article title');
-  assert.match(await p.locator('#articleReaderLead').innerText(),/national literacy/,'Article summary is present');
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/document Q&A tool/i,'Selected published article title');
+  assert.match(await p.locator('#articleReaderLead').innerText(),/document question-and-answer/i,'Article summary is present');
   assert.match(await p.locator('#articleReaderLink').getAttribute('href'),/medium.com/,'Full original Medium article link');
-  assert.ok((await p.locator('#articleReaderImage').getAttribute('src')).length>8,'Original article image referenced');
+  assert.equal(await p.locator('#articleArtFallback').isVisible(),true,'No invented banner for articles without images');
   await p.locator('#articleReaderNext').click();
-  assert.match(await p.locator('#articleReaderTitle').innerText(),/Static Dashboard/i,'Next article navigation');
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/Classrooms/i,'Next article navigation');
   await p.locator('#articleReaderPrev').click();
-  assert.match(await p.locator('#articleReaderTitle').innerText(),/Classrooms/i,'Previous article navigation');
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/document Q&A tool/i,'Previous article navigation');
   await p.keyboard.press('Escape');
   assert.equal(await p.locator('#articleReader').evaluate(d=>d.open),false,'Escape closes reader');
   assert.equal(await p.evaluate(()=>document.activeElement?.getAttribute('data-article-index')),'0','Keyboard focus returns to selected case');
@@ -122,6 +133,6 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Planner mobile horizontal overflow');
   await p.goto(base+'/',{waitUntil:'domcontentloaded'});
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Portfolio mobile horizontal overflow');
-  console.log('DVD shelf with six left-side articles, empty right bay, credentials, projects and planner checks passed.');
+  console.log('Twelve metallic Medium article cases, empty right bay, reader, credentials, projects and planner checks passed.');
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
