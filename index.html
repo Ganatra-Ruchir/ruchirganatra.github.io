@@ -1577,7 +1577,64 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       </div>
     </div>
 
-    <div data-rv="up">
+    <div class="archive-gallery" data-rv="up">
+      <section class="ab-archive" id="writing" aria-labelledby="articleBookHeading">
+        <div class="cw-heading">
+          <div>
+            <div class="label" style="margin-bottom:9px;">Writing / the collection</div>
+            <h3 class="cw-title" id="articleBookHeading">The article book</h3>
+            <p class="cw-subtitle" style="margin-top:9px;">Six published articles · Turn the pages</p>
+          </div>
+        </div>
+        <div class="ab-book" id="articleBook">
+          <div class="wb-book">
+            <div class="wb-pages">
+              <div class="wb-book-right" id="articlePage" aria-label="Current article" aria-live="polite">
+                <div class="wb-kicker">Writing archive · Published on Medium</div>
+              </div>
+            </div>
+            <div class="wb-turner" id="articleTurner" aria-hidden="true"></div>
+            <button class="wb-cover ab-cover" id="articleCover" type="button" aria-label="Open the article book">
+              <span class="wb-cover-inner">
+                <span class="wb-cover-emblem" aria-hidden="true">✦</span>
+                <span class="wb-cover-sub">Ruchir Ganatra / Published writing</span>
+                <span class="ab-cover-name">The<br>Article<br>Book</span>
+                <span class="wb-cover-small">06 ARTICLES / DATA · AI · SECURITY</span>
+                <span class="wb-cover-small">SELECT TO OPEN</span>
+              </span>
+            </button>
+          </div>
+          <div class="wb-controls" aria-label="Article book navigation">
+            <button id="articlePrev" type="button" aria-label="Previous article" disabled>←</button>
+            <span class="wb-control-count" id="articleCount">COVER / 00 / 06</span>
+            <button id="articleNext" type="button" aria-label="Next article">→</button>
+          </div>
+        </div>
+        <p class="cw-note">Open the book to browse your articles. Select “Read article” to open the full piece on Medium.</p>
+        <div class="writing-list ab-source" id="writingList">
+
+      <a class="wrow" data-rv="up" data-peek="Real UNESCO and UDISE data, and the honesty to report a hypothesis that didn't hold." href="https://ruchirganatra.medium.com/what-indias-classrooms-tell-us-a-data-analyst-s-look-at-the-literacy-gap-e34dc51ee706" target="_blank" rel="noopener">
+        <span class="wi">/01</span><span class="wt">What India's Classrooms Tell Us</span><span class="wcat">Data analytics</span><span class="wdate">Aug 2026</span>
+      </a>
+      <a class="wrow" data-rv="up" data-peek="Why conversational AI — not another chart — is the next frontier for analytics." href="https://ruchirganatra.medium.com/the-death-of-the-static-dashboard-why-conversational-ai-is-the-next-frontier-for-data-analytics-8039f38311d1" target="_blank" rel="noopener">
+        <span class="wi">/02</span><span class="wt">The Death of the Static Dashboard</span><span class="wcat">AI &amp; analytics</span><span class="wdate">Jul 2026</span>
+      </a>
+      <a class="wrow" data-rv="up" data-peek="A full walkthrough of a Flask + Pandas + Plotly dashboard, forecasting included." href="https://ruchirganatra.medium.com/building-a-professional-global-gdp-analysis-dashboard-a-complete-data-science-project-8372a22f8c02" target="_blank" rel="noopener">
+        <span class="wi">/03</span><span class="wt">Building a Global GDP Dashboard</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
+      </a>
+      <a class="wrow" data-rv="up" data-peek="1,461 days of Delhi AQI: trends, seasonality and what the pollutants do together." href="https://ruchirganatra.medium.com/analyzing-delhis-air-quality-a-comprehensive-data-science-approach-2021-2024-0e3d03b67eab" target="_blank" rel="noopener">
+        <span class="wi">/04</span><span class="wt">Analyzing Delhi's Air Quality</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
+      </a>
+      <a class="wrow" data-rv="up" data-peek="Building real-time IOC detection and threat monitoring with Python and React." href="https://ruchirganatra.medium.com/%EF%B8%8F-skyrecon-my-ai-powered-cybersecurity-dashboard-for-real-time-ioc-detection-715354c3cafb" target="_blank" rel="noopener">
+        <span class="wi">/05</span><span class="wt">SkyRecon: An AI Security Dashboard</span><span class="wcat">Cybersecurity</span><span class="wdate">Jun 2025</span>
+      </a>
+      <a class="wrow" data-rv="up" data-peek="Blockchain UX is broken in one specific place — awareness. Here's the fix I shipped." href="https://ruchirganatra.medium.com/why-i-built-cryptoflow-notify-3d434bdabdf9" target="_blank" rel="noopener">
+        <span class="wi">/06</span><span class="wt">Why I Built CryptoFlow-Notify</span><span class="wcat">Blockchain</span><span class="wdate">Jul 2025</span>
+      </a>
+        </div>
+        <noscript><p class="body-sm">Article links remain available below. Enable JavaScript for the page-turning book.</p></noscript>
+        <a class="ab-all-link" href="https://ruchirganatra.medium.com" target="_blank" rel="noopener noreferrer">All writing on Medium ↗</a>
+      </section>
       <section id="certificateWardrobe" aria-label="Credential wardrobe and certificates">
         <div class="cw-heading">
           <div>
@@ -1806,45 +1863,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <div class="sec-title-wrap"><h3 class="display" style="font-size:clamp(28px,4vw,52px);" data-split-h>The workbench</h3></div>
         <span class="label" style="margin-left:auto;">A field notebook of smaller builds</span>
       </div>
-      <div class="wb-story" id="workbenchStory" tabindex="0" aria-label="Scrollable workbench chapter book">
-        <div class="wb-sticky">
-          <div class="wb-book" id="wbBook">
-            <div class="wb-pages">
-              <div class="wb-book-left">
-                <div>
-                  <div class="wb-kicker">Ruchir Ganatra / Vol. 01</div>
-                  <div class="wb-index-mark">RG</div>
-                  <h4 class="wb-left-title">Build notes</h4>
-                  <p class="wb-left-copy">Data, security and useful tools — one working project per chapter.</p>
-                </div>
-                <div>
-                  <div class="wb-line"></div>
-                  <div class="wb-current" style="margin-top:14px;">DESIGNED TO BE USED · NOT JUST SHOWN</div>
-                </div>
-              </div>
-              <div class="wb-book-right" id="wbContent" aria-label="Current project chapter" aria-live="polite">
-                <div class="wb-kicker">Project index · Scroll to read</div>
-              </div>
-            </div>
-            <div class="wb-turner" id="wbTurner" aria-hidden="true"></div>
-            <div class="wb-cover" id="wbCover" aria-hidden="false">
-              <div class="wb-cover-inner">
-                <span class="wb-cover-emblem" aria-hidden="true">✦</span>
-                <span class="wb-cover-sub">The independent builds archive</span>
-                <h4>The<br>Workbench</h4>
-                <div class="wb-cover-small">10 CHAPTERS / DATA · DEVELOPMENT · SECURITY</div>
-                <div class="wb-cover-small">SCROLL TO TURN THE FIRST PAGE</div>
-              </div>
-            </div>
-          </div>
-          <div class="wb-controls">
-            <button id="wbPrev" type="button" aria-label="Previous chapter" disabled>←</button>
-            <span class="wb-control-count" id="wbCount">COVER / 00 / 10</span>
-            <button id="wbNext" type="button" aria-label="Next chapter">→</button>
-          </div>
-        </div>
-      </div>
-      <div class="wb-fallback" id="wbSource">
+      <div class="wb-project-index" id="wbSource">
       <div class="mini-list" id="miniList">
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/01</span>
@@ -1912,7 +1931,6 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
           <span class="mr-desc" id="liveRepoNote">Fetching most recently pushed repositories…</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir" target="_blank" rel="noopener">Profile ↗</a></span>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -1982,41 +2000,6 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     </div>
   </div>
 </section>
-
-<!-- ============ 05 WRITING ============ -->
-<section class="band" id="writing">
-  <div class="shell">
-    <div class="sec-head">
-      <span class="sec-num">05</span>
-      <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Writing</h2></div>
-      <span class="label" style="margin-left:auto;">Documenting the work · on Medium</span>
-    </div>
-    <div class="writing-list" id="writingList">
-      <a class="wrow" data-rv="up" data-peek="Real UNESCO and UDISE data, and the honesty to report a hypothesis that didn't hold." href="https://ruchirganatra.medium.com/what-indias-classrooms-tell-us-a-data-analyst-s-look-at-the-literacy-gap-e34dc51ee706" target="_blank" rel="noopener">
-        <span class="wi">/01</span><span class="wt">What India's Classrooms Tell Us</span><span class="wcat">Data analytics</span><span class="wdate">Aug 2026</span>
-      </a>
-      <a class="wrow" data-rv="up" data-peek="Why conversational AI — not another chart — is the next frontier for analytics." href="https://ruchirganatra.medium.com/the-death-of-the-static-dashboard-why-conversational-ai-is-the-next-frontier-for-data-analytics-8039f38311d1" target="_blank" rel="noopener">
-        <span class="wi">/02</span><span class="wt">The Death of the Static Dashboard</span><span class="wcat">AI &amp; analytics</span><span class="wdate">Jul 2026</span>
-      </a>
-      <a class="wrow" data-rv="up" data-peek="A full walkthrough of a Flask + Pandas + Plotly dashboard, forecasting included." href="https://ruchirganatra.medium.com/building-a-professional-global-gdp-analysis-dashboard-a-complete-data-science-project-8372a22f8c02" target="_blank" rel="noopener">
-        <span class="wi">/03</span><span class="wt">Building a Global GDP Dashboard</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
-      </a>
-      <a class="wrow" data-rv="up" data-peek="1,461 days of Delhi AQI: trends, seasonality and what the pollutants do together." href="https://ruchirganatra.medium.com/analyzing-delhis-air-quality-a-comprehensive-data-science-approach-2021-2024-0e3d03b67eab" target="_blank" rel="noopener">
-        <span class="wi">/04</span><span class="wt">Analyzing Delhi's Air Quality</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
-      </a>
-      <a class="wrow" data-rv="up" data-peek="Building real-time IOC detection and threat monitoring with Python and React." href="https://ruchirganatra.medium.com/%EF%B8%8F-skyrecon-my-ai-powered-cybersecurity-dashboard-for-real-time-ioc-detection-715354c3cafb" target="_blank" rel="noopener">
-        <span class="wi">/05</span><span class="wt">SkyRecon: An AI Security Dashboard</span><span class="wcat">Cybersecurity</span><span class="wdate">Jun 2025</span>
-      </a>
-      <a class="wrow" data-rv="up" data-peek="Blockchain UX is broken in one specific place — awareness. Here's the fix I shipped." href="https://ruchirganatra.medium.com/why-i-built-cryptoflow-notify-3d434bdabdf9" target="_blank" rel="noopener">
-        <span class="wi">/06</span><span class="wt">Why I Built CryptoFlow-Notify</span><span class="wcat">Blockchain</span><span class="wdate">Jul 2025</span>
-      </a>
-    </div>
-    <div style="margin-top:28px;" data-rv="up">
-      <a class="btn" href="https://ruchirganatra.medium.com" target="_blank" rel="noopener" data-mag><span class="t">All writing on Medium</span><span class="ar">↗</span></a>
-    </div>
-  </div>
-</section>
-<div id="peek"><div class="pk-cat"></div><div class="pk-x"></div><div class="pk-m">Read on Medium ↗</div></div>
 
 <!-- ============ 06 VOICES ============ -->
 <section class="band" id="voices">
