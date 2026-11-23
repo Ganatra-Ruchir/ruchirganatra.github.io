@@ -29,6 +29,7 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
  });
  if(!items.length)return;
  var active=-1,lastCase=null;
+ rack.style.setProperty('--dvd-total',String(items.length));
  var tones=['ochre','plum','sage','clay','midnight','teal'];
  function node(tag,klass,txt){
   var el=doc.createElement(tag);
@@ -44,7 +45,7 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   button.style.setProperty('--dvd-position',String(i));
   button.classList.add('dvd-'+tones[i%tones.length]);
   var edge=node('span','dvd-case-edge');
-  var serial=node('span','dvd-case-serial',String(i+1).padStart(2,'0')+' / 06');
+  var serial=node('span','dvd-case-serial',String(i+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0'));
   var title=node('strong','dvd-case-title',item.spine);title.title=item.title;
   var footer=node('span','dvd-case-category',item.category);
   edge.append(serial,title,footer);
