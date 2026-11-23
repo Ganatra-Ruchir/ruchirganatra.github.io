@@ -193,7 +193,7 @@ body.is-locked{overflow:hidden;}
   color:#fff6e9!important;
 }
 #toolkit .skill-tabs,#toolkit .chips-lg{position:relative;z-index:2;}
-#trajectory,#voices{
+#trajectory{
   border-top:1px solid var(--industrial-seam);
   background-image:
     repeating-linear-gradient(0deg,transparent 0 72px,rgba(68,98,114,.05) 72px 73px),
