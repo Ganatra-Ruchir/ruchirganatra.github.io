@@ -134,3 +134,55 @@ body{overflow-x:clip;}
  .wb-book.is-open .wb-cover{display:none;}
  .wb-turner{display:none!important;}
 }
+
+/* The book of writing sits LEFT of the certificate wardrobe on large screens. */
+.archive-gallery{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:start;gap:clamp(22px,3vw,48px);margin-top:clamp(34px,5vw,64px);}
+.archive-gallery #certificateWardrobe{margin-top:0;min-width:0;}
+.ab-archive{min-width:0;scroll-margin-top:110px;}
+.ab-archive .cw-heading,.archive-gallery .cw-heading{min-height:116px;align-items:start;}
+.ab-archive .cw-title,.archive-gallery .cw-title{font-size:clamp(27px,3vw,42px);}
+.ab-book{position:relative;width:100%;padding:0 0 6px;}
+.ab-book .wb-book{width:100%;height:490px;min-height:0;max-height:none;perspective:1450px;filter:drop-shadow(0 26px 24px rgba(47,27,13,.22));}
+.ab-book .wb-pages{grid-template-columns:1fr;}
+.ab-book .wb-book-right{padding:clamp(22px,3vw,35px);}
+.ab-book .wb-page-title{font-size:clamp(26px,3.4vw,43px);margin:15px 0 14px;}
+.ab-book .wb-page-desc{font-size:clamp(13px,1.1vw,15px);line-height:1.6;}
+.ab-book .wb-turner{left:0;width:100%;}
+.ab-cover{width:100%;cursor:pointer;font:inherit;}
+.ab-cover:focus-visible{outline:3px solid var(--accent);outline-offset:5px;}
+.ab-cover-name{display:block;font:clamp(45px,5vw,72px)/.92 var(--display);color:#f5d3a2;text-transform:uppercase;letter-spacing:.025em;}
+.ab-book.is-open .ab-cover{transform:rotateY(-156deg);opacity:0;visibility:hidden;transition:transform .95s cubic-bezier(.17,.82,.21,1),opacity .7s,visibility 0s .95s;}
+.ab-category{font:10px/1.5 var(--mono);color:#8a6749;letter-spacing:.12em;text-transform:uppercase;margin-top:18px;}
+.ab-all-link{display:inline-block;margin-top:15px;font:11px var(--mono);color:var(--accent);text-decoration:underline;text-underline-offset:4px;}
+.ab-source{margin-top:16px;}
+.ab-source.ab-hidden{display:none;}
+.ab-book .wb-controls{margin-top:16px;}
+.archive-gallery .cw-cabinet{min-height:490px;border-width:10px;padding:24px 14px 15px;}
+.archive-gallery .cw-shelves{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 7px;}
+.archive-gallery .cw-paper{height:121px;width:min(100%,116px);}
+.archive-gallery .cw-sleeve-title{font-size:9px;}
+#work .wb-project-index{margin-top:16px;}
+#work .wb-project-index .mini-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+#work .wb-project-index .mini-row{margin:0;display:grid;grid-template-columns:30px minmax(0,1fr);gap:5px 12px;align-items:start;padding:18px;background:var(--bg-elev);border:1px solid var(--hair);border-radius:12px;}
+#work .wb-project-index .mini-row .mr-i{grid-column:1;grid-row:1 / span 3;}
+#work .wb-project-index .mini-row .mr-t,#work .wb-project-index .mini-row .mr-desc,#work .wb-project-index .mini-row .mr-go{grid-column:2;}
+#work .wb-project-index .mini-row .mr-desc{font-size:12px;}
+@media(max-width:1020px){
+ .archive-gallery{grid-template-columns:1fr;gap:36px;}
+ .ab-archive .cw-heading,.archive-gallery .cw-heading{min-height:0;}
+ .ab-book{max-width:650px;margin:auto;}
+ .ab-book .wb-book{height:clamp(370px,60vw,480px);}
+ .archive-gallery .cw-shelves{grid-template-columns:repeat(5,minmax(0,1fr));}
+ .archive-gallery .cw-cabinet{min-height:380px;}
+}
+@media(max-width:650px){
+ .archive-gallery{gap:32px;}
+ .ab-book .wb-book{height:420px;min-height:0;}
+ .ab-book .wb-page-title{font-size:clamp(26px,7vw,39px);}
+ .ab-book .wb-book-right{padding:24px 22px;}
+ .archive-gallery .cw-shelves{grid-template-columns:repeat(2,minmax(0,1fr));}
+ #work .wb-project-index .mini-list{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ab-book.is-open .ab-cover{display:none;}
+}
