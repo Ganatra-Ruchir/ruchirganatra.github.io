@@ -1583,14 +1583,17 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
           <div>
             <div class="label" style="margin-bottom:9px;">Writing / the collection</div>
             <h3 class="cw-title" id="articleBookHeading">The article book</h3>
-            <p class="cw-subtitle" style="margin-top:9px;">Six published articles · Turn the pages</p>
+            <p class="cw-subtitle" style="margin-top:9px;">Six published articles · Two-page reading spreads</p>
           </div>
         </div>
         <div class="ab-book" id="articleBook">
           <div class="wb-book">
-            <div class="wb-pages">
-              <div class="wb-book-right" id="articlePage" aria-label="Current article" aria-live="polite">
+            <div class="wb-pages ab-spread" role="group" aria-label="Open article book with left and right pages">
+              <div class="ab-page ab-page-left" id="articlePageLeft" aria-label="Left page: article cover and image">
                 <div class="wb-kicker">Writing archive · Published on Medium</div>
+              </div>
+              <div class="ab-page ab-page-right" id="articlePageRight" aria-label="Right page: article summary and reading link" aria-live="polite">
+                <div class="wb-kicker">Article notes · Turn the page</div>
               </div>
             </div>
             <div class="wb-turner" id="articleTurner" aria-hidden="true"></div>
@@ -1610,25 +1613,25 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <button id="articleNext" type="button" aria-label="Next article">→</button>
           </div>
         </div>
-        <p class="cw-note">Open the book to browse your articles. Select “Read article” to open the full piece on Medium.</p>
+        <p class="cw-note">Each spread opens to a picture and a short article preview. Turn pages to browse the collection.</p>
         <div class="writing-list ab-source" id="writingList">
 
-      <a class="wrow" data-rv="up" data-peek="Real UNESCO and UDISE data, and the honesty to report a hypothesis that didn't hold." href="https://ruchirganatra.medium.com/what-indias-classrooms-tell-us-a-data-analyst-s-look-at-the-literacy-gap-e34dc51ee706" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="Real UNESCO and UDISE data, and the honesty to report a hypothesis that didn't hold." data-image="https://raw.githubusercontent.com/Ganatra-Ruchir/india-education-gap-analysis/main/outputs/02_gender_gap.png" data-image-alt="Education analysis chart showing literacy gender gaps" data-description="A national literacy figure hides the gaps that matter. I explore differences between states, gender parity and school dropout risk—and how an analyst can turn broad education goals into sharper questions. This article openly identifies where sample data was used instead of presenting it as official statistics." data-hook="Beyond the national average" href="https://ruchirganatra.medium.com/what-indias-classrooms-tell-us-a-data-analyst-s-look-at-the-literacy-gap-e34dc51ee706" target="_blank" rel="noopener">
         <span class="wi">/01</span><span class="wt">What India's Classrooms Tell Us</span><span class="wcat">Data analytics</span><span class="wdate">Aug 2026</span>
       </a>
-      <a class="wrow" data-rv="up" data-peek="Why conversational AI — not another chart — is the next frontier for analytics." href="https://ruchirganatra.medium.com/the-death-of-the-static-dashboard-why-conversational-ai-is-the-next-frontier-for-data-analytics-8039f38311d1" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="Why conversational AI — not another chart — is the next frontier for analytics." data-image="articles/ai-conversational-analytics.svg" data-image-alt="Original illustration of a dashboard becoming a conversational interface" data-description="Dashboards answer predefined questions. People need to ask new ones. This piece explains conversational analytics, why connecting a language model straight to a database can mislead, and how a semantic layer turns business definitions into more trustworthy AI answers." data-hook="From charts to questions" href="https://ruchirganatra.medium.com/the-death-of-the-static-dashboard-why-conversational-ai-is-the-next-frontier-for-data-analytics-8039f38311d1" target="_blank" rel="noopener">
         <span class="wi">/02</span><span class="wt">The Death of the Static Dashboard</span><span class="wcat">AI &amp; analytics</span><span class="wdate">Jul 2026</span>
       </a>
-      <a class="wrow" data-rv="up" data-peek="A full walkthrough of a Flask + Pandas + Plotly dashboard, forecasting included." href="https://ruchirganatra.medium.com/building-a-professional-global-gdp-analysis-dashboard-a-complete-data-science-project-8372a22f8c02" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="A full walkthrough of a Flask + Pandas + Plotly dashboard, forecasting included." data-image="articles/gdp-analysis.svg" data-image-alt="Original illustration of global GDP growth and chart trends" data-description="A practical walkthrough of an interactive GDP dashboard for 180-plus countries. From cleaning World Bank and UN data to country comparisons and forecasting, the article covers the Flask, Pandas and Plotly decisions behind turning economic data into something useful." data-hook="Economies, compared clearly" href="https://ruchirganatra.medium.com/building-a-professional-global-gdp-analysis-dashboard-a-complete-data-science-project-8372a22f8c02" target="_blank" rel="noopener">
         <span class="wi">/03</span><span class="wt">Building a Global GDP Dashboard</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
       </a>
-      <a class="wrow" data-rv="up" data-peek="1,461 days of Delhi AQI: trends, seasonality and what the pollutants do together." href="https://ruchirganatra.medium.com/analyzing-delhis-air-quality-a-comprehensive-data-science-approach-2021-2024-0e3d03b67eab" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="1,461 days of Delhi AQI: trends, seasonality and what the pollutants do together." data-image="https://raw.githubusercontent.com/Ganatra-Ruchir/delhi-aqi-analysis-2021-2024/main/1.%20Exploratory%20Data%20Analysis%20%28EDA%29%20project/images/plots/04_seasonal_analysis.png" data-image-alt="Seasonal analysis chart from the Delhi air quality repository" data-description="Four years of Delhi air-quality readings tell more than a single AQI number. I examine seasonal cycles, pollutant relationships and how readings shift over time—separating what the historical data shows from claims about what caused it." data-hook="Look beyond the haze" href="https://ruchirganatra.medium.com/analyzing-delhis-air-quality-a-comprehensive-data-science-approach-2021-2024-0e3d03b67eab" target="_blank" rel="noopener">
         <span class="wi">/04</span><span class="wt">Analyzing Delhi's Air Quality</span><span class="wcat">Data science</span><span class="wdate">Jan 2026</span>
       </a>
-      <a class="wrow" data-rv="up" data-peek="Building real-time IOC detection and threat monitoring with Python and React." href="https://ruchirganatra.medium.com/%EF%B8%8F-skyrecon-my-ai-powered-cybersecurity-dashboard-for-real-time-ioc-detection-715354c3cafb" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="Building real-time IOC detection and threat monitoring with Python and React." data-image="https://raw.githubusercontent.com/Ganatra-Ruchir/skyrecon/main/docs/screenshots/overview.png" data-image-alt="Actual SkyRecon security dashboard overview screenshot" data-description="Security analysts need one clear view of changing threats. I explain how SkyRecon uses React, TypeScript and Flask to process IOC files, display threat statistics and surface alerts, plus the challenges of turning security feeds into a usable dashboard." data-hook="Signals worth noticing" href="https://ruchirganatra.medium.com/%EF%B8%8F-skyrecon-my-ai-powered-cybersecurity-dashboard-for-real-time-ioc-detection-715354c3cafb" target="_blank" rel="noopener">
         <span class="wi">/05</span><span class="wt">SkyRecon: An AI Security Dashboard</span><span class="wcat">Cybersecurity</span><span class="wdate">Jun 2025</span>
       </a>
-      <a class="wrow" data-rv="up" data-peek="Blockchain UX is broken in one specific place — awareness. Here's the fix I shipped." href="https://ruchirganatra.medium.com/why-i-built-cryptoflow-notify-3d434bdabdf9" target="_blank" rel="noopener">
+      <a class="wrow" data-rv="up" data-peek="Blockchain UX is broken in one specific place — awareness. Here's the fix I shipped." data-image="articles/cryptoflow-notify.svg" data-image-alt="Original illustration of blockchain transfers and live alerts" data-description="On-chain activity is difficult to follow when useful notifications are scattered. This article covers the motivation behind CryptoFlow-Notify: a wallet-connected alert workflow for transfers and governance events, using MetaMask, Solidity and live updates to make activity easier to follow." data-hook="Every transaction has a story" href="https://ruchirganatra.medium.com/why-i-built-cryptoflow-notify-3d434bdabdf9" target="_blank" rel="noopener">
         <span class="wi">/06</span><span class="wt">Why I Built CryptoFlow-Notify</span><span class="wcat">Blockchain</span><span class="wdate">Jul 2025</span>
       </a>
         </div>
