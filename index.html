@@ -1315,6 +1315,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 .studio-toplink:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 @media(max-width:480px){.studio-toplink{font-size:10px;padding:8px 9px;}}
 </style>
+<link rel="stylesheet" href="portfolio-experiences.css">
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
@@ -1577,33 +1578,58 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     </div>
 
     <div data-rv="up">
-      <div class="label" style="margin:clamp(34px,5vw,60px) 0 0;">Certifications</div>
-      <div class="cert-list">
-        <div class="cert"><span class="ci">C/01</span><span class="cn">Google Analytics Certification</span><span class="cw">Google · Sep 2026</span></div>
-        <div class="cert"><span class="ci">C/02</span><span class="cn">Google Ads Measurement Certification</span><span class="cw">Google · Sep 2026</span></div>
-        <div class="cert"><span class="ci">C/03</span><span class="cn">Getting Started with Artificial Intelligence</span><span class="cw">IBM SkillsBuild · Sep 2026</span></div>
-        <div class="cert"><span class="ci">C/04</span><span class="cn">Cloud Computing Fundamentals</span><span class="cw">IBM SkillsBuild · Aug 2026</span></div>
-        <div class="cert"><span class="ci">C/05</span><span class="cn">Generative AI Essentials: Using LLMs to Work with Data</span><span class="cw">IBM SkillsBuild · 2026</span></div>
-        <div class="cert"><span class="ci">C/06</span><span class="cn">Data Science Essentials with Python</span><span class="cw">Cisco Networking Academy · 2026</span></div>
-        <div class="cert"><span class="ci">C/07</span><span class="cn">Data Visualization</span><span class="cw">Kaggle · 2026</span></div>
-        <div class="cert"><span class="ci">C/08</span><span class="cn">Python</span><span class="cw">Kaggle · 2025</span></div>
-        <div class="cert"><span class="ci">C/09</span><span class="cn">Elements of AI</span><span class="cw">Univ. of Helsinki &amp; MinnaLearn · 2025</span></div>
-        <div class="cert"><span class="ci">C/10</span><span class="cn">AI Tools &amp; ChatGPT</span><span class="cw">be10X · 2025</span></div>
-      </div>
-      <div style="margin-top:clamp(26px,3.4vw,42px);">
-        <div class="label" style="margin-bottom:14px;">Digital badges</div>
-        <div class="chips-lg">
-          <span class="chip-lg">Introduction to Large Language Models · IBM</span>
-          <span class="chip-lg">Summarizing Data Using IBM Granite</span>
-          <span class="chip-lg">Classifying Data Using IBM Granite</span>
-          <span class="chip-lg">Generative AI Essentials · IBM SkillsBuild</span>
-          <span class="chip-lg">Google Analytics · Google</span>
-          <span class="chip-lg">Google Ads Measurement · Google</span>
+      <section id="certificateWardrobe" aria-label="Credential wardrobe and certificates">
+        <div class="cw-heading">
+          <div>
+            <div class="label" style="margin-bottom:9px;">Credentials / the archive</div>
+            <h3 class="cw-title">The certificate wardrobe</h3>
+            <p class="cw-subtitle" style="margin-top:9px;">Ten verified documents · Open the doors, choose a sleeve</p>
+          </div>
+          <button class="cw-open-control" id="cabinetToggle" type="button" aria-expanded="false" aria-controls="certificateShelf">Open wardrobe</button>
         </div>
-      </div>
+        <div class="cw-cabinet">
+          <div class="cw-cabinet-top">Ruchir Ganatra · Credential Collection</div>
+          <div class="cw-shelves" id="certificateShelf"></div>
+          <div class="cw-doors" aria-hidden="true">
+            <div class="cw-door"></div><div class="cw-door"></div>
+          </div>
+        </div>
+        <p class="cw-note">Select a certificate to take it off the shelf and inspect its original image.</p>
+        <noscript>
+          <p>Certificates available: <a href="certificates/google-analytics.pdf">Google Analytics</a>,
+          <a href="certificates/google-ads.pdf">Google Ads Measurement</a>,
+          <a href="certificates/ibm-ai.pdf">IBM AI</a>,
+          <a href="certificates/ibm-cloud.pdf">IBM Cloud Computing</a>,
+          <a href="certificates/generative-ai.pdf">Generative AI Essentials</a>,
+          <a href="certificates/cisco-data-science.pdf">Cisco Data Science Essentials</a>,
+          <a href="certificates/kaggle-visualization.png">Kaggle Data Visualization</a>,
+          <a href="certificates/kaggle-python.pdf">Kaggle Python</a>,
+          <a href="certificates/be10x-ai.pdf">AI Tools and ChatGPT</a>,
+          <a href="certificates/ibm-genai-badge.pdf">IBM GenAI Badge</a>.</p>
+        </noscript>
+      </section>
     </div>
   </div>
 </section>
+
+<dialog id="certificateViewer" aria-labelledby="cwViewerTitle">
+  <div class="cw-viewer-head">
+    <div>
+      <div class="cw-viewer-title" id="cwViewerTitle">Certificate</div>
+      <div class="cw-viewer-issuer" id="cwViewerIssuer">Credential archive</div>
+    </div>
+    <button type="button" class="cw-viewer-close" id="cwClose" aria-label="Close certificate viewer">×</button>
+  </div>
+  <div class="cw-viewer-preview" id="cwViewerPreview" aria-label="Certificate image preview"></div>
+  <div class="cw-viewer-foot">
+    <div class="cw-navigator">
+      <button type="button" id="cwPrevious" aria-label="Previous certificate">←</button>
+      <span id="cwViewerCount" class="label">01 / 10</span>
+      <button type="button" id="cwNext" aria-label="Next certificate">→</button>
+    </div>
+    <a id="cwOriginal" href="certificates/google-analytics.pdf" target="_blank" rel="noopener noreferrer">Open original ↗</a>
+  </div>
+</dialog>
 
 <!-- ============ 03 WORK (horizontal pinned) ============ -->
 <section class="work" id="work">
@@ -1774,26 +1800,51 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   </div>
 
   <div class="shell">
-    <div class="work-prog" id="workProg"><i></i></div>
-    <div class="work-hint">
-      <span class="mono-sm" id="workHintTxt">Scroll, drag, or press <span class="kbd">←</span><span class="kbd">→</span> to move through the work</span>
-      <span class="mono-sm"><span id="workCount">01</span> / 05</span>
-    </div>
-    <div class="work-nav" id="workNav">
-      <button data-i="0"><span class="wn-n">P/01</span><span class="wn-t">DocuSense AI</span><span class="wn-s">Client-side RAG · live</span></button>
-      <button data-i="1"><span class="wn-n">P/02</span><span class="wn-t">SkyRecon</span><span class="wn-s">IOC dashboard · live</span></button>
-      <button data-i="2"><span class="wn-n">P/03</span><span class="wn-t">Literacy Gap Analysis</span><span class="wn-s">UDISE data · live</span></button>
-      <button data-i="3"><span class="wn-n">P/04</span><span class="wn-t">Backstop</span><span class="wn-s">Fraud ML &middot; production</span></button>
-      <button data-i="4"><span class="wn-n">P/05</span><span class="wn-t">PDFly</span><span class="wn-s">File toolkit · live</span></button>
-    </div>
-
-    <!-- workbench -->
-    <div style="margin-top:clamp(50px,8vh,110px);">
-      <div class="sec-head" style="margin-bottom:clamp(16px,2vw,26px);">
+    <div class="workbench-intro" id="workbench">
+      <div class="sec-head">
         <span class="sec-num">03·b</span>
-        <div class="sec-title-wrap"><h3 class="display" style="font-size:clamp(24px,3.4vw,44px);" data-split-h>The workbench</h3></div>
-        <span class="label" style="margin-left:auto;">Smaller builds · analysis notebooks · security tooling</span>
+        <div class="sec-title-wrap"><h3 class="display" style="font-size:clamp(28px,4vw,52px);" data-split-h>The workbench</h3></div>
+        <span class="label" style="margin-left:auto;">A field notebook of smaller builds</span>
       </div>
+      <div class="wb-story" id="workbenchStory" tabindex="0" aria-label="Scrollable workbench chapter book">
+        <div class="wb-sticky">
+          <div class="wb-book" id="wbBook">
+            <div class="wb-pages">
+              <div class="wb-book-left">
+                <div>
+                  <div class="wb-kicker">Ruchir Ganatra / Vol. 01</div>
+                  <div class="wb-index-mark">RG</div>
+                  <h4 class="wb-left-title">Build notes</h4>
+                  <p class="wb-left-copy">Data, security and useful tools — one working project per chapter.</p>
+                </div>
+                <div>
+                  <div class="wb-line"></div>
+                  <div class="wb-current" style="margin-top:14px;">DESIGNED TO BE USED · NOT JUST SHOWN</div>
+                </div>
+              </div>
+              <div class="wb-book-right" id="wbContent" aria-label="Current project chapter" aria-live="polite">
+                <div class="wb-kicker">Project index · Scroll to read</div>
+              </div>
+            </div>
+            <div class="wb-turner" id="wbTurner" aria-hidden="true"></div>
+            <div class="wb-cover" id="wbCover" aria-hidden="false">
+              <div class="wb-cover-inner">
+                <span class="wb-cover-emblem" aria-hidden="true">✦</span>
+                <span class="wb-cover-sub">The independent builds archive</span>
+                <h4>The<br>Workbench</h4>
+                <div class="wb-cover-small">10 CHAPTERS / DATA · DEVELOPMENT · SECURITY</div>
+                <div class="wb-cover-small">SCROLL TO TURN THE FIRST PAGE</div>
+              </div>
+            </div>
+          </div>
+          <div class="wb-controls">
+            <button id="wbPrev" type="button" aria-label="Previous chapter" disabled>←</button>
+            <span class="wb-control-count" id="wbCount">COVER / 00 / 10</span>
+            <button id="wbNext" type="button" aria-label="Next chapter">→</button>
+          </div>
+        </div>
+      </div>
+      <div class="wb-fallback" id="wbSource">
       <div class="mini-list" id="miniList">
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/01</span>
@@ -1861,6 +1912,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
           <span class="mr-desc" id="liveRepoNote">Fetching most recently pushed repositories…</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir" target="_blank" rel="noopener">Profile ↗</a></span>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -3146,5 +3198,6 @@ setTimeout(function(){
 
 })();
 </script>
+<script src="portfolio-experiences.js" defer></script>
 </body>
 </html>
