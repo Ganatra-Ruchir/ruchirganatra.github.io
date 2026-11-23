@@ -689,3 +689,22 @@ body{overflow-x:clip;}
 @media(prefers-reduced-motion:reduce){
   .archive-gallery .cw-feature-action{transition:none;}
 }
+
+/* At narrower laptop widths, stack the archive panels rather than squeezing
+   the wardrobe into a tall portrait-shaped cabinet. */
+@media(min-width:1021px) and (max-width:1260px){
+  .archive-gallery{
+    grid-template-columns:minmax(0,1fr);
+    --archive-panel-height:520px;
+    gap:24px;
+  }
+  .archive-gallery > section{
+    width:min(100%,880px);
+    margin-inline:auto;
+  }
+  .archive-gallery .cw-heading{
+    height:76px;
+    min-height:0;
+  }
+  .archive-gallery .ab-book{max-width:none;}
+}
