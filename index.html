@@ -250,21 +250,82 @@ html.anim .char-mask.in .ch{ transform:translateY(0); }
   font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--fg-faint);
 }
 
-/* ---------- 6. CURSOR: precise dot + compact focus ring ---------- */
-.cur, .cur-ring{
-  position:fixed; top:0; left:0; z-index:390; pointer-events:none;
-  border-radius:50%; transform:translate(-50%,-50%); opacity:0;
+/* ---------- 6. SAKURA SPARK CURSOR ---------- */
+/* Mouse-only enhancement: native cursor remains for touch, text fields and reduced motion. */
+.sakura-cursor{
+  position:fixed; left:0; top:0; z-index:390; width:42px; height:43px;
+  pointer-events:none; opacity:0; will-change:transform;
+  transition:opacity .13s ease; transform:translate3d(-100px,-100px,0);
 }
-html.cursor-active .cur, html.cursor-active .cur-ring{opacity:1;}
-.cur{width:5px; height:5px; background:var(--accent); box-shadow:0 0 0 1px var(--bg-elev);}
-.cur-ring{
-  width:22px; height:22px; border:1px solid var(--accent);
-  background:transparent;
-  transition:width .2s var(--ease), height .2s var(--ease), opacity .15s ease,
-    background .2s ease, border-color .2s ease;
+.sakura-cursor.is-visible{opacity:1;}
+.sakura-arrow{
+  position:absolute; left:0; top:0; width:33px; height:39px;
+  overflow:visible; filter:drop-shadow(0 1px 2px rgba(69,26,39,.25));
 }
-.cur-ring.hot{width:34px; height:34px; background:var(--accent-soft); border-color:var(--accent);}
-body.in-work .cur-ring:not(.hot){width:26px; height:26px; border-color:var(--accent);}
+.sakura-blossom{
+  position:absolute; left:18px; top:18px; width:20px; height:20px;
+  transform:rotate(-18deg) scale(.9);
+  transition:transform .26s cubic-bezier(.18,.8,.23,1.36);
+  filter:drop-shadow(0 0 5px rgba(242,115,161,.38));
+}
+.sakura-blossom i{
+  position:absolute; left:7px; top:0; width:7px; height:11px;
+  border-radius:72% 72% 45% 45%;
+  background:linear-gradient(180deg,#fff7f9 0%,#f8b0ca 42%,#e76d9d 100%);
+  border:1px solid rgba(160,65,104,.3);
+  transform-origin:50% 9px;
+  transform:rotate(var(--petal-turn)) translateY(-3px);
+}
+.sakura-blossom i:nth-child(1){--petal-turn:0deg;}
+.sakura-blossom i:nth-child(2){--petal-turn:72deg;}
+.sakura-blossom i:nth-child(3){--petal-turn:144deg;}
+.sakura-blossom i:nth-child(4){--petal-turn:216deg;}
+.sakura-blossom i:nth-child(5){--petal-turn:288deg;}
+.sakura-blossom b{
+  position:absolute; left:8.5px; top:7px; width:4px; height:4px;
+  border-radius:50%; background:#f9d36a; box-shadow:0 0 4px #fff4ce;
+}
+.sakura-glint{
+  position:absolute; left:31px; top:7px; width:10px; height:10px;
+  background:#fbe0ea; opacity:.6;
+  clip-path:polygon(50% 0%,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  transform:scale(.65) rotate(-12deg);
+  transition:transform .24s ease,opacity .24s ease;
+  filter:drop-shadow(0 0 3px #f48fb5);
+}
+.sakura-cursor.is-hot .sakura-blossom{transform:rotate(15deg) scale(1.22);}
+.sakura-cursor.is-hot .sakura-glint{opacity:1;transform:scale(1.22) rotate(36deg);}
+.sakura-cursor.is-pressed .sakura-blossom{transform:rotate(34deg) scale(.8);}
+.sakura-trail{position:fixed;inset:0;pointer-events:none;z-index:389;overflow:hidden;}
+.sakura-particle{
+  position:absolute;left:0;top:0;width:7px;height:10px;opacity:0;
+  background:linear-gradient(145deg,#fff9fc,#f5a3c3 70%,#e475a3);
+  border-radius:85% 15% 75% 25%; box-shadow:0 0 7px rgba(242,134,172,.35);
+  pointer-events:none; will-change:transform,opacity;
+}
+.sakura-particle.is-spark{
+  width:7px;height:7px;border-radius:0;background:#f7ccdb;
+  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  box-shadow:none;
+}
+html.sakura-cursor-enabled,
+html.sakura-cursor-enabled body,
+html.sakura-cursor-enabled a,
+html.sakura-cursor-enabled button,
+html.sakura-cursor-enabled summary,
+html.sakura-cursor-enabled .studio-orbit,
+html.sakura-cursor-enabled .work-pin{cursor:none!important;}
+html.sakura-cursor-enabled input,
+html.sakura-cursor-enabled textarea,
+html.sakura-cursor-enabled [contenteditable="true"]{cursor:text!important;}
+html.sakura-cursor-enabled select{cursor:default!important;}
+html.sakura-cursor-enabled :is(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--accent); outline-offset:4px;
+}
+@media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){
+  .sakura-cursor,.sakura-trail{display:none!important;}
+  html.sakura-cursor-enabled,html.sakura-cursor-enabled *{cursor:auto!important;}
+}
 body.dragging{cursor:grabbing;}
 body.dragging .panel{transition:none;}
 .work.horiz .work-pin{cursor:grab;}
@@ -274,8 +335,7 @@ body.dragging .work.horiz .work-pin{cursor:grabbing;}
   padding:0 5px; margin:0 2px; border:1px solid var(--hair-strong); border-radius:5px;
   font-family:var(--mono); font-size:10.5px; color:var(--fg-dim); background:var(--surface-raised);
 }
-html.cursor-none, html.cursor-none a, html.cursor-none button{cursor:none;}
-@media (hover:none){ .cur,.cur-ring{display:none;} html.cursor-none,html.cursor-none a,html.cursor-none button{cursor:auto;} }
+/* All pointer fallbacks are managed by the Sakura cursor media rules above. */
 
 /* ---------- 7. TOP BAR + OVERLAY MENU ---------- */
 .topbar{
@@ -1171,8 +1231,15 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   </div>
 </div>
 
-<div class="cur" id="cur"></div>
-<div class="cur-ring" id="curRing"></div>
+<div class="sakura-trail" id="sakuraTrail" aria-hidden="true"></div>
+<div class="sakura-cursor" id="cur" aria-hidden="true">
+  <svg class="sakura-arrow" viewBox="0 0 35 40" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+    <path d="M2.6 2.5V31.5L10.8 24.2L16.4 36.2L22.4 33.5L16.6 21.2L27.3 20.8Z" fill="#fff9f9" stroke="#71394c" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M4.9 6.6V26L11 20.6L14.8 29" fill="none" stroke="#f3a5c1" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <span class="sakura-blossom"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+  <span class="sakura-glint"></span>
+</div>
 <div id="prog"></div>
 
 <!-- ============ TOP BAR ============ -->
@@ -2740,43 +2807,107 @@ var Previews = (function(){
 })();
 
 /* ==========================================================
-   16. CURSOR + MAGNETIC BUTTONS
+   16. SAKURA SPARK CURSOR + MAGNETIC BUTTONS
    ========================================================== */
 (function(){
-  if(!CAN_HOVER || RM) return;
-  var dot = $('#cur'), ring = $('#curRing');
-  if(!dot || !ring) return;
-  document.documentElement.classList.add('cursor-none');
-  var dx=0, dy=0, rx=0, ry=0;
-  document.addEventListener('mousemove', function(e){
-    dx = e.clientX; dy = e.clientY;
-    document.documentElement.classList.add('cursor-active');
-    dot.style.transform = 'translate('+dx+'px,'+dy+'px) translate(-50%,-50%)';
-    curKick();
-  });
-  document.addEventListener('mouseleave', function(){
-    document.documentElement.classList.remove('cursor-active');
-    ring.classList.remove('hot');
-  });
-  var curRaf = null;
-  function curLoop(){
-    rx += (dx-rx)*0.18; ry += (dy-ry)*0.18;
-    ring.style.transform = 'translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
-    if(Math.abs(dx-rx) > 0.3 || Math.abs(dy-ry) > 0.3){ curRaf = requestAnimationFrame(curLoop); }
-    else { curRaf = null; }
+  var finePointer = window.matchMedia('(hover:hover) and (pointer:fine)');
+  if(!finePointer.matches || !CAN_HOVER) return;
+  var cursor = $('#cur'), trail = $('#sakuraTrail');
+  if(!cursor || !trail) return;
+  var root = document.documentElement;
+  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var paused = document.body.classList.contains('motion-paused');
+  var particles = [], particleIndex = 0, lastX = -100, lastY = -100;
+  var lastEmitX = -100, lastEmitY = -100, lastEmitAt = 0, pointerSeen = false;
+
+  /* Reuse a fixed pool: no unlimited DOM nodes, no timers or continuous animation loops. */
+  for(var i=0;i<12;i++){
+    var p = document.createElement('span');
+    p.className = 'sakura-particle';
+    p.setAttribute('aria-hidden','true');
+    trail.appendChild(p);
+    particles.push(p);
   }
-  function curKick(){ if(!curRaf) curRaf = requestAnimationFrame(curLoop); }
-  $$('a, button, .win-view, .mini-row, .wrow').forEach(function(el){
-    el.addEventListener('mouseenter', function(){ ring.classList.add('hot'); });
-    el.addEventListener('mouseleave', function(){ ring.classList.remove('hot'); });
-  });
-  $$('[data-mag]').forEach(function(b){
-    b.addEventListener('mousemove', function(e){
-      var r = b.getBoundingClientRect();
-      var ox = e.clientX - r.left - r.width/2, oy = e.clientY - r.top - r.height/2;
-      b.style.transform = 'translate(' + (ox*0.16).toFixed(1) + 'px,' + (oy*0.26 - 2).toFixed(1) + 'px)';
+  function allowed(){ return finePointer.matches && !motionQuery.matches && !paused; }
+  function clearParticles(){
+    particles.forEach(function(p){
+      p.getAnimations().forEach(function(a){a.cancel();});
+      p.style.opacity = '0';
     });
-    b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+  }
+  function hide(){
+    cursor.classList.remove('is-visible','is-hot','is-pressed');
+    root.classList.remove('sakura-cursor-enabled');
+    pointerSeen = false;
+  }
+  function disable(){ hide(); clearParticles(); }
+  function emit(x,y){
+    var p=particles[particleIndex++ % particles.length];
+    p.getAnimations().forEach(function(a){a.cancel();});
+    var spark = particleIndex % 3 === 0;
+    p.className = spark ? 'sakura-particle is-spark' : 'sakura-particle';
+    p.style.left = (x+11) + 'px';
+    p.style.top = (y+16) + 'px';
+    var phase = particleIndex * 2.399963229728653;
+    var driftX = Math.cos(phase)*18 - 9, driftY = 17 + Math.abs(Math.sin(phase))*22;
+    var startRotate = (particleIndex*43)%360;
+    p.animate([
+      {opacity:.82, transform:'translate3d(0,0,0) rotate('+startRotate+'deg) scale(.9)'},
+      {opacity:.5, offset:.43, transform:'translate3d('+(driftX*.4)+'px,'+(driftY*.35)+'px,0) rotate('+(startRotate+75)+'deg) scale(.88)'},
+      {opacity:0, transform:'translate3d('+driftX+'px,'+driftY+'px,0) rotate('+(startRotate+145)+'deg) scale(.38)'}
+    ], {duration:spark?480:690,easing:'cubic-bezier(.15,.52,.35,1)',fill:'forwards'});
+  }
+  function pointerMove(e){
+    if(e.pointerType && e.pointerType !== 'mouse'){ disable(); return; }
+    if(!allowed()){disable();return;}
+    var target = e.target && e.target.nodeType === 1 ? e.target : null;
+    if(target && target.closest('input,textarea,select,[contenteditable],[role="textbox"]')){
+      hide(); return; /* retain the familiar text caret and selection cursor */
+    }
+    var x=e.clientX,y=e.clientY;
+    cursor.style.transform='translate3d('+(x-2)+'px,'+(y-2)+'px,0)';
+    cursor.classList.add('is-visible');
+    root.classList.add('sakura-cursor-enabled');
+    var hot=!!(target && target.closest('a,button,summary,[role="button"],.win-view,.mini-row,.wrow,.studio-orbit'));
+    cursor.classList.toggle('is-hot', hot);
+    var now=performance.now();
+    if(pointerSeen && now-lastEmitAt>46 &&
+       Math.hypot(x-lastEmitX,y-lastEmitY)>11){
+      emit(x,y);lastEmitAt=now;lastEmitX=x;lastEmitY=y;
+    }
+    if(!pointerSeen){lastEmitX=x;lastEmitY=y;lastEmitAt=now;}
+    pointerSeen=true;lastX=x;lastY=y;
+  }
+  document.addEventListener('pointermove',pointerMove,{passive:true});
+  document.addEventListener('pointerdown',function(e){
+    if(e.pointerType === 'mouse' && allowed() && pointerSeen){
+      cursor.classList.add('is-pressed');
+      emit(e.clientX,e.clientY);
+    }
+  },{passive:true});
+  document.addEventListener('pointerup',function(){cursor.classList.remove('is-pressed');},{passive:true});
+  document.addEventListener('pointercancel',disable,{passive:true});
+  document.addEventListener('mouseout',function(e){if(!e.relatedTarget) hide();},{passive:true});
+  window.addEventListener('blur',disable);
+  document.addEventListener('visibilitychange',function(){if(document.hidden) disable();});
+  document.addEventListener('keydown',function(e){if(e.key === 'Tab') hide();});
+  window.addEventListener('portfolio-motion',function(e){
+    paused=!!(e.detail && e.detail.paused); if(paused) disable();
+  });
+  function pointerSettingsChanged(){disable();}
+  if(motionQuery.addEventListener)motionQuery.addEventListener('change',pointerSettingsChanged);
+  else if(motionQuery.addListener)motionQuery.addListener(pointerSettingsChanged);
+  if(finePointer.addEventListener)finePointer.addEventListener('change',pointerSettingsChanged);
+
+  /* Keep existing magnetic-button behaviour; disable it when motion is paused. */
+  $('[data-mag]').forEach(function(b){
+    b.addEventListener('mousemove', function(e){
+      if(!allowed()) return;
+      var r=b.getBoundingClientRect();
+      var ox=e.clientX-r.left-r.width/2,oy=e.clientY-r.top-r.height/2;
+      b.style.transform='translate('+(ox*.16).toFixed(1)+'px,'+(oy*.26-2).toFixed(1)+'px)';
+    });
+    b.addEventListener('mouseleave',function(){b.style.transform='';});
   });
 })();
 
