@@ -7,7 +7,7 @@ const server=http.createServer((req,res)=>{
  if(!file.startsWith(root+path.sep)&&file!==root){res.writeHead(403);return res.end();}
  if(fs.existsSync(file)&&fs.statSync(file).isDirectory())file=path.join(file,'index.html');
  if(!fs.existsSync(file)){res.writeHead(404);return res.end();}
- res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8'})[path.extname(file)]||'application/octet-stream');
+ res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.pdf':'application/pdf','.png':'image/png'})[path.extname(file)]||'application/octet-stream');
  fs.createReadStream(file).pipe(res);
 });
 (async()=>{
@@ -25,6 +25,22 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#client-studio').count(),0,'Planner is no longer embedded on homepage');
   assert.equal(await p.locator('.topbar a[href="/plan-project.html"]').count(),1,'Planner navigation link');
   assert.equal(await p.locator('#workPrev').count(),1,'Project gallery remains intact');
+  assert.equal(await p.locator('#workNav').count(),0,'Redundant project navigation strip is removed');
+  assert.equal(await p.locator('#workProg').count(),0,'Redundant project progress strip is removed');
+  assert.equal(await p.locator('#miniList .mini-row').count(),11,'Original workbench source is preserved');
+  assert.equal(await p.locator('#workbenchStory.wb-ready').count(),1,'Scroll-driven book is ready');
+  assert.equal(await p.locator('#certificateShelf .cw-sleeve').count(),10,'All imported credentials are available');
+  await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
+  await p.locator('#certificateShelf .cw-sleeve').first().click();
+  assert.equal(await p.locator('#certificateViewer').evaluate(el=>el.open),true,'Certificate viewer opens');
+  assert.match(await p.locator('#cwViewerTitle').innerText(),/Google Analytics/);
+  await p.locator('#cwClose').click();
+  assert.equal(await p.locator('#certificateViewer').evaluate(el=>el.open),false,'Certificate viewer closes');
+  await p.locator('#certificateShelf .cw-sleeve').nth(6).click();
+  await p.locator('#cwViewerPreview img').waitFor({state:'visible',timeout:10000});
+  assert.match(await p.locator('#cwViewerTitle').innerText(),/Data Visualization/);
+  await p.keyboard.press('Escape');
+  assert.equal(await p.locator('#certificateViewer').evaluate(el=>el.open),false,'Escape closes certificate dialog');
   await p.goto(base+'/plan-project.html',{waitUntil:'domcontentloaded'});
   assert.equal(await p.locator('#client-studio').count(),1,'Standalone planner renders');
   assert.equal(await p.locator('a.plan-back[href="/"]').count(),1,'Return to portfolio is available');
@@ -58,6 +74,6 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Planner mobile horizontal overflow');
   await p.goto(base+'/',{waitUntil:'domcontentloaded'});
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Portfolio mobile horizontal overflow');
-  console.log('Standalone planner workflows, exports, reload behavior, and portfolio/mobile regression checks passed.');
+  console.log('Standalone planner, preserved featured gallery, Workbench book, 10 certificate viewer files and mobile checks passed.');
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
