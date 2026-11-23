@@ -22,7 +22,7 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   next=$('#articleReaderNext'),close=$('#articleReaderClose');
  var items=all('.wrow',source).map(function(row){
   function txt(selector){var el=$(selector,row);return el?el.textContent.trim():'';}
-  return {title:txt('.wt'),category:txt('.wcat'),date:txt('.wdate'),
+  return {title:txt('.wt'),spine:$('.wt',row)?.getAttribute('data-spine')||txt('.wt'),category:txt('.wcat'),date:txt('.wdate'),
    desc:row.getAttribute('data-description')||row.getAttribute('data-peek')||'',
    hook:row.getAttribute('data-hook')||'',image:row.getAttribute('data-image')||'',
    alt:row.getAttribute('data-image-alt')||'',href:row.href};
@@ -45,7 +45,7 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   button.classList.add('dvd-'+tones[i%tones.length]);
   var edge=node('span','dvd-case-edge');
   var serial=node('span','dvd-case-serial',String(i+1).padStart(2,'0')+' / 06');
-  var title=node('strong','dvd-case-title',item.title);
+  var title=node('strong','dvd-case-title',item.spine);title.title=item.title;
   var footer=node('span','dvd-case-category',item.category);
   edge.append(serial,title,footer);
   var art=node('span','dvd-case-art');
