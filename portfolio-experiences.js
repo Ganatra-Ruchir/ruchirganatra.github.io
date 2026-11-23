@@ -52,13 +52,24 @@ function render(){
  var header=element('div','ab-right-header');
  header.append(element('span','ab-category',item.category),element('span','ab-page-date',item.date));
  var hook=element('h5','ab-article-hook',item.hook);
- var desc=element('p','ab-article-summary',item.desc);
- var link=element('a','ab-read-link','Read full article ↗');
+ var sectionLabel=element('span','ab-story-label','THE STORY');
+ var sentences=item.desc.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[item.desc];
+ var lead=element('p','ab-reading-lead',(sentences[0]||'').trim());
+ var paragraphs=element('div','ab-reading-paragraphs');
+ if(sentences.length>1){
+  var second=element('p','ab-article-summary',sentences.slice(1).join(' ').trim());
+  paragraphs.appendChild(second);
+ }
+ var source=element('p','ab-reading-source','Read the complete published story on Medium.');
+ var link=element('a','ab-read-link','Continue to full article ↗');
  link.href=item.href;link.target='_blank';link.rel='noopener noreferrer';
  var body=element('div','ab-right-body');
- body.append(header,hook,desc,link);
- var foot=element('div','ab-page-footer','MEDIUM · WRITING ARCHIVE');
+ var reading=element('div','ab-reading-text');
+ reading.append(sectionLabel,lead,paragraphs,source);
+ body.append(header,hook,reading,link);
+ var foot=element('div','ab-page-footer','ORIGINAL WRITING  ·  RUCHIR GANATRA');
  right.replaceChildren(body,foot);
+ right.scrollTop=0;
 }
 function setIndex(n){
  n=Math.max(-1,Math.min(items.length-1,n));
@@ -99,6 +110,10 @@ source.classList.add('ab-hidden');
 var wardrobe=$('#certificateWardrobe'),shelf=$('#certificateShelf'),openBtn=$('#cabinetToggle'),viewer=$('#certificateViewer');
 var title=$('#cwViewerTitle'),issuer=$('#cwViewerIssuer'),preview=$('#cwViewerPreview'),original=$('#cwOriginal'),count=$('#cwViewerCount');
 var prev=$('#cwPrevious'),next=$('#cwNext'),close=$('#cwClose');
+var cabinetContent=$('#cwCabinetContent'),featureBtn=$('#cwFeaturedOpen'),
+ featureImg=$('#cwFeaturedImage'),featureTitle=$('#cwFeaturedTitle'),featureIssuer=$('#cwFeaturedIssuer'),
+ shelfPrev=$('#cwShelfPrev'),shelfNext=$('#cwShelfNext');
+if(!cabinetContent||!featureBtn||!featureImg||!featureTitle||!featureIssuer||!shelfPrev||!shelfNext)return;
 if(!wardrobe||!shelf||!viewer)return;
 var certificates=[
  {title:'Google Analytics Certification',short:'Google Analytics',issuer:'Google',date:'Sep 2026',path:'certificates/google-analytics.pdf',type:'pdf'},
@@ -115,8 +130,20 @@ var certificates=[
 var index=0,activeToken=0,lastButton=null;
 function previewPath(c){return 'certificates/previews/'+c.path.split('/').pop().replace(/\.(?:pdf|png)$/i,'.webp');}
 function showDoors(open){
+ var wasOpen=wardrobe.classList.contains('cw-is-open');
  wardrobe.classList.toggle('cw-is-open',open);
- if(openBtn){openBtn.setAttribute('aria-expanded',String(open));openBtn.textContent=open?'Close wardrobe':'Open wardrobe';}
+ cabinetContent.inert=!open;
+ cabinetContent.toggleAttribute('inert',!open);
+ featureBtn.disabled=!open;
+ shelfPrev.disabled=!open;
+ shelfNext.disabled=!open;
+ all('.cw-sleeve',shelf).forEach(function(b){b.disabled=!open;});
+ if(!open&&viewer.open)viewer.close();
+ if(open&&!wasOpen)renderFeatured();
+ if(openBtn){
+  openBtn.setAttribute('aria-expanded',String(open));
+  openBtn.textContent=open?'Close wardrobe':'Open wardrobe';
+ }
 }
 openBtn?.addEventListener('click',function(){showDoors(!wardrobe.classList.contains('cw-is-open'));});
 if('IntersectionObserver' in window){
@@ -137,24 +164,43 @@ certificates.forEach(function(c,i){
  card.appendChild(image);
  var foot=doc.createElement('span');foot.className='cw-sleeve-title';foot.textContent=c.short;
  button.append(card,foot);
- button.addEventListener('click',function(){lastButton=button;openCertificate(i);});
+ button.disabled=true;
+ button.setAttribute('aria-pressed','false');
+ button.addEventListener('click',function(){if(!isOpen())return;lastButton=button;selectCertificate(i);});
  shelf.appendChild(button);
 });
 /* Images are pre-rendered from the original PDF's first page and served
    directly from GitHub/Vercel; no CDN script or PDF worker on the critical path. */
-/* Measure the wardrobe cabinet and match the book's displayed height,
-   clamping only when the viewport is too short to contain page controls. */
-function matchBookToWardrobe(){
- var cabinet=$('.cw-cabinet',wardrobe),book=$('#articleBook');
- if(!cabinet||!book)return;
- var height=Math.round(cabinet.getBoundingClientRect().height);
- if(height>0)book.style.setProperty('--book-cabinet-height',height+'px');
+/* Certificate controls never work while the cabinet is closed.
+   The selected original certificate is shown large inside the wardrobe. */
+function isOpen(){return wardrobe.classList.contains('cw-is-open');}
+function renderFeatured(){
+ var c=certificates[index];
+ featureImg.src=previewPath(c);
+ featureImg.alt='Full certificate preview: '+c.title+' by '+c.issuer;
+ featureTitle.textContent=c.title;
+ featureIssuer.textContent=c.issuer+' · '+numbered(index+1,certificates.length);
+ featureBtn.setAttribute('aria-label','Open full-size certificate: '+c.title);
+ all('.cw-sleeve',shelf).forEach(function(b,i){b.setAttribute('aria-pressed',String(i===index));});
 }
-requestAnimationFrame(matchBookToWardrobe);
-if('ResizeObserver' in window){
- var cabinet=$('.cw-cabinet',wardrobe);
- if(cabinet)new ResizeObserver(matchBookToWardrobe).observe(cabinet);
+function selectCertificate(i){
+ if(!isOpen())return;
+ index=(i+certificates.length)%certificates.length;
+ renderFeatured();
+ var picked=$('.cw-sleeve[data-cert-index="'+index+'"]',shelf);
+ if(picked)picked.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
 }
+featureBtn.addEventListener('click',function(){if(isOpen()){lastButton=featureBtn;openCertificate(index);}});
+shelfPrev.addEventListener('click',function(){selectCertificate(index-1);});
+shelfNext.addEventListener('click',function(){selectCertificate(index+1);});
+wardrobe.addEventListener('keydown',function(e){
+ if(!isOpen()||viewer.open||e.altKey||e.ctrlKey||e.metaKey)return;
+ if(e.target===openBtn)return;
+ if(e.key==='ArrowRight'){e.preventDefault();selectCertificate(index+1);}
+ if(e.key==='ArrowLeft'){e.preventDefault();selectCertificate(index-1);}
+});
+renderFeatured();
+showDoors(false);
 function imageFallback(c,token){
  if(token!==activeToken||!viewer.open)return;
  if(c.type==='pdf'){
@@ -167,7 +213,9 @@ function imageFallback(c,token){
  }
 }
 function openCertificate(i){
+ if(!isOpen())return;
  index=(i+certificates.length)%certificates.length;
+ renderFeatured();
  var c=certificates[index],token=++activeToken;
  if(title)title.textContent=c.title;if(issuer)issuer.textContent=c.issuer+' · '+c.date;
  if(count)count.textContent=numbered(index+1,certificates.length);
