@@ -7,7 +7,7 @@ const server=http.createServer((req,res)=>{
  if(!file.startsWith(root+path.sep)&&file!==root){res.writeHead(403);return res.end();}
  if(fs.existsSync(file)&&fs.statSync(file).isDirectory())file=path.join(file,'index.html');
  if(!fs.existsSync(file)){res.writeHead(404);return res.end();}
- res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.pdf':'application/pdf','.png':'image/png'})[path.extname(file)]||'application/octet-stream');
+ res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.pdf':'application/pdf','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml'})[path.extname(file)]||'application/octet-stream');
  fs.createReadStream(file).pipe(res);
 });
 (async()=>{
@@ -28,32 +28,30 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#workNav').count(),0,'Redundant project navigation strip is removed');
   assert.equal(await p.locator('#workProg').count(),0,'Redundant project progress strip is removed');
   assert.equal(await p.locator('#miniList .mini-row').count(),11,'Original workbench source is preserved');
-  assert.equal(await p.locator('#workbenchStory.wb-ready').count(),1,'Scroll-driven book is ready');
-  await p.evaluate(() => {
-    const story=document.querySelector('#workbenchStory');
-    window.scrollTo({top:scrollY+story.getBoundingClientRect().top+story.offsetHeight*.35,behavior:'instant'});
+  assert.equal(await p.locator('#articleBook.ab-ready').count(),1,'Article book is initialized');
+  assert.equal(await p.locator('#writingList .wrow').count(),6,'Six Medium articles remain available');
+  assert.equal(await p.locator('#articleBook .ab-page').count(),2,'Book includes a left and right page');
+  assert.equal(await p.locator('#articleBook .ab-spread').count(),1,'Book has one two-page spread');
+  await p.locator('#articleBook').scrollIntoViewIfNeeded();
+  await p.locator('#articleCover').click();
+  assert.equal(await p.locator('#articleBook.is-open').count(),1,'Cover opens both pages');
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/,'Article title on left');
+  assert.match(await p.locator('#articlePageRight').innerText(),/national literacy/,'Description on right');
+  assert.equal(await p.locator('#articlePageLeft img').count(),1,'Article image on left');
+  const bookScroll=await p.evaluate(()=>window.scrollY);
+  await p.locator('#articleNext').click();
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Static Dashboard/,'Next turns a spread');
+  assert.ok(Math.abs((await p.evaluate(()=>window.scrollY))-bookScroll)<2,'Turning pages must not scroll the page');
+  assert.match(await p.locator('#articlePageRight a').getAttribute('href'),/medium.com/,'Full article link');
+  await p.locator('#articlePrev').click();
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/,'Previous restores the spread');
+  const twoPageLayout=await p.evaluate(()=>{
+    const left=document.querySelector('#articlePageLeft').getBoundingClientRect();
+    const right=document.querySelector('#articlePageRight').getBoundingClientRect();
+    return {left,right};
   });
-  await p.waitForTimeout(350);
-  const bookBefore=await p.evaluate(() => ({
-    scrollY:window.scrollY,
-    position:document.querySelector('.wb-sticky').getBoundingClientRect().top,
-    chapter:document.querySelector('#wbCount').textContent
-  }));
-  assert.ok(bookBefore.position>=75&&bookBefore.position<=140,'Workbench stays pinned and visible while scrolling');
-  await p.locator('#wbNext').click();
-  await p.waitForTimeout(250);
-  const bookAfter=await p.evaluate(() => ({
-    scrollY:window.scrollY,
-    position:document.querySelector('.wb-sticky').getBoundingClientRect().top,
-    chapter:document.querySelector('#wbCount').textContent
-  }));
-  assert.notEqual(bookAfter.chapter,bookBefore.chapter,'Next arrow changes chapter');
-  assert.ok(Math.abs(bookAfter.scrollY-bookBefore.scrollY)<2,'Flipping a page must not scroll the document');
-  assert.ok(Math.abs(bookAfter.position-bookBefore.position)<2,'Book position stays fixed after a page turn');
-  await p.locator('#wbPrev').click();
-  await p.waitForTimeout(200);
-  assert.equal(await p.locator('#wbCount').textContent(),bookBefore.chapter,'Previous arrow restores chapter');
-  assert.ok(Math.abs(await p.evaluate(()=>window.scrollY)-bookBefore.scrollY)<2,'Previous page does not scroll the document');
+  assert.ok(twoPageLayout.left.right<=twoPageLayout.right.left+3,'Left page sits beside the right page');
+  assert.ok(twoPageLayout.left.width>100&&twoPageLayout.right.width>100,'Both article pages are visible');
   assert.equal(await p.locator('#certificateShelf .cw-sleeve').count(),10,'All imported credentials are available');
   await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
   await p.locator('#certificateShelf .cw-sleeve').first().click();
@@ -99,6 +97,6 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Planner mobile horizontal overflow');
   await p.goto(base+'/',{waitUntil:'domcontentloaded'});
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Portfolio mobile horizontal overflow');
-  console.log('Standalone planner, preserved featured gallery, Workbench book, 10 certificate viewer files and mobile checks passed.');
+  console.log('Portfolio two-page article book, six Medium links, project gallery, credentials and planner checks passed.');
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
