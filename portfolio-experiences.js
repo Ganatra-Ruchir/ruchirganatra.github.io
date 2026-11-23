@@ -8,35 +8,57 @@ function all(s,root){return Array.from((root||doc).querySelectorAll(s));}
 function canAnimate(){return !reduce.matches&&!doc.body.classList.contains('motion-paused');}
 function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0');}
 
-/* Published articles live in a page-turning book beside the wardrobe.
-   Smaller builds remain a normal, accessible workbench list. */
+/* One article per two-page spread: image/title on the left, description on the right.
+   Projects remain in the separate Workbench listing. */
 (function initArticleBook(){
-var root=$('#articleBook'),cover=$('#articleCover'),page=$('#articlePage');
-var source=$('#writingList'),turner=$('#articleTurner');
-var prev=$('#articlePrev'),next=$('#articleNext'),counter=$('#articleCount');
-if(!root||!cover||!page||!source)return;
+var root=$('#articleBook'),cover=$('#articleCover'),
+ left=$('#articlePageLeft'),right=$('#articlePageRight'),source=$('#writingList'),
+ turner=$('#articleTurner'),prev=$('#articlePrev'),next=$('#articleNext'),counter=$('#articleCount');
+if(!root||!cover||!left||!right||!source||!prev||!next||!counter)return;
 var items=all('.wrow',source).map(function(row){
  var text=function(selector){var el=$(selector,row);return el?el.textContent.trim():'';};
- return {title:text('.wt'),category:text('.wcat'),date:text('.wdate'),
-  desc:row.getAttribute('data-peek')||'',href:row.href};
+ return {
+  title:text('.wt'),category:text('.wcat'),date:text('.wdate'),
+  desc:row.getAttribute('data-description')||row.getAttribute('data-peek')||'',
+  hook:row.getAttribute('data-hook')||'',
+  image:row.getAttribute('data-image')||'',
+  alt:row.getAttribute('data-image-alt')||'Article illustration',
+  href:row.href
+ };
 });
 if(!items.length)return;
 var index=-1;
+function element(tag,className,content){
+ var node=doc.createElement(tag);
+ if(className)node.className=className;
+ if(content!==undefined)node.textContent=content;
+ return node;
+}
 function render(){
  var item=items[index],number=String(index+1).padStart(2,'0');
- var kicker=doc.createElement('div');kicker.className='wb-page-num';
- kicker.textContent='ARTICLE '+number+' / '+String(items.length).padStart(2,'0');
- var category=doc.createElement('div');category.className='ab-category';
- category.textContent=item.category+' · '+item.date;
- var title=doc.createElement('h4');title.className='wb-page-title';title.textContent=item.title;
- var desc=doc.createElement('p');desc.className='wb-page-desc';desc.textContent=item.desc;
- var link=doc.createElement('a');link.href=item.href;link.target='_blank';
- link.rel='noopener noreferrer';link.textContent='Read article ↗';
- var links=doc.createElement('div');links.className='wb-page-links';links.appendChild(link);
- var group=doc.createElement('div');group.append(kicker,category,title,desc,links);
- var foot=doc.createElement('div');foot.className='wb-page-meta';
- foot.append('R. GANATRA / MEDIUM','PUBLISHED '+item.date.toUpperCase());
- page.replaceChildren(group,foot);
+ var kicker=element('span','wb-page-num','ARTICLE '+number+' / '+String(items.length).padStart(2,'0'));
+ var pic=element('div','ab-picture');
+ var img=element('img','ab-article-image');
+ img.src=item.image;img.alt=item.alt;img.loading='eager';img.decoding='async';
+ img.addEventListener('error',function(){
+  pic.classList.add('is-fallback');
+  img.remove();
+  pic.appendChild(element('span','ab-image-missing','ART / '+item.category));
+ },{once:true});
+ pic.appendChild(img);
+ var title=element('h4','ab-article-title',item.title);
+ var meta=element('div','ab-page-footer','R. GANATRA  ·  '+item.date);
+ left.replaceChildren(kicker,pic,title,meta);
+ var header=element('div','ab-right-header');
+ header.append(element('span','ab-category',item.category),element('span','ab-page-date',item.date));
+ var hook=element('h5','ab-article-hook',item.hook);
+ var desc=element('p','ab-article-summary',item.desc);
+ var link=element('a','ab-read-link','Read full article ↗');
+ link.href=item.href;link.target='_blank';link.rel='noopener noreferrer';
+ var body=element('div','ab-right-body');
+ body.append(header,hook,desc,link);
+ var foot=element('div','ab-page-footer','MEDIUM · WRITING ARCHIVE');
+ right.replaceChildren(body,foot);
 }
 function setIndex(n){
  n=Math.max(-1,Math.min(items.length-1,n));
@@ -54,7 +76,7 @@ function setIndex(n){
    turner.classList.add('is-turning');
   }
  }
- counter.textContent=n<0?'COVER / '+numbered(0,items.length):'PAGE '+numbered(n+1,items.length);
+ counter.textContent=n<0?'COVER / '+numbered(0,items.length):'SPREAD '+numbered(n+1,items.length);
  prev.disabled=n<0;
  next.disabled=n===items.length-1;
 }
