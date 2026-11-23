@@ -319,12 +319,12 @@ body{overflow-x:clip;}
 /* EQUAL ARCHIVE PANELS — book and wardrobe have identical visual dimensions.
    The large original-document preview replaces a crowded ten-up miniature shelf. */
 .archive-gallery{
-  --archive-panel-height:clamp(550px,75svh,760px);
+  --archive-panel-height:542px;
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(16px,2vw,30px);
   align-items:start;
-  margin-top:clamp(20px,3vw,44px);
+  margin-top:clamp(16px,2.2vw,28px);
 }
 .archive-gallery > section{width:100%;max-width:100%;min-width:0;margin:0;}
 .archive-gallery .cw-heading,
@@ -362,6 +362,12 @@ body{overflow-x:clip;}
   margin:0;
   padding:9px 0 0;
 }
+/* Use the Article Book's original 490px reading area with 52px of controls.
+   A landscape cabinet beside it no longer stretches to fill the viewport. */
+.archive-gallery .cw-cabinet{aspect-ratio:auto;}
+.archive-gallery .cw-feature{min-height:0;}
+.archive-gallery .cw-feature img{display:block;object-fit:contain;}
+
 .archive-gallery .cw-cabinet{
   box-sizing:border-box;
   width:100%;max-width:none;
@@ -621,14 +627,14 @@ body{overflow-x:clip;}
   .archive-gallery{
     grid-template-columns:1fr;
     gap:clamp(22px,5vw,34px);
-    --archive-panel-height:clamp(480px,72svh,700px);
+    --archive-panel-height:520px;
   }
   .archive-gallery .cw-heading{height:auto;min-height:70px;}
   .archive-gallery .ab-book{max-width:none!important;}
 }
 @media(max-width:560px){
   .archive-gallery{
-    --archive-panel-height:clamp(490px,76svh,660px);
+    --archive-panel-height:480px;
     gap:22px;
   }
   .archive-gallery .cw-heading{min-height:0;height:auto;margin-bottom:12px;}
