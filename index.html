@@ -2543,7 +2543,7 @@ function initWork(){
   var progEl=$('#workProg i'), countEl=$('#workCount'),hint=$('#workHintTxt');
   var navBtns=$$('#workNav button'),ambient=$('#workAmbientFrame');
   var prev=$('#workPrev'), next=$('#workNext'),stageCount=$('#workStageCount'),stageHint=$('#workStageInstruction');
-  var horiz=!!(G&&ST&&!RM&&window.innerWidth>=1024);
+  var horiz=!!(!RM&&window.innerWidth>=1024);
   var active=0,visited=false,completed=false,lastWheelStep=0,wheelSum=0;
   var ambientIndex=-1,ambientTimer=null,scrollRaf=0;
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
