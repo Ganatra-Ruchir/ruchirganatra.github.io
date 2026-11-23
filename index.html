@@ -2961,7 +2961,7 @@ var Previews = (function(){
   if(finePointer.addEventListener)finePointer.addEventListener('change',pointerSettingsChanged);
 
   /* Keep existing magnetic-button behaviour; disable it when motion is paused. */
-  $('[data-mag]').forEach(function(b){
+  $$('[data-mag]').forEach(function(b){
     b.addEventListener('mousemove', function(e){
       if(!allowed()) return;
       var r=b.getBoundingClientRect();
