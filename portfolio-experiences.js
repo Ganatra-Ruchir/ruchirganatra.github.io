@@ -90,7 +90,8 @@ var certificates=[
  {title:'AI Tools and ChatGPT Workshop',short:'AI Tools & ChatGPT',issuer:'be10X',date:'Jan 2026',path:'certificates/be10x-ai.pdf',type:'pdf'},
  {title:'Generative AI Essentials Badge',short:'Generative AI Badge',issuer:'IBM SkillsBuild',date:'2026',path:'certificates/ibm-genai-badge.pdf',type:'pdf'}
 ];
-var index=0,activeToken=0,lastButton=null,pdfLibrary=null;
+var index=0,activeToken=0,lastButton=null;
+function previewPath(c){return 'certificates/previews/'+c.path.split('/').pop().replace(/\.(?:pdf|png)$/i,'.webp');}
 function showDoors(open){
  wardrobe.classList.toggle('cw-is-open',open);
  if(openBtn){openBtn.setAttribute('aria-expanded',String(open));openBtn.textContent=open?'Close wardrobe':'Open wardrobe';}
@@ -108,55 +109,40 @@ certificates.forEach(function(c,i){
  button.setAttribute('aria-label','Pick certificate: '+c.title+' by '+c.issuer);
  button.setAttribute('data-cert-index',i);
  var card=doc.createElement('span');card.className='cw-paper';
- var medal=doc.createElement('span');medal.className='cw-medal';medal.textContent='✦';
- var provider=doc.createElement('span');provider.className='cw-provider';provider.textContent=c.issuer;
- var name=doc.createElement('span');name.className='cw-course';name.textContent=c.short;
- card.append(medal,provider,name);
+ var image=doc.createElement('img');
+ image.className='cw-cert-image';image.src=previewPath(c);
+ image.alt=c.title+' — actual certificate preview';image.loading='lazy';image.decoding='async';
+ card.appendChild(image);
  var foot=doc.createElement('span');foot.className='cw-sleeve-title';foot.textContent=c.short;
  button.append(card,foot);
  button.addEventListener('click',function(){lastButton=button;openCertificate(i);});
  shelf.appendChild(button);
 });
-function loadPdfjs(){
- if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
- if(pdfLibrary)return pdfLibrary;
- pdfLibrary=new Promise(function(resolve,reject){
-  var script=doc.createElement('script');
-  script.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-  script.async=true;
-  script.onload=function(){
-   if(!window.pdfjsLib)return reject(new Error('PDF renderer unavailable'));
-   window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-   resolve(window.pdfjsLib);
-  };
-  script.onerror=function(){reject(new Error('PDF library could not load'));};
-  doc.head.appendChild(script);
- }).catch(function(e){pdfLibrary=null;throw e;});
- return pdfLibrary;
+/* Images are pre-rendered from the original PDF's first page and served
+   directly from GitHub/Vercel; no CDN script or PDF worker on the critical path. */
+/* Measure the wardrobe cabinet and match the book's displayed height,
+   clamping only when the viewport is too short to contain page controls. */
+function matchBookToWardrobe(){
+ var cabinet=$('.cw-cabinet',wardrobe),story=$('#workbenchStory');
+ if(!cabinet||!story)return;
+ var height=Math.round(cabinet.getBoundingClientRect().height);
+ if(height>0)story.style.setProperty('--wb-cabinet-height',height+'px');
 }
-function fallbackPdf(c,token){
+requestAnimationFrame(matchBookToWardrobe);
+if('ResizeObserver' in window){
+ var cabinet=$('.cw-cabinet',wardrobe);
+ if(cabinet)new ResizeObserver(matchBookToWardrobe).observe(cabinet);
+}
+function imageFallback(c,token){
  if(token!==activeToken||!viewer.open)return;
- var frame=doc.createElement('iframe');frame.title=c.title;
- frame.src=c.path+'#toolbar=0&navpanes=0';
- frame.loading='eager';preview.replaceChildren(frame);
-}
-async function renderPdf(c,token){
- try{
-  var pdfjs=await loadPdfjs();
-  if(token!==activeToken)return;
-  var docHandle=await pdfjs.getDocument({url:c.path}).promise;
-  var pdfPage=await docHandle.getPage(1);
-  if(token!==activeToken)return;
-  var pageViewport=pdfPage.getViewport({scale:1}),maxWidth=Math.min(1000,window.innerWidth-66);
-  var density=Math.min(window.devicePixelRatio||1,2);
-  var scaled=pdfPage.getViewport({scale:Math.min(2.2,Math.max(.75,maxWidth/pageViewport.width))});
-  var canvas=doc.createElement('canvas');
-  canvas.width=Math.ceil(scaled.width*density);canvas.height=Math.ceil(scaled.height*density);
-  canvas.style.width=Math.ceil(scaled.width)+'px';canvas.style.height=Math.ceil(scaled.height)+'px';
-  await pdfPage.render({canvasContext:canvas.getContext('2d'),viewport:pdfPage.getViewport({scale:scaled.scale*density})}).promise;
-  if(token===activeToken&&viewer.open)preview.replaceChildren(canvas);
-  docHandle.destroy();
- }catch(e){fallbackPdf(c,token);}
+ if(c.type==='pdf'){
+  var frame=doc.createElement('iframe');frame.title=c.title;
+  frame.src=c.path+'#toolbar=0&navpanes=0';preview.replaceChildren(frame);
+ }else{
+  var message=doc.createElement('span');message.className='cw-loading';
+  message.textContent='Preview unavailable. Open the original certificate instead.';
+  preview.replaceChildren(message);
+ }
 }
 function openCertificate(i){
  index=(i+certificates.length)%certificates.length;
@@ -164,14 +150,12 @@ function openCertificate(i){
  if(title)title.textContent=c.title;if(issuer)issuer.textContent=c.issuer+' · '+c.date;
  if(count)count.textContent=numbered(index+1,certificates.length);
  if(original){original.href=c.path;original.setAttribute('aria-label','Open original '+c.title+' in a new tab');}
- var loading=doc.createElement('span');loading.className='cw-loading';loading.textContent='Opening original certificate…';
- preview.replaceChildren(loading);
+ var image=doc.createElement('img');
+ image.className='cw-certificate-full';image.src=previewPath(c);
+ image.alt=c.title+' original certificate page';image.decoding='async';image.loading='eager';
+ image.onerror=function(){imageFallback(c,token);};
+ preview.replaceChildren(image);
  if(!viewer.open)viewer.showModal();
- if(c.type==='image'){
-  var image=doc.createElement('img');image.src=c.path;image.alt=c.title+' certificate image';image.decoding='async';
-  image.onload=function(){if(token===activeToken)preview.replaceChildren(image);};
-  image.onerror=function(){if(token===activeToken)preview.replaceChildren(doc.createTextNode('Preview unavailable. Use Open original.'));};
- }else renderPdf(c,token);
 }
 function navigate(d){openCertificate(index+d);}
 prev?.addEventListener('click',function(){navigate(-1);});
