@@ -1863,44 +1863,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <div class="sec-title-wrap"><h3 class="display" style="font-size:clamp(28px,4vw,52px);" data-split-h>The workbench</h3></div>
         <span class="label" style="margin-left:auto;">A field notebook of smaller builds</span>
       </div>
-      <div class="wb-story" id="workbenchStory" tabindex="0" aria-label="Scrollable Workbench chapter book">
-        <div class="wb-sticky">
-          <div class="wb-book" id="wbBook">
-            <div class="wb-pages">
-              <div class="wb-book-left">
-                <div>
-                  <div class="wb-kicker">Ruchir Ganatra / Vol. 01</div>
-                  <div class="wb-index-mark">RG</div>
-                  <h4 class="wb-left-title">Build notes</h4>
-                  <p class="wb-left-copy">Data, security and useful tools — one working project per chapter.</p>
-                </div>
-                <div>
-                  <div class="wb-line"></div>
-                  <div class="wb-current" style="margin-top:14px;">DESIGNED TO BE USED · NOT JUST SHOWN</div>
-                </div>
-              </div>
-              <div class="wb-book-right" id="wbContent" aria-label="Current project chapter" aria-live="polite">
-                <div class="wb-kicker">Project index · Scroll to read</div>
-              </div>
-            </div>
-            <div class="wb-turner" id="wbTurner" aria-hidden="true"></div>
-            <div class="wb-cover" id="wbCover" aria-hidden="false">
-              <div class="wb-cover-inner">
-                <span class="wb-cover-emblem" aria-hidden="true">✦</span>
-                <span class="wb-cover-sub">The independent builds archive</span>
-                <h4>The<br>Workbench</h4>
-                <div class="wb-cover-small">10 CHAPTERS / DATA · DEVELOPMENT · SECURITY</div>
-                <div class="wb-cover-small">SCROLL TO TURN THE FIRST PAGE</div>
-              </div>
-            </div>
-          </div>
-          <div class="wb-controls">
-            <button id="wbPrev" type="button" aria-label="Previous chapter" disabled>←</button>
-            <span class="wb-control-count" id="wbCount">COVER / 00 / 10</span>
-            <button id="wbNext" type="button" aria-label="Next chapter">→</button>
-          </div>
-        </div>
-        <div class="wb-fallback" id="wbSource">
+      <div class="wb-project-index" id="wbSource">
       <div class="mini-list" id="miniList">
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/01</span>
@@ -1967,8 +1930,6 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
           <span class="mr-t">Live from GitHub</span>
           <span class="mr-desc" id="liveRepoNote">Fetching most recently pushed repositories…</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir" target="_blank" rel="noopener">Profile ↗</a></span>
-        </div>
-      </div>
         </div>
       </div>
     </div>
