@@ -145,10 +145,17 @@ function showDoors(open){
   openBtn.textContent=open?'Close wardrobe':'Open wardrobe';
  }
 }
-openBtn?.addEventListener('click',function(){showDoors(!wardrobe.classList.contains('cw-is-open'));});
+var manualDoorChoice=false;
+openBtn?.addEventListener('click',function(){
+ manualDoorChoice=true;
+ showDoors(!wardrobe.classList.contains('cw-is-open'));
+});
 if('IntersectionObserver' in window){
  var obs=new IntersectionObserver(function(entries){
-  if(entries.some(function(e){return e.isIntersecting;})){showDoors(true);obs.disconnect();}
+  if(entries.some(function(e){return e.isIntersecting;})){
+   if(!manualDoorChoice)showDoors(true);
+   obs.disconnect();
+  }
  },{threshold:.15});
  obs.observe(wardrobe);
 }else showDoors(true);
