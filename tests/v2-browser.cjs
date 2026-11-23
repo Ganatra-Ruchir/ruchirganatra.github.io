@@ -46,6 +46,21 @@ const server=http.createServer((req,res)=>{
   assert.equal(new Set(allMedium.links).size,12,'No duplicate Medium articles');
   assert.ok(allMedium.links.every(x=>x.startsWith('https://ruchirganatra.medium.com/')),'Article shelf contains only verified Medium posts');
   assert.equal(allMedium.caseTitles.length,12,'Every article has its own DVD spine');
+  const shelfLayout=await p.locator('#dvdRack').evaluate(el=>{
+    const cases=[...el.querySelectorAll('.dvd-case')];
+    const positions=cases.map(c=>({x:Math.round(c.getBoundingClientRect().x),y:Math.round(c.getBoundingClientRect().y)}));
+    const shelf=el.closest('.dvd-bookcase');
+    return {rows:new Set(positions.map(p=>p.y)).size,total:cases.length,
+      rowSetting:getComputedStyle(shelf).getPropertyValue('--dvd-rows').trim(),
+      cssLayout:getComputedStyle(el).display,
+      heights:positions.map(p=>p.y),
+      rightEmpty:!shelf.querySelector('.dvd-empty-bay').hasChildNodes()};
+  });
+  assert.equal(shelfLayout.cssLayout,'grid','Article cases form a CD/DVD shelf grid');
+  assert.equal(shelfLayout.rows,2,'Twelve articles are stored in two horizontal metal shelves');
+  assert.equal(shelfLayout.rowSetting,'2','New articles will generate more shelf rows');
+  assert.equal(shelfLayout.rightEmpty,true,'The right compartment remains empty');
+  assert.equal(shelfLayout.total,12,'Articles are never replaced by project cards');
   const metallic=await p.locator('.dvd-cabinet').evaluate(el=>getComputedStyle(el).backgroundImage);
   assert.match(metallic,/linear-gradient/,'Metallic brushed shelf finish is active');
 
