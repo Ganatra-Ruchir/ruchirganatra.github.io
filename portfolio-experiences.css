@@ -186,3 +186,47 @@ body{overflow-x:clip;}
 @media(prefers-reduced-motion:reduce){
  .ab-book.is-open .ab-cover{display:none;}
 }
+
+
+/* Wardrobe-sized book: use the cabinet's measured height, retaining viewport space
+   for the book controls and sticky navigation at short screen heights. */
+.wb-story.wb-ready .wb-sticky{
+  min-height:0;
+  height:min(calc(var(--wb-cabinet-height, 620px) + 92px), calc(100svh - 104px));
+  top:clamp(76px,9vh,104px);
+  padding-block:8px 18px;
+}
+.wb-story.wb-ready .wb-book{
+  min-height:0;
+  height:min(var(--wb-cabinet-height, 620px), calc(100svh - 184px));
+  width:min(1120px, calc(100vw - 2 * var(--gut) - 18px));
+}
+.wb-story.wb-ready .wb-controls{margin-top:14px;flex-shrink:0;}
+/* Every sleeve displays the true printed certificate, not an illustrative card. */
+.cw-sleeve .cw-paper{
+  width:min(100%,176px);
+  height:clamp(134px,12vw,168px);
+  padding:0;overflow:hidden;
+  background:#fff; border:2px solid #ddc19a;
+  box-shadow:0 10px 17px rgba(0,0,0,.26);
+}
+.cw-sleeve .cw-paper::before{content:none;}
+.cw-cert-image{
+  position:relative;display:block;width:100%;height:100%;
+  object-fit:contain;object-position:center;
+  background:white;
+  border:0;
+}
+.cw-viewer-preview .cw-certificate-full{
+  width:auto;max-width:100%;max-height:none;height:auto;
+  object-fit:contain;object-position:center;
+  background:white;
+}
+@media(max-width:800px){
+  .wb-story.wb-ready .wb-sticky{top:78px;height:min(calc(var(--wb-cabinet-height,620px) + 92px),calc(100svh - 82px));}
+  .wb-story.wb-ready .wb-book{height:min(var(--wb-cabinet-height,620px),calc(100svh - 162px));}
+}
+@media(max-width:560px){
+  .cw-sleeve .cw-paper{height:138px;width:min(100%,156px);}
+  .wb-story.wb-ready .wb-book{width:calc(100vw - 2 * var(--gut) - 10px);}
+}
