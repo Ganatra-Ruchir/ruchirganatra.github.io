@@ -28,47 +28,43 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.locator('#workNav').count(),0,'Redundant project navigation strip is removed');
   assert.equal(await p.locator('#workProg').count(),0,'Redundant project progress strip is removed');
   assert.equal(await p.locator('#miniList .mini-row').count(),11,'Original workbench source is preserved');
-  assert.equal(await p.locator('#articleBook.ab-ready').count(),1,'Article book is initialized');
-  assert.equal(await p.locator('#writingList .wrow').count(),6,'Six Medium articles remain available');
-  assert.equal(await p.locator('#articleBook .ab-page').count(),2,'Book includes a left and right page');
-  assert.equal(await p.locator('#articleBook .ab-spread').count(),1,'Book has one two-page spread');
-  await p.locator('#articleBook').scrollIntoViewIfNeeded();
-  await p.locator('#articleCover').click();
-  assert.equal(await p.locator('#articleBook.is-open').count(),1,'Cover opens both pages');
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/i,'Article title on left');
-  assert.match(await p.locator('#articlePageRight').innerText(),/national literacy/,'Description on right');
-  assert.equal(await p.locator('#articlePageLeft img').count(),1,'Article image on left');
-  await p.locator('#articleNext').scrollIntoViewIfNeeded();
-  const bookScroll=await p.evaluate(()=>window.scrollY);
-  await p.locator('#articleNext').click();
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Static Dashboard/i,'Next turns a spread');
-  assert.ok(Math.abs((await p.evaluate(()=>window.scrollY))-bookScroll)<2,'Turning pages must not scroll the page');
-  assert.match(await p.locator('#articlePageRight a').getAttribute('href'),/medium.com/,'Full article link');
-  await p.locator('#articlePrev').click();
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/i,'Previous restores the spread');
-  const twoPageLayout=await p.evaluate(()=>{
-    const left=document.querySelector('#articlePageLeft').getBoundingClientRect();
-    const right=document.querySelector('#articlePageRight').getBoundingClientRect();
-    return {left,right};
+  assert.equal(await p.locator('#writingList .wrow').count(),6,'Six original article links are retained');
+  assert.equal(await p.locator('#dvdRack .dvd-case').count(),6,'All six game cases rendered');
+  const shelf=await p.evaluate(()=>{
+    const rect=e=>e.getBoundingClientRect();
+    const left=rect(document.querySelector('.dvd-filled-bay'));
+    const empty=document.querySelector('.dvd-empty-bay'),right=rect(empty);
+    return {left,right,emptyChildren:empty.children.length,
+      cases:[...document.querySelectorAll('#dvdRack .dvd-case')].map(rect)};
   });
-  assert.ok(twoPageLayout.left.right<=twoPageLayout.right.left+3,'Left page sits beside the right page');
-  assert.ok(twoPageLayout.left.width>100&&twoPageLayout.right.width>100,'Both article pages are visible');
+  assert.equal(shelf.emptyChildren,0,'Right shelf reserved and empty');
+  assert.ok(shelf.left.right<=shelf.right.left+11,'Filled bay is on the left');
+  assert.ok(shelf.cases.every(r=>r.left>=shelf.left.left-2&&r.right<=shelf.left.right+2),'All six articles remain visible inside left compartment');
+  assert.match(await p.locator('#dvdRack .dvd-case-title').nth(1).innerText(),/Static Dashboard/,'Readable DVD spine title');
+  await p.locator('#dvdRack .dvd-case').first().click();
+  assert.equal(await p.locator('#articleReader').evaluate(d=>d.open),true,'Selecting a case opens the article viewer');
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/Classrooms/i,'Selected article title');
+  assert.match(await p.locator('#articleReaderLead').innerText(),/national literacy/,'Article summary is present');
+  assert.match(await p.locator('#articleReaderLink').getAttribute('href'),/medium.com/,'Full original Medium article link');
+  assert.ok((await p.locator('#articleReaderImage').getAttribute('src')).length>8,'Original article image referenced');
+  await p.locator('#articleReaderNext').click();
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/Static Dashboard/i,'Next article navigation');
+  await p.locator('#articleReaderPrev').click();
+  assert.match(await p.locator('#articleReaderTitle').innerText(),/Classrooms/i,'Previous article navigation');
+  await p.keyboard.press('Escape');
+  assert.equal(await p.locator('#articleReader').evaluate(d=>d.open),false,'Escape closes reader');
+  assert.equal(await p.evaluate(()=>document.activeElement?.getAttribute('data-article-index')),'0','Keyboard focus returns to selected case');
   assert.equal(await p.locator('#certificateShelf .cw-sleeve').count(),10,'All imported credentials are available');
   if(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open'))){
     await p.locator('#cabinetToggle').click();
   }
   assert.equal(await p.locator('#cwCabinetContent').evaluate(el=>el.inert),true,'Closed wardrobe is inert');
   assert.equal(await p.locator('#cwFeaturedOpen').isDisabled(),true,'Closed wardrobe prevents certificate access');
-  const panelSizes=await p.evaluate(()=>{
-    const rect=el=>el.getBoundingClientRect();
-    const book=rect(document.querySelector('#articleBook'));
-    const paper=rect(document.querySelector('#articleBook .wb-book'));
-    const cabinet=rect(document.querySelector('.archive-gallery .cw-cabinet'));
-    return {book:book.height,paper:paper.height,cabinet:cabinet.height,landscape:cabinet.width>cabinet.height};
+  const cabinet=await p.evaluate(()=>{
+    const r=document.querySelector('.archive-v4 .cw-cabinet').getBoundingClientRect();
+    return {width:r.width,height:r.height};
   });
-  assert.ok(Math.abs(panelSizes.book-panelSizes.cabinet)<2,'Book and wardrobe have matching heights');
-  assert.ok(Math.abs(panelSizes.paper-490)<3,'Article book retains original 490px paper');
-  assert.equal(panelSizes.landscape,true,'Wardrobe is a horizontal rectangle');
+  assert.ok(cabinet.width>cabinet.height,'Certificate exhibit remains landscape');
   await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
   await p.locator('#cabinetToggle').click();
   await p.waitForTimeout(450);
@@ -123,6 +119,6 @@ const server=http.createServer((req,res)=>{
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Planner mobile horizontal overflow');
   await p.goto(base+'/',{waitUntil:'domcontentloaded'});
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false,'Portfolio mobile horizontal overflow');
-  console.log('Portfolio two-page article book, six Medium links, project gallery, credentials and planner checks passed.');
+  console.log('DVD shelf with six left-side articles, empty right bay, credentials, projects and planner checks passed.');
  }finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
