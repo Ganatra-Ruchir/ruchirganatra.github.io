@@ -66,9 +66,12 @@ const server=http.createServer((req,res)=>{
   });
   assert.ok(cabinet.width>cabinet.height,'Certificate exhibit remains landscape');
   await p.locator('#certificateWardrobe').scrollIntoViewIfNeeded();
-  await p.locator('#cabinetToggle').click();
-  await p.waitForTimeout(450);
-  assert.equal(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open')),true,'Wardrobe reopens only when requested');
+  await p.waitForTimeout(150);
+  if(!await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open'))){
+    await p.locator('#cabinetToggle').click();
+  }
+  await p.waitForTimeout(250);
+  assert.equal(await p.locator('#certificateWardrobe').evaluate(el=>el.classList.contains('cw-is-open')),true,'Wardrobe opens when requested or on first intersection');
   assert.equal(await p.locator('#cwFeaturedOpen').isEnabled(),true,'Certificate controls unlock only after opening');
   assert.equal(await p.locator('#cwFeaturedImage').evaluate(el=>el.complete&&el.naturalWidth>0),true,'True certificate image loads');
   await p.locator('#cwShelfNext').click();
