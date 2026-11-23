@@ -1649,12 +1649,23 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         </div>
         <div class="cw-cabinet">
           <div class="cw-cabinet-top">Ruchir Ganatra · Credential Collection</div>
-          <div class="cw-shelves" id="certificateShelf"></div>
+          <button class="cw-feature" id="cwFeaturedOpen" type="button" aria-label="View selected certificate at full size">
+            <img id="cwFeaturedImage" src="certificates/previews/google-analytics.webp" alt="Google Analytics certificate" decoding="async" fetchpriority="high">
+            <span class="cw-feature-action">Open full certificate ↗</span>
+          </button>
+          <div class="cw-feature-meta">
+            <button type="button" class="cw-navigate" id="cwShelfPrev" aria-label="Previous certificate">←</button>
+            <div class="cw-feature-label" aria-live="polite">
+              <strong id="cwFeaturedTitle">Google Analytics Certification</strong>
+              <span id="cwFeaturedIssuer">Google · 01 / 10</span>
+            </div>
+            <button type="button" class="cw-navigate" id="cwShelfNext" aria-label="Next certificate">→</button>
+          </div>
+          <div class="cw-shelves" id="certificateShelf" role="group" aria-label="Choose one of ten certificate thumbnails"></div>
           <div class="cw-doors" aria-hidden="true">
             <div class="cw-door"></div><div class="cw-door"></div>
           </div>
         </div>
-        <p class="cw-note">Select a certificate to take it off the shelf and inspect its original image.</p>
         <noscript>
           <p>Certificates available: <a href="certificates/google-analytics.pdf">Google Analytics</a>,
           <a href="certificates/google-ads.pdf">Google Ads Measurement</a>,
