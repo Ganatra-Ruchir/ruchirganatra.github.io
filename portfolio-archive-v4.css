@@ -389,3 +389,134 @@
   .archive-v4 .dvd-case,.archive-v4 .cw-feature-action,.article-reader[open]{animation:none!important;transition:none!important;}
   .article-reader[open]{transform:none!important;}
 }
+
+
+/* COLLECTOR SHELF — published cases grouped left, right compartment vacant.
+   All six existing titles fit in a single visible row on desktop.
+   Reserve the other bay as real empty space for future articles. */
+.archive-v4 .dvd-bookcase{
+  --case-gap:clamp(5px,.72vw,11px);
+  display:grid;
+  grid-template-columns:minmax(0,58fr) minmax(0,42fr);
+  min-height:clamp(300px,31vw,390px);
+  margin:21px 0 0;
+  position:relative;
+  border:1px solid rgba(229,190,140,.25);
+  border-bottom:0;
+  border-radius:6px 6px 0 0;
+  background:linear-gradient(135deg,#36251b 0%,#241710 100%);
+  box-shadow:inset 0 10px 18px rgba(0,0,0,.21);
+}
+.archive-v4 .dvd-filled-bay{
+  min-width:0;min-height:0;position:relative;
+  border-right:10px solid #775035;
+  box-shadow:inset -5px 0 12px rgba(0,0,0,.19);
+  overflow:hidden;
+}
+.archive-v4 .dvd-empty-bay{
+  min-width:0;min-height:0;position:relative;
+  background:repeating-linear-gradient(90deg,rgba(130,87,53,.035) 0,rgba(130,87,53,.035) 13px,transparent 14px,transparent 46px);
+  box-shadow:inset 5px 0 14px rgba(0,0,0,.22);
+}
+.archive-v4 .dvd-empty-bay::before,
+.archive-v4 .dvd-filled-bay::before{
+  content:"";position:absolute;left:0;right:0;top:0;
+  height:12px;pointer-events:none;
+  background:linear-gradient(#795137,#4c3020);
+  box-shadow:0 6px 10px rgba(0,0,0,.2);
+  z-index:1;
+}
+.archive-v4 .dvd-empty-bay::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:7px;
+  background:linear-gradient(#ac7951,#64432b);
+  box-shadow:0 -4px 8px rgba(0,0,0,.2);
+}
+.archive-v4 .dvd-bookcase .dvd-rack{
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  width:100%;height:100%;min-height:0;
+  padding:52px clamp(8px,1vw,15px) 8px;
+  gap:var(--case-gap);
+  overflow:visible;
+  scroll-snap-type:none;
+  scrollbar-width:none;
+}
+.archive-v4 .dvd-bookcase .dvd-case{
+  flex:0 0 min(82px,calc((100% - 5 * var(--case-gap))/6));
+  width:min(82px,calc((100% - 5 * var(--case-gap))/6));
+  height:clamp(210px,24vw,300px);
+  min-width:0;
+  min-height:0;
+  max-width:none;
+  margin:0 0 9px;
+  padding:0;
+  border-left-width:4px;
+  border-radius:3px 6px 5px 3px;
+  transform:translateY(0) rotateY(-5deg);
+}
+.archive-v4 .dvd-bookcase .dvd-case:hover,
+.archive-v4 .dvd-bookcase .dvd-case:focus-visible{
+  transform:translateY(-20px) rotateY(-3deg) scale(1.03);
+}
+.archive-v4 .dvd-bookcase .dvd-case.is-selected{
+  transform:translateY(-26px) rotateY(-3deg);
+}
+.archive-v4 .dvd-bookcase .dvd-case-edge{
+  width:58%;
+  gap:6px;
+  padding:8px 2px;
+}
+.archive-v4 .dvd-bookcase .dvd-case-title{
+  font-size:clamp(9px,.86vw,12px);
+  line-height:1.1;
+}
+.archive-v4 .dvd-bookcase .dvd-case-category{
+  max-height:45px;font-size:7px;
+}
+.archive-v4 .dvd-bookcase .dvd-case-art{
+  flex:1;
+}
+.archive-v4 .dvd-shelf-plinth{
+  margin-top:0;
+  border-top-width:14px;
+  border-radius:0 0 4px 4px;
+}
+@media(max-width:740px){
+  .archive-v4 .dvd-bookcase{
+    grid-template-columns:1fr;
+    margin-top:14px;
+  }
+  .archive-v4 .dvd-filled-bay{
+    border-right:0;
+    border-bottom:10px solid #775035;
+    min-height:290px;
+  }
+  .archive-v4 .dvd-empty-bay{
+    min-height:142px;
+  }
+  .archive-v4 .dvd-bookcase .dvd-rack{
+    padding:42px 9px 9px;
+    gap:6px;
+  }
+  .archive-v4 .dvd-bookcase .dvd-case{
+    flex-basis:min(60px,calc((100% - 30px)/6));
+    width:min(60px,calc((100% - 30px)/6));
+    height:225px;
+  }
+  .archive-v4 .dvd-bookcase .dvd-case-title{
+    font-size:10px;
+  }
+}
+@media(max-width:360px){
+  .archive-v4 .dvd-bookcase .dvd-rack{gap:4px;padding-inline:7px;}
+  .archive-v4 .dvd-bookcase .dvd-case{
+    flex-basis:calc((100% - 20px)/6);
+    width:calc((100% - 20px)/6);
+  }
+  .archive-v4 .dvd-bookcase .dvd-case-edge{width:66%;}
+  .archive-v4 .dvd-bookcase .dvd-case-title{font-size:9px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .archive-v4 .dvd-bookcase .dvd-case{transition:none!important;}
+}
