@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3eee5">
+<title>Plan a Project — Ruchir Ganatra</title>
+<meta name="description" content="Plan a dashboard, automation, data analysis or document-research project with Ruchir Ganatra. Explore relevant work and prepare a clear project brief.">
+<link rel="canonical" href="https://ruchirganatra-github-io.vercel.app/plan-project.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23141110'/%3E%3Cpath d='M14 72 L34 52 L50 62 L86 26' fill='none' stroke='%23c08a4e' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#241610;--choco:#6b4226;--choco-2:#8a5730;--caramel:#c08a4e;
+  --paper:#f3eee5;--paper-2:#fbf8f2;--ink:#141110;
+  --bg:var(--paper);--surface-raised:var(--paper-2);--surface-sunken:#e7dfd2;
+  --bg-elev:rgba(251,248,242,.82);--hair:rgba(20,17,16,.14);--hair-strong:rgba(20,17,16,.3);
+  --fg:var(--ink);--fg-dim:#4a423b;--fg-faint:#6b6157;
+  --accent:var(--choco);--accent-soft:rgba(107,66,38,.13);--on-accent:#fdf9f3;
+  --card-shadow:0 26px 60px -38px rgba(36,22,16,.42);
+  --display:'Anton',system-ui,sans-serif;--head:'Space Grotesk',system-ui,sans-serif;
+  --body:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --gut:clamp(18px,4vw,64px);--maxw:1560px;
+}
+html[data-theme="dark"]{
+  --paper:#12100e;--paper-2:#1e1813;--ink:#f4efe6;
+  --bg:#12100e;--surface-raised:#1e1813;--surface-sunken:#191410;
+  --bg-elev:rgba(244,239,230,.06);--hair:rgba(244,239,230,.11);
+  --hair-strong:rgba(244,239,230,.26);--fg:#f4efe6;--fg-dim:#c6b8a6;
+  --fg-faint:#8f8272;--accent:#c9924f;--accent-soft:rgba(201,146,79,.2);
+  --on-accent:#1b1209;--card-shadow:0 8px 40px -14px rgba(0,0,0,.6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--body);overflow-x:hidden}
+button,a,input,textarea,select{font:inherit}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+h1,h2,h3,p{margin:0}
+.shell{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
+.label{font:10px/1.6 var(--mono);color:var(--accent);letter-spacing:.16em;text-transform:uppercase}
+.plan-top{height:78px;border-bottom:1px solid var(--hair);background:var(--bg);position:sticky;top:0;z-index:20}
+.plan-top .shell{height:100%;display:flex;align-items:center;gap:16px;justify-content:space-between}
+.plan-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.plan-mark{height:42px;width:42px;border-radius:11px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#6b4226,#c08a4e);color:white;font:24px var(--display);box-shadow:0 8px 18px rgba(36,22,16,.12)}
+.plan-name{font:600 12px var(--mono);letter-spacing:.08em}
+.plan-role{font:10px/1.5 var(--mono);color:var(--fg-faint);letter-spacing:.07em}
+.plan-nav{display:flex;gap:10px;align-items:center}
+.plan-back,.plan-mode{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ padding:9px 13px;border-radius:100px;border:1px solid var(--hair-strong);background:var(--bg-elev);
+ font:11px/1.4 var(--mono);transition:background .2s,border-color .2s}
+.plan-back:hover,.plan-mode:hover{border-color:var(--accent);background:var(--accent-soft)}
+.plan-mode{min-width:40px;min-height:36px}
+.plan-banner{position:relative;overflow:hidden;border-bottom:1px solid var(--hair);padding:48px 0 28px}
+.plan-banner:before{content:"";position:absolute;right:-12%;top:-55%;width:52vw;height:52vw;
+ border:1px solid var(--hair);border-radius:50%;pointer-events:none}
+.plan-banner h1{font:clamp(44px,7vw,106px)/.98 var(--display);text-transform:uppercase;letter-spacing:-.025em;margin:10px 0 16px}
+.plan-banner h1 span{color:var(--accent)}
+.plan-banner p{max-width:65ch;color:var(--fg-dim);font-size:clamp(13px,1.3vw,16px)}
+.plan-banner .kicker{display:flex;align-items:center;gap:14px}
+.plan-banner .kicker:after{content:"";height:1px;width:76px;background:var(--accent)}
+#projectPlannerMount{min-height:65vh}
+#projectPlannerMount #client-studio{border-top:0;padding-top:42px}
+#projectPlannerMount .studio-intro h2{font:clamp(28px,3.5vw,52px)/1.12 var(--head);letter-spacing:-.035em}
+#projectPlannerMount .studio-intro{margin-bottom:28px}
+#projectPlannerMount .studio-intro p{line-height:1.65}
+#projectPlannerMount .studio-panel{background:var(--bg-elev);border-color:var(--hair)}
+#projectPlannerMount .studio-card-foot{flex-wrap:wrap}
+#projectPlannerMount .studio-output{overflow-x:auto}
+#projectPlannerMount .studio-orbit{color:var(--accent)}
+.plan-foot{padding:28px 0 45px;border-top:1px solid var(--hair)}
+.plan-foot .shell{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.plan-foot small{font:10px var(--mono);color:var(--fg-faint);letter-spacing:.06em}
+@media(max-width:700px){
+ .plan-top{height:68px}.plan-role{display:none}
+ .plan-back{padding:8px 10px;font-size:10px}
+ .plan-banner{padding:34px 0 16px}
+ #projectPlannerMount #client-studio{padding:26px 0 52px}
+ #projectPlannerMount .studio-intro{flex-direction:column;align-items:stretch}
+ #projectPlannerMount .studio-orbit{align-self:flex-start}
+ .plan-name{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+<link rel="stylesheet" href="client-studio.css">
+</head>
+<body>
+<header class="plan-top">
+  <div class="shell">
+    <a class="plan-identity" href="/" aria-label="Return to Ruchir Ganatra's portfolio">
+      <span class="plan-mark" aria-hidden="true">RG</span>
+      <span><span class="plan-name">Ruchir Ganatra</span><br><span class="plan-role">Data &amp; Digital Systems Analyst</span></span>
+    </a>
+    <nav class="plan-nav" aria-label="Page navigation">
+      <button class="plan-mode" id="pageTheme" type="button" aria-label="Toggle colour theme" title="Toggle colour theme">◐</button>
+      <a class="plan-back" href="/">← Back to portfolio</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="plan-banner" aria-labelledby="planHeading">
+    <div class="shell">
+      <div class="kicker label">01 / Project enquiries</div>
+      <h1 id="planHeading">Plan a <span>project.</span></h1>
+      <p>Tell me what needs fixing or building. Explore relevant work, define the result you want, and leave with a shareable brief. Nothing is sent automatically.</p>
+    </div>
+  </section>
+  <div id="projectPlannerMount"></div>
+</main>
+<footer class="plan-foot"><div class="shell">
+  <small>© 2026 Ruchir Ganatra · Ahmedabad</small>
+  <a class="plan-back" href="/#work">Explore selected work ↗</a>
+</div></footer>
+<script>
+(function(){
+  var root=document.documentElement;
+  var saved=null;try{saved=localStorage.getItem('rg-theme')}catch(e){}
+  if(saved==='dark'||saved==='light')root.setAttribute('data-theme',saved);
+  else if(window.matchMedia('(prefers-color-scheme: dark)').matches)root.setAttribute('data-theme','dark');
+  document.getElementById('pageTheme').addEventListener('click',function(){
+    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('rg-theme',next)}catch(e){}
+  });
+})();
+</script>
+<script src="client-studio.js"></script>
+</body>
+</html>
