@@ -242,3 +242,64 @@
 }
 #work .panel{border-color:rgba(198,136,175,.27)}
 #work .panel:hover{box-shadow:0 24px 75px rgba(11,15,29,.32),0 0 22px rgba(246,115,172,.13)}
+
+
+/* 2026-11-23 — Hero collage removed; keep the typography balanced edge-to-edge. */
+.vice-hero>.shell{
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  min-height:min(790px,calc(100svh - 145px));max-width:1510px;
+}
+.vice-hero .hero-meta{width:100%;flex:none}
+.vice-hero .hero-h1{
+  width:100%;max-width:1180px;align-self:flex-start;
+  font-size:clamp(68px,10.4vw,162px);line-height:.96;
+  margin:clamp(10px,2vh,22px) 0 0;
+}
+.vice-hero .hero-h1 .ln.ind{padding-left:clamp(0px,8vw,135px)}
+.vice-hero .hero-bottom{
+  width:100%;max-width:1000px;display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:clamp(20px,5vw,76px);align-items:end;margin:clamp(22px,4vh,40px) 0 0;
+}
+.vice-hero .hero-para .lede{max-width:59ch}
+.vice-hero .hero-cta{align-self:end}
+
+/* Three-photo About slideshow; images crossfade without changing card dimensions. */
+#about #photoWrap{position:relative;isolation:isolate}
+#about #photoWrap .about-portrait-slide{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 28%;
+  opacity:0;z-index:0;pointer-events:none;
+  transition:opacity .72s ease-in-out;
+}
+#about #photoWrap .about-portrait-slide.is-active{opacity:1;z-index:1}
+#about #photoWrap .scan,#about #photoWrap .frame-c{z-index:3;pointer-events:none}
+#about #photoWrap .about-photo-dots{
+  position:absolute;bottom:14px;right:15px;z-index:5;
+  display:flex;align-items:center;gap:7px;
+  background:rgba(10,18,28,.45);padding:8px 9px;border-radius:24px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);pointer-events:none
+}
+#about #photoWrap .about-photo-dot{
+  width:6px;height:6px;border-radius:20px;background:rgba(255,255,255,.42);
+  transition:width .35s ease,background .35s ease,box-shadow .35s ease
+}
+#about #photoWrap .about-photo-dot.is-active{
+  width:20px;background:#ffb6c9;box-shadow:0 0 10px rgba(255,152,203,.7)
+}
+@media(max-width:800px){
+  .vice-hero>.shell{min-height:clamp(570px,78svh,760px);justify-content:center}
+  .vice-hero .hero-h1{font-size:clamp(68px,11vw,108px);margin-top:12px}
+  .vice-hero .hero-bottom{display:flex;align-items:flex-start;gap:22px}
+  .vice-hero .hero-cta{align-self:flex-start}
+}
+@media(max-width:480px){
+  .hero.vice-hero{padding:110px 0 36px}
+  .vice-hero>.shell{min-height:calc(100svh - 146px)}
+  .vice-hero .hero-h1{font-size:clamp(55px,12.5vw,78px)}
+  .vice-hero .hero-h1 .ln.ind{padding-left:12px}
+  .vice-hero .hero-bottom{gap:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  #about #photoWrap .about-portrait-slide,#about #photoWrap .about-photo-dot{transition:none!important}
+}

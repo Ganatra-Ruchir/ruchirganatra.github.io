@@ -1429,27 +1429,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       </div>
     </div>
 
-    <!-- Three personal portraits in an original cinematic, textured 3D composition -->
-    <div class="vice-scene" aria-label="Three portraits of Ruchir Ganatra in a cinematic layered presentation">
-      <span class="vice-orbit" aria-hidden="true"></span>
-      <figure class="vice-frame vice-frame--garden">
-        <img src="assets/portrait-garden.jpg" alt="Ruchir seated outdoors in a white shirt with leafy trees behind him" width="1229" height="1536" loading="lazy" decoding="async">
-        <figcaption>02 // Outdoors</figcaption>
-      </figure>
-      <figure class="vice-frame vice-frame--main">
-        <img src="assets/portrait-city.jpg" alt="Ruchir wearing glasses and a white shirt under warm lantern light" width="1300" height="1536" fetchpriority="high" decoding="async">
-        <figcaption>01 // The portrait</figcaption>
-      </figure>
-      <figure class="vice-frame vice-frame--gallery">
-        <img src="assets/portrait-gallery.jpg" alt="Ruchir in a beige kurta visiting a sculpture gallery" width="1152" height="1536" loading="lazy" decoding="async">
-        <figcaption>03 // Gallery</figcaption>
-      </figure>
-      <span class="vice-light-streak" aria-hidden="true"></span>
-      <span class="vice-serial" aria-hidden="true">RG // 2026</span>
-      <span class="vice-signature" aria-hidden="true">Ruchir Ganatra<small>Data · Design · Digital</small></span>
-      <span class="vice-spark vice-spark--a" aria-hidden="true"></span>
-      <span class="vice-spark vice-spark--b" aria-hidden="true"></span>
-    </div>
+
   </div>
   <div class="scroll-cue"><span>Scroll</span><span class="cue-track"><i></i></span></div>
   <div class="hero-index">00 / 06</div>
@@ -1484,7 +1464,10 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       <div class="about-sticky">
         <div class="idcard" data-rv="fade">
           <div class="idcard-photo" id="photoWrap">
-            <img src="assets/portrait-city.jpg" alt="Ruchir Ganatra, wearing glasses and a white shirt" loading="lazy" decoding="async" onerror="this.style.display='none';document.getElementById('photoWrap').classList.add('noimg');">
+            <img class="about-portrait-slide is-active" src="assets/portrait-city.jpg" alt="Ruchir wearing glasses and a white shirt under warm lantern light" loading="lazy" decoding="async">
+            <img class="about-portrait-slide" src="assets/portrait-garden.jpg" alt="Ruchir sitting outdoors in a white shirt with trees behind him" loading="lazy" decoding="async" aria-hidden="true">
+            <img class="about-portrait-slide" src="assets/portrait-gallery.jpg" alt="Ruchir standing in a museum in a beige kurta" loading="lazy" decoding="async" aria-hidden="true">
+            <div class="about-photo-dots" aria-hidden="true"><span class="about-photo-dot is-active"></span><span class="about-photo-dot"></span><span class="about-photo-dot"></span></div>
             <span class="initials">RG</span>
             <span class="scan"></span>
             <span class="frame-c fc-tl"></span><span class="frame-c fc-tr"></span><span class="frame-c fc-bl"></span><span class="frame-c fc-br"></span>
