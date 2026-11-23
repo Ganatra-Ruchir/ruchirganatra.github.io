@@ -123,10 +123,10 @@ certificates.forEach(function(c,i){
 /* Measure the wardrobe cabinet and match the book's displayed height,
    clamping only when the viewport is too short to contain page controls. */
 function matchBookToWardrobe(){
- var cabinet=$('.cw-cabinet',wardrobe),story=$('#workbenchStory');
- if(!cabinet||!story)return;
+ var cabinet=$('.cw-cabinet',wardrobe),book=$('#articleBook');
+ if(!cabinet||!book)return;
  var height=Math.round(cabinet.getBoundingClientRect().height);
- if(height>0)story.style.setProperty('--wb-cabinet-height',height+'px');
+ if(height>0)book.style.setProperty('--book-cabinet-height',height+'px');
 }
 requestAnimationFrame(matchBookToWardrobe);
 if('ResizeObserver' in window){
