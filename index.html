@@ -859,17 +859,6 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 #peek .pk-m{font-family:var(--mono); font-size:10px; color:var(--fg-faint); margin-top:10px; letter-spacing:0.1em;}
 @media (max-width:900px){ #peek{display:none;} }
 
-/* ---------- 16. QUOTES ---------- */
-.quote-stage{position:relative; min-height:clamp(230px,26vh,300px);}
-.qslide{position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity .6s ease;}
-.qslide.on{opacity:1; pointer-events:auto; position:relative;}
-.qmark{font-family:var(--display); font-size:clamp(56px,8vw,120px); line-height:0.6; color:var(--accent); opacity:.28;}
-.qtext{font-family:var(--head); font-weight:400; font-size:clamp(20px,2.6vw,36px); line-height:1.3; letter-spacing:-0.02em; color:var(--fg); max-width:24ch; margin-top:10px;}
-.qwho{font-family:var(--mono); font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-faint); margin-top:22px;}
-.qnav{display:flex; gap:10px; margin-top:28px;}
-.qdot{width:34px; height:3px; background:var(--hair); border-radius:100px; transition:background .3s;}
-.qdot.on{background:var(--accent);}
-
 /* ---------- 17. CONTACT + FOOTER ---------- */
 .contact{position:relative; overflow:hidden; padding-bottom:clamp(50px,7vh,90px);}
 .contact-mail{display:inline-flex; align-items:baseline; gap:clamp(10px,1.6vw,22px); flex-wrap:wrap;}
@@ -1406,8 +1395,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   <button data-go="#work"><span class="rl">03 Work</span><span class="rd"></span></button>
   <button data-go="#trajectory"><span class="rl">04 Trajectory</span><span class="rd"></span></button>
   <button data-go="#writing"><span class="rl">05 Writing</span><span class="rd"></span></button>
-  <button data-go="#voices"><span class="rl">06 Voices</span><span class="rd"></span></button>
-  <button data-go="#contact"><span class="rl">07 Contact</span><span class="rd"></span></button>
+  <button data-go="#contact"><span class="rl">06 Contact</span><span class="rd"></span></button>
 </div>
 
 <main id="top">
@@ -1441,7 +1429,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     </div>
   </div>
   <div class="scroll-cue"><span>Scroll</span><span class="cue-track"><i></i></span></div>
-  <div class="hero-index">00 / 07</div>
+  <div class="hero-index">00 / 06</div>
 </section>
 
 <!-- ============ TICKER ============ -->
@@ -2056,38 +2044,11 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   </div>
 </section>
 
-<!-- ============ 06 VOICES ============ -->
-<section class="band" id="voices">
-  <div class="shell">
-    <div class="sec-head">
-      <span class="sec-num">06</span>
-      <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Voices</h2></div>
-      <span class="label" style="margin-left:auto;">What people who've worked with me say</span>
-    </div>
-    <div class="quote-stage" data-rv="fade" id="quoteStage">
-      <div class="qslide on">
-        <div class="qmark">"</div>
-        <p class="qtext">Ruchir is an incredibly fast learner. Through our group projects he kept a positive attitude and was always open to taking feedback and acting on it. A true team player.</p>
-        <div class="qwho">— Faculty recommendation</div>
-      </div>
-      <div class="qslide">
-        <div class="qmark">"</div>
-        <p class="qtext">Organising the Tech Expo with Ruchir was seamless. Coordinating teams and running logistics while keeping everyone motivated is a rare kind of leadership.</p>
-        <div class="qwho">— Event co-organiser</div>
-      </div>
-    </div>
-    <div class="qnav" id="qnav" role="tablist" aria-label="Testimonials">
-      <button class="qdot on" aria-label="Testimonial 1"></button>
-      <button class="qdot" aria-label="Testimonial 2"></button>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 07 CONTACT ============ -->
+<!-- ============ 06 CONTACT ============ -->
 <section class="band contact" id="contact">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-num">07</span>
+      <span class="sec-num">06</span>
       <div class="sec-title-wrap"><h2 class="label" style="font-size:11px;" data-split-h>Contact</h2></div>
     </div>
     <div class="contact-mail">
@@ -2951,24 +2912,6 @@ var Previews = (function(){
 })();
 
 /* ==========================================================
-   15. QUOTES
-   ========================================================== */
-(function(){
-  var slides = $$('.qslide'), dots = $$('#qnav .qdot');
-  if(slides.length < 2) return;
-  var i = 0, timer = null;
-  function go(n){
-    slides[i].classList.remove('on'); dots[i].classList.remove('on');
-    i = (n + slides.length) % slides.length;
-    slides[i].classList.add('on'); dots[i].classList.add('on');
-  }
-  dots.forEach(function(d, n){ d.addEventListener('click', function(){ go(n); restart(); }); });
-  function restart(){ clearInterval(timer); if(!RM) timer = setInterval(function(){ go(i+1); }, 6500); }
-  restart();
-  window.addEventListener('portfolio-motion',function(){restart();});
-})();
-
-/* ==========================================================
    16. SAKURA SPARK CURSOR + MAGNETIC BUTTONS
    ========================================================== */
 (function(){
@@ -3146,7 +3089,7 @@ var Previews = (function(){
   measure(); paint();
 
   /* rail active state */
-  var ids = ['#top','#about','#toolkit','#work','#trajectory','#writing','#voices','#contact'];
+  var ids = ['#top','#about','#toolkit','#work','#trajectory','#writing','#contact'];
   var buttons = $$('#rail button');
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
