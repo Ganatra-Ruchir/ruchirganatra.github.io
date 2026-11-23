@@ -538,7 +538,7 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 }
 .work.horiz .panel-copy{ justify-content:center; }
 @media (min-width:1000px){ .panel{grid-template-columns:1.02fr 0.98fr; align-items:center;} }
-.panel-copy{display:flex; flex-direction:column; gap:14px; min-width:0;}
+.panel-copy{display:flex; flex-direction:column; gap:12px; min-width:0;}
 .panel-top{display:flex; align-items:baseline; gap:14px;}
 .panel-i{font-family:var(--mono); font-size:12px; color:var(--accent); letter-spacing:0.1em;}
 .panel-flag{
@@ -548,7 +548,7 @@ body.in-work #rail{ opacity:0; pointer-events:none; }
 }
 .panel h3{font-family:var(--display); text-transform:uppercase; font-size:clamp(26px,3.2vw,52px); line-height:0.92;}
 .panel .sub{font-family:var(--mono); font-size:12px; color:var(--fg-faint); letter-spacing:0.04em;}
-.panel .txt{font-size:14.8px; line-height:1.6; color:var(--fg-dim);}
+.panel .txt{font-size:14.8px; line-height:1.55; color:var(--fg-dim); max-width:58ch;}
 .panel .txt strong{color:var(--fg); font-weight:600;}
 .chips{display:flex; gap:7px; flex-wrap:wrap;}
 .chip{
@@ -1181,7 +1181,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 
     <div class="hero-bottom">
       <div class="hero-para" data-rv="up">
-        <p class="lede">I'm Ruchir — a data analyst who takes messy, half-structured, real-world data and leaves it as something a team can actually decide with. Dashboards that survive real use, pipelines that don't break at 2am, and full-stack tools built with equal parts curiosity and discipline.</p>
+        <p class="lede">I build dashboards, data pipelines and web tools that turn messy information into clear decisions. Real data, practical systems, measurable results.</p>
       </div>
       <div class="hero-cta" data-rv="up">
         <a class="btn solid" href="#work" data-mag><span class="t">See the work</span><span class="ar">↗</span></a>
@@ -1237,11 +1237,11 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       </div>
 
       <div class="about-body">
-        <p class="about-statement" id="statement" data-words>What pulled me into IT wasn't the syllabus — it was wanting to know what's actually happening behind the screen. A spreadsheet full of numbers is just noise until you find the story it's telling. Then it's a decision someone can act on.</p>
+        <p class="about-statement" id="statement" data-words>I like data that leads to a decision, not another dashboard. I turn messy records into systems people can trust and use.</p>
 
         <div style="margin-top:clamp(24px,3.4vw,44px); display:grid; gap:16px; max-width:62ch;" data-rv="up">
-          <p class="body-md">I'm based in Ahmedabad, pursuing my B.Tech in Information Technology at Aditya Silver Oak Institute of Technology after finishing my Diploma in IT in 2026. Since June 2026 I've been the <strong style="color:var(--fg)">Data & Digital Systems Analyst at Elixir Foundation</strong>, an NGO where the datasets aren't practice sets — they're beneficiary and program records that decide where real support goes.</p>
-          <p class="body-md">Outside that, I build: a client-side RAG engine, a cybersecurity IOC dashboard, government-data analyses I publish honestly (including the ones where my hypothesis died), and utilities I actually use. I'd rather hear hard feedback early than ship something half-right.</p>
+          <p class="body-md">I'm based in Ahmedabad, studying B.Tech IT at Aditya Silver Oak Institute of Technology. At Elixir Foundation, I work as a <strong style="color:var(--fg)">Data & Digital Systems Analyst</strong>, turning beneficiary and programme records into reporting teams can act on.</p>
+          <p class="body-md">Outside work, I build document AI, security dashboards and practical tools. I test my assumptions, report results as they are and improve what doesn't work.</p>
         </div>
 
         <div class="about-cols">
@@ -1263,7 +1263,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <div class="fact"><span class="ic"><svg class="pixel-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" shape-rendering="crispEdges"><rect width="16" height="16" fill="#211b1b"/><rect x="2" y="9" width="3" height="5" fill="#83b8a6"/><rect x="6" y="5" width="3" height="9" fill="#f1d5a2"/><rect x="10" y="2" width="3" height="12" fill="#83b8a6"/></svg></span><span>Organising local community tech events.</span></div>
             <div style="margin-top:22px;">
               <div class="label" style="margin-bottom:10px;">Community &amp; leadership</div>
-              <p class="body-sm">Helped organise the Startup Mini Meetup Ahmedabad, the Ahmedabad Innovation Summit and the FITAG Tech Expo 2026 — coordinating speakers, running logistics, keeping teams moving.</p>
+              <p class="body-sm">Coordinated speakers and event logistics for Startup Mini Meetup, Ahmedabad Innovation Summit and FITAG Tech Expo 2026.</p>
             </div>
           </div>
         </div>
@@ -1319,7 +1319,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 
         <div class="meters" id="meters"></div>
 
-        <p class="body-sm" style="margin-top:26px; max-width:46ch;">Solid on the technical side — but none of it matters if I can't explain a finding to someone who never touches SQL. Both halves get equal attention.</p>
+        <p class="body-sm" style="margin-top:26px; max-width:46ch;">Technical skills matter only if the result is clear and useful to the people making decisions.</p>
       </div>
     </div>
 
@@ -1369,7 +1369,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <span class="sec-num">03</span>
         <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Selected work</h2></div>
       </div>
-      <p class="body-sm" style="max-width:38ch;">Featured builds plus live data systems and field reporting tools below. Open a project to see the working application.</p>
+      <p class="body-sm" style="max-width:38ch;">Real projects, live tools and the problems they solve.</p>
     </div>
   </div>
 
@@ -1385,9 +1385,8 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <span class="panel-flag">Latest · Live</span>
           </div>
           <h3>DocuSense AI</h3>
-          <div class="sub">Enterprise document intelligence — 100% client-side RAG</div>
-          <p class="txt"><strong>The problem:</strong> document Q&amp;A tools mean uploading sensitive files to somebody else's server — a non-starter for regulated or confidential documents.</p>
-          <p class="txt"><strong>The build:</strong> a real retrieval-augmented Q&amp;A pipeline that never leaves the browser — parsing, chunking, embeddings, semantic search and extractive answering, with no API keys and no cloud storage. Quantised MiniLM-L6-v2 for embeddings, DistilBERT-SQuAD for answer spans, both on-device via ONNX Runtime Web. Ships with role-based retrieval filtering and a live 6-question eval harness reporting recall, confidence and latency.</p>
+          <div class="sub">Private document answers — no cloud uploads</div>
+          <p class="txt"><strong>Private document Q&amp;A, entirely in your browser.</strong> Open files, search by meaning and get answers without sending sensitive data to a server. On-device models handle retrieval and answer extraction, while role-based filtering and a six-question test suite check access, accuracy and speed.</p>
           <div class="chips"><span class="chip">Transformers.js</span><span class="chip">ONNX / WASM</span><span class="chip">PDF.js</span><span class="chip">Vanilla JS</span><span class="chip">RAG</span></div>
           <div class="panel-links">
             <a class="btn solid" href="https://docusense-ai-xi.vercel.app/" target="_blank" rel="noopener" data-mag><span class="t">Open live</span><span class="ar">↗</span></a>
@@ -1414,9 +1413,8 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <span class="panel-flag">Flagship · Live</span>
           </div>
           <h3>SkyRecon</h3>
-          <div class="sub">AI-powered threat detection &amp; IOC analysis dashboard</div>
-          <p class="txt"><strong>The problem:</strong> security analysts watch indicators of compromise across five disconnected tools instead of one surface.</p>
-          <p class="txt"><strong>The build:</strong> a hybrid Python + React application for live monitoring — real-time feeds, automated IOC detection, ML-scored alerting and role-based dashboards for analysts and blue teams. Flask/FastAPI backend serving a Vite + React + TypeScript front end, SQLite for storage, and an analytics layer driving the live charts.</p>
+          <div class="sub">Live threat monitoring in one dashboard</div>
+          <p class="txt"><strong>Threat signals, one clear view.</strong> SkyRecon brings live IOC feeds, automated detection and ML-ranked alerts into a role-based dashboard. Built with Python, React and TypeScript to help security analysts spot threats and focus on what needs attention.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Flask / FastAPI</span><span class="chip">SQLite</span></div>
           <div class="panel-links">
             <a class="btn solid" href="https://skyrecon-neon.vercel.app/" target="_blank" rel="noopener" data-mag><span class="t">Open live</span><span class="ar">↗</span></a>
@@ -1441,9 +1439,8 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <span class="panel-flag">Real data · Live</span>
           </div>
           <h3>Literacy Gap Analysis</h3>
-          <div class="sub">India's state-level education data — honest findings, null result included</div>
-          <p class="txt"><strong>The problem:</strong> state literacy and gender-gap data sits across government sources in inconsistent formats, with genuine holes (Telangana's 2014 split, missing exam records) that most write-ups quietly paper over.</p>
-          <p class="txt"><strong>The build:</strong> built on real 2015-16 UDISE school-census data, with a documented derivation for every computed metric and a pytest suite validating each number against an independent manual calculation. Gaps stay documented as gaps instead of zero-filled. I tested whether classroom crowding tracks exam pass rates expecting a clean story — it didn't (r ≈ −0.13), so it's published as a null result rather than reframed until something correlated.</p>
+          <div class="sub">India's education gaps, backed by real data</div>
+          <p class="txt"><strong>Real education data. No convenient assumptions.</strong> Built on 2015–16 UDISE records, with documented metrics, automated checks and missing data kept visible. Classroom crowding showed little link to exam pass rates (r ≈ −0.13) — a weak result reported as-is, not dressed up.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span><span class="chip">pytest</span><span class="chip">UDISE</span></div>
           <div class="panel-links">
             <a class="btn solid" href="https://india-education-gap-analysis.vercel.app/" target="_blank" rel="noopener" data-mag><span class="t">Open live</span><span class="ar">↗</span></a>
@@ -1470,9 +1467,8 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <span class="panel-flag">Machine learning</span>
           </div>
           <h3>Backstop</h3>
-          <div class="sub">Card-fraud decisioning, graded on the future and priced in euros</div>
-          <p class="txt"><strong>The problem:</strong> a fraud model has to decide in milliseconds on 0.17% prevalence, and then justify the decision. Almost every published model on this data is graded on a random split — trained on Tuesday, tested on Monday — which flatters it by 0.072 of average precision it will never see in production.</p>
-          <p class="txt"><strong>The build:</strong> an end-to-end system on 283,726 real transactions. Eleven models compared across expanding time windows, the threshold chosen by expected euro cost under a review-capacity constraint, SHAP reasons on every alert, PSI drift monitoring, and a FastAPI service that answers in 2.1&nbsp;ms and provably reproduces the offline scores. <strong>65 of 97 frauds caught for one false alarm</strong>, avoiding &euro;7,071 of &euro;11,596 exposure — on a window the model had never seen.</p>
+          <div class="sub">Fraud detection built around real-world cost</div>
+          <p class="txt"><strong>Fraud detection built for real decisions.</strong> Tested 11 models on 283,726 transactions using chronological splits, cost-based thresholds and SHAP explanations. On held-out data, it caught 65 of 97 frauds with one false alarm, avoiding &euro;7,071 in exposure. FastAPI serves scores in 2.1&nbsp;ms, with drift monitoring built in.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">XGBoost</span><span class="chip">scikit-learn</span><span class="chip">SHAP</span><span class="chip">FastAPI</span><span class="chip">Docker</span></div>
           <div class="panel-links">
             <a class="btn solid" href="https://github.com/Ganatra-Ruchir/Backstop-1.0.0-" target="_blank" rel="noopener" data-mag><span class="t">Source &amp; case study</span><span class="ar">&#8599;</span></a>
@@ -1503,9 +1499,8 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <span class="panel-flag">Utility · Live</span>
           </div>
           <h3>PDFly</h3>
-          <div class="sub">Free file converter — everything stays on your machine</div>
-          <p class="txt"><strong>The problem:</strong> every free PDF tool wants your file on their server first, for a task the browser can do by itself.</p>
-          <p class="txt"><strong>The build:</strong> merge, split, compress, rotate, watermark and AES-128 password-protect PDFs, plus conversion between PDF, Word, PowerPoint, Markdown, plain text and images — all client-side, no upload, no backend, no LibreOffice or Pandoc on a server anywhere. Built on pdf-lib, pdf.js, JSZip and mammoth with no framework or build step.</p>
+          <div class="sub">Everyday PDF tools. Files stay on your device.</div>
+          <p class="txt"><strong>PDF work without handing over your files.</strong> Merge, split, compress, rotate, watermark, password-protect and convert documents directly in the browser. Nothing is uploaded or processed on a server — your files stay on your device.</p>
           <div class="chips"><span class="chip">JavaScript</span><span class="chip">pdf-lib</span><span class="chip">pdf.js</span><span class="chip">JSZip</span><span class="chip">Client-side</span></div>
           <div class="panel-links">
             <a class="btn solid" href="https://pdfy.antideploy.com/" target="_blank" rel="noopener" data-mag><span class="t">Open live</span><span class="ar">↗</span></a>
@@ -1551,61 +1546,61 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/01</span>
           <span class="mr-t">Delhi Air Quality 2021–2024</span>
-          <span class="mr-desc">1,461 days of AQI readings — seasonality, pollutant relationships, publication-ready charts.</span>
+          <span class="mr-desc">Finds seasonal pollution patterns across 1,461 days of Delhi AQI data.</span>
           <span class="mr-go"><a href="https://delhi-aqi-analysis-2021-2024.vercel.app/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/delhi-aqi-analysis-2021-2024" target="_blank" rel="noopener">Code</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/02</span>
           <span class="mr-t">Global GDP Dashboard</span>
-          <span class="mr-desc">Flask + Plotly dashboard for GDP trends, forecasting and country comparison.</span>
+          <span class="mr-desc">Compare GDP trends and forecasts across countries in one dashboard.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/global-gdp-dashboard" target="_blank" rel="noopener">Code ↗</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/03</span>
           <span class="mr-t">COVID-19 Global Analysis</span>
-          <span class="mr-desc">Streamlit dashboard — KPIs, filters and country-level comparison over Kaggle data.</span>
+          <span class="mr-desc">Explore COVID-19 trends and country comparisons with interactive filters.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/COVID-19-analysis-using-Kaggle-data" target="_blank" rel="noopener">Code ↗</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/04</span>
           <span class="mr-t">NetGuard</span>
-          <span class="mr-desc">Network intrusion detection — deep packet inspection across TCP/UDP/DNS/TLS with ML anomaly scoring.</span>
+          <span class="mr-desc">Flags suspicious TCP, UDP, DNS and TLS traffic using ML.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/NetGuard" target="_blank" rel="noopener">Code ↗</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/05</span>
           <span class="mr-t">CryptoFlow-Notify</span>
-          <span class="mr-desc">Full-stack blockchain alerting — MetaMask, Solidity contracts, Socket.io push for transfers and governance.</span>
+          <span class="mr-desc">Live alerts for wallet transfers and governance activity.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/CryptoFlow-Notify" target="_blank" rel="noopener">Code ↗</a><a href="https://ruchirganatra.medium.com/why-i-built-cryptoflow-notify-3d434bdabdf9" target="_blank" rel="noopener">Story</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/06</span>
           <span class="mr-t">SecureVault</span>
-          <span class="mr-desc">Local-only password manager — AES-256 via Fernet, PBKDF2 at 480k iterations, nothing leaves the machine.</span>
+          <span class="mr-desc">Encrypted password storage that keeps data on your device.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/SecureVault" target="_blank" rel="noopener">Code ↗</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/07</span>
           <span class="mr-t">Ransomware Canary Detector</span>
-          <span class="mr-desc">Watchdog-based early warning — hidden canary files in sensitive folders, instant alert on tamper.</span>
+          <span class="mr-desc">Detects suspicious file changes early using ransomware decoys.</span>
           <span class="mr-go"><a href="https://github.com/Ganatra-Ruchir/ransomware-canary-detector" target="_blank" rel="noopener">Code ↗</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/08</span>
           <span class="mr-t">Sashakt Salon Impact Dashboard</span>
-          <span class="mr-desc">Live impact reporting dashboard for salon beneficiary income, performance and operational KPIs.</span>
+          <span class="mr-desc">Tracks salon beneficiary income and programme performance.</span>
           <span class="mr-go"><a href="https://sashakt-salon-dashboard.antideploy.com/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/Sashakt-Salon-Dashboard-" target="_blank" rel="noopener">Code</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/09</span>
           <span class="mr-t">Sashakt Daily Activity Log</span>
-          <span class="mr-desc">Digital activity capture workflow for field teams, with structured daily reporting.</span>
+          <span class="mr-desc">Makes daily field reporting structured and easy to review.</span>
           <span class="mr-go"><a href="https://beognis.vercel.app/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/beognis" target="_blank" rel="noopener">Code</a></span>
         </div>
         <div class="mini-row" data-rv="up">
           <span class="mr-i">/10</span>
           <span class="mr-t">Salon Beneficiary Income Tracker</span>
-          <span class="mr-desc">Live beneficiary income-entry system supporting structured field reporting.</span>
+          <span class="mr-desc">Captures beneficiary income through a simple field-entry tool.</span>
           <span class="mr-go"><a href="https://diva-salon-beneficiary-income-track.vercel.app/" target="_blank" rel="noopener">Live ↗</a><a href="https://github.com/Ganatra-Ruchir/Diva-Salon---Beneficiary-Income-Tracker-Narol-form-" target="_blank" rel="noopener">Code</a></span>
         </div>
         <div class="mini-row" data-rv="up">
@@ -1636,7 +1631,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <div class="tl-when">Jun 2026 — Present <span class="tag-now">Current</span></div>
             <h4>Data &amp; Digital Systems Analyst</h4>
             <div class="tl-org">Elixir Foundation · NGO, Ahmedabad</div>
-            <p>Own the beneficiary and programme data end to end — cleaning it, structuring it and analysing it so the team can see what's actually working on the ground and direct support where it lands hardest.</p>
+            <p>Clean and analyse beneficiary data, build dashboards and support reporting so programme teams can track progress and act on it.</p>
           </div>
           <div class="tl-item">
             <div class="tl-when">2026</div>
@@ -1648,13 +1643,13 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <div class="tl-when">2026</div>
             <h4>CSR Social Impact Projects</h4>
             <div class="tl-org">Independent / volunteer</div>
-            <p>Ran beneficiary trend assessments, keeping the focus on whether the tech served the community rather than whether the dashboard looked impressive.</p>
+            <p>Analysed beneficiary trends to help teams understand programme reach and results.</p>
           </div>
           <div class="tl-item now">
             <div class="tl-when">2024 — Present <span class="tag-now">Ongoing</span></div>
             <h4>Data Analyst — Projects &amp; Freelance</h4>
             <div class="tl-org">Self-employed, Ahmedabad</div>
-            <p>Independent dashboards, SQL analysis and Kaggle competitions — where most of my Pandas, Seaborn and query-optimisation instincts got built through repetition.</p>
+            <p>Built dashboards, analysed data with SQL and strengthened Python skills through real projects.</p>
           </div>
         </div>
       </div>
@@ -1666,18 +1661,18 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
             <div class="tl-when">2026 — Present <span class="tag-now">Current</span></div>
             <h4>B.Tech, Information Technology</h4>
             <div class="tl-org">Aditya Silver Oak Institute of Technology</div>
-            <p>Going deeper into software systems, data engineering and the fundamentals sitting underneath the tools I already use daily.</p>
+            <p>Studying software systems, data engineering and core IT fundamentals.</p>
           </div>
           <div class="tl-item">
             <div class="tl-when">2023 — 2026 · Completed</div>
             <h4>Diploma, Information Technology</h4>
             <div class="tl-org">Aditya Silver Oak Institute of Technology</div>
-            <p>Data structures, database management, statistics, machine learning, data mining and web development — the base the CSR work and my first real Python pipelines came out of.</p>
+            <p>Built a foundation in databases, statistics, machine learning and web development.</p>
           </div>
         </div>
         <div style="margin-top:clamp(30px,4vw,48px);" class="body-sm">
           <div class="label" style="margin-bottom:10px;">Currently</div>
-          <p>Balancing the Elixir Foundation role with full-time study — which means every build here had to justify its own time.</p>
+          <p>Working in data analytics while studying IT full-time.</p>
         </div>
       </div>
     </div>
@@ -1759,7 +1754,7 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
     <div class="contact-mail">
       <h2 class="contact-huge grad-text line-mask"><span>something.</span></h2>
     </div>
-    <p class="lede contact-sub" data-rv="up">I'm available for small fixed-price freelance tasks and limited weekly project support — spreadsheet cleanup, dashboards, SQL, Google Sheets automation and reporting. I'm also happy to talk through a dataset you're stuck on. My inbox is genuinely open.</p>
+    <p class="lede contact-sub" data-rv="up">Available for focused freelance work in dashboards, SQL, Google Sheets automation and reporting. Got messy data or a workflow to fix? Let's talk.</p>
     <div class="contact-row">
       <div class="footword" aria-hidden="true">GANATRA</div>
       <div data-rv="up">
