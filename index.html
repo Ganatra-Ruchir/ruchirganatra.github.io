@@ -1577,43 +1577,68 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
       </div>
     </div>
 
-    <div class="archive-gallery" data-rv="up">
-      <section class="ab-archive" id="writing" aria-labelledby="articleBookHeading">
-        <div class="cw-heading">
+    <div class="archive-gallery archive-v4" data-rv="up">
+      <section id="certificateWardrobe" class="credential-gallery" aria-labelledby="credentialsTitle">
+        <div class="archive-v4-heading">
           <div>
-            <div class="label" style="margin-bottom:9px;">Writing / the collection</div>
-            <h3 class="cw-title" id="articleBookHeading">The article book</h3>
-            <p class="cw-subtitle" style="margin-top:9px;">Six published stories · Illustrated reading spreads</p>
+            <span class="label">01 / Credentials with purpose</span>
+            <h3 class="archive-v4-title" id="credentialsTitle">The certificate wardrobe</h3>
+            <p class="archive-v4-sub">Real certificates. The skills behind them, and why they matter.</p>
           </div>
+          <button class="cw-open-control" id="cabinetToggle" type="button" aria-expanded="false" aria-controls="cwCabinetContent">Open wardrobe</button>
         </div>
-        <div class="ab-book" id="articleBook">
-          <div class="wb-book">
-            <div class="wb-pages ab-spread" role="group" aria-label="Open article book with left and right pages">
-              <div class="ab-page ab-page-left" id="articlePageLeft" aria-label="Left page: article cover and image">
-                <div class="wb-kicker">Writing archive · Published on Medium</div>
+        <div class="cw-cabinet">
+          <div class="cw-cabinet-top"><span>THE CREDENTIAL COLLECTION</span><span>VOL. 01 — 10 DOCUMENTS</span></div>
+          <div class="cw-cabinet-content" id="cwCabinetContent" inert>
+            <button class="cw-feature" id="cwFeaturedOpen" type="button" aria-label="View selected certificate at full size" disabled>
+              <img id="cwFeaturedImage" src="certificates/previews/google-analytics.webp" alt="Google Analytics certificate" decoding="async" fetchpriority="high">
+              <span class="cw-feature-action">Inspect original ↗</span>
+            </button>
+            <div class="cw-credential-story">
+              <div class="cw-credential-story-top">
+                <span class="cw-story-eyebrow" id="cwStoryNumber">CREDENTIAL 01 / 10</span>
+                <span class="cw-story-issued" id="cwStoryDate">SEP 2026</span>
               </div>
-              <div class="ab-page ab-page-right" id="articlePageRight" aria-label="Right page: article summary and reading link" aria-live="polite">
-                <div class="wb-kicker">Article notes · Turn the page</div>
+              <h4 class="cw-story-heading" id="cwFeaturedTitle">Google Analytics Certification</h4>
+              <p class="cw-story-provider" id="cwFeaturedIssuer">Google</p>
+              <div class="cw-story-divider"></div>
+              <p class="cw-story-label">What it represents</p>
+              <h5 class="cw-story-takeaway" id="cwStoryTakeaway">Measurement that leads somewhere.</h5>
+              <p class="cw-story-value" id="cwStoryValue">The value is in understanding what people actually do, then turning that insight into a better decision.</p>
+              <div class="cw-credential-bottom">
+                <div class="cw-feature-meta">
+                  <button type="button" class="cw-navigate" id="cwShelfPrev" aria-label="Previous certificate" disabled>←</button>
+                  <span id="cwStoryCounter" class="cw-story-counter">01 / 10</span>
+                  <button type="button" class="cw-navigate" id="cwShelfNext" aria-label="Next certificate" disabled>→</button>
+                </div>
+                <div class="cw-shelves" id="certificateShelf" role="group" aria-label="Choose one of ten certificates"></div>
+                <p class="cw-story-hint">Choose a document · Click the large certificate to inspect it</p>
               </div>
             </div>
-            <div class="wb-turner" id="articleTurner" aria-hidden="true"></div>
-            <button class="wb-cover ab-cover" id="articleCover" type="button" aria-label="Open the article book">
-              <span class="wb-cover-inner">
-                <span class="wb-cover-emblem" aria-hidden="true">✦</span>
-                <span class="wb-cover-sub">Ruchir Ganatra / Published writing</span>
-                <span class="ab-cover-name">The<br>Article<br>Book</span>
-                <span class="wb-cover-small">06 ARTICLES / DATA · AI · SECURITY</span>
-                <span class="wb-cover-small">SELECT TO OPEN</span>
-              </span>
-            </button>
           </div>
-          <div class="wb-controls" aria-label="Article book navigation">
-            <button id="articlePrev" type="button" aria-label="Previous article" disabled>←</button>
-            <span class="wb-control-count" id="articleCount">COVER / 00 / 06</span>
-            <button id="articleNext" type="button" aria-label="Next article">→</button>
-          </div>
+          <div class="cw-doors" aria-hidden="true"><div class="cw-door"></div><div class="cw-door"></div></div>
         </div>
-        <p class="cw-note">Read each story overview on the right; open the full published article when you want more.</p>
+        <noscript>
+          <p class="body-sm">View the original credentials: <a href="certificates/google-analytics.pdf">Google Analytics</a>,
+          <a href="certificates/ibm-ai.pdf">IBM AI</a>,
+          <a href="certificates/cisco-data-science.pdf">Cisco Data Science</a>, and
+          <a href="certificates/kaggle-visualization.png">Kaggle Data Visualization</a>.</p>
+        </noscript>
+      </section>
+      <section id="writing" class="dvd-library" aria-labelledby="dvdLibraryTitle">
+        <div class="archive-v4-heading">
+          <div>
+            <span class="label">02 / Writing collection</span>
+            <h3 class="archive-v4-title" id="dvdLibraryTitle">The article collection</h3>
+            <p class="archive-v4-sub">Six published stories, stored like classic game cases. Pull one out to read.</p>
+          </div>
+          <span class="dvd-edition">THE WRITING ARCHIVE · VOL. 01</span>
+        </div>
+        <div class="dvd-cabinet">
+          <div class="dvd-cabinet-top"><span>RG / THE WRITING SHELF</span><span>06 ORIGINAL ARTICLES</span></div>
+          <div class="dvd-rack" id="dvdRack" role="group" aria-label="Article cases. Select a case to read its story."></div>
+          <div class="dvd-shelf-plinth"><span>SELECT A SPINE TO PULL IT OUT</span><span>DATA · AI · SECURITY · SYSTEMS</span></div>
+        </div>
         <div class="writing-list ab-source" id="writingList">
 
       <a class="wrow" data-rv="up" data-peek="Real UNESCO and UDISE data, and the honesty to report a hypothesis that didn't hold." data-image="https://raw.githubusercontent.com/Ganatra-Ruchir/india-education-gap-analysis/main/outputs/02_gender_gap.png" data-image-alt="Education analysis chart showing literacy gender gaps" data-description="A national literacy figure hides the gaps that matter. I explore differences between states, gender parity and school dropout risk—and how an analyst can turn broad education goals into sharper questions. This article openly identifies where sample data was used instead of presenting it as official statistics." data-hook="Beyond the national average" href="https://ruchirganatra.medium.com/what-indias-classrooms-tell-us-a-data-analyst-s-look-at-the-literacy-gap-e34dc51ee706" target="_blank" rel="noopener">
@@ -1635,55 +1660,41 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         <span class="wi">/06</span><span class="wt">Why I Built CryptoFlow-Notify</span><span class="wcat">Blockchain</span><span class="wdate">Jul 2025</span>
       </a>
         </div>
-        <noscript><p class="body-sm">Article links remain available below. Enable JavaScript for the page-turning book.</p></noscript>
-        <a class="ab-all-link" href="https://ruchirganatra.medium.com" target="_blank" rel="noopener noreferrer">All writing on Medium ↗</a>
-      </section>
-      <section id="certificateWardrobe" aria-label="Credential wardrobe and certificates">
-        <div class="cw-heading">
-          <div>
-            <div class="label" style="margin-bottom:9px;">Credentials / the archive</div>
-            <h3 class="cw-title">The certificate wardrobe</h3>
-            <p class="cw-subtitle" style="margin-top:9px;">Ten certificates · Select a document to read</p>
-          </div>
-          <button class="cw-open-control" id="cabinetToggle" type="button" aria-expanded="false" aria-controls="certificateShelf">Open wardrobe</button>
-        </div>
-        <div class="cw-cabinet">
-          <div class="cw-cabinet-top">Ruchir Ganatra · Credential Collection</div>
-          <div class="cw-cabinet-content" id="cwCabinetContent" inert>
-          <button class="cw-feature" id="cwFeaturedOpen" type="button" aria-label="View selected certificate at full size" disabled>
-            <img id="cwFeaturedImage" src="certificates/previews/google-analytics.webp" alt="Google Analytics certificate" decoding="async" fetchpriority="high">
-            <span class="cw-feature-action">Open full certificate ↗</span>
-          </button>
-          <div class="cw-feature-meta">
-            <button type="button" class="cw-navigate" id="cwShelfPrev" aria-label="Previous certificate" disabled>←</button>
-            <div class="cw-feature-label" aria-live="polite">
-              <strong id="cwFeaturedTitle">Google Analytics Certification</strong>
-              <span id="cwFeaturedIssuer">Google · 01 / 10</span>
-            </div>
-            <button type="button" class="cw-navigate" id="cwShelfNext" aria-label="Next certificate" disabled>→</button>
-          </div>
-          <div class="cw-shelves" id="certificateShelf" role="group" aria-label="Choose one of ten certificate thumbnails"></div>
-          </div>
-          <div class="cw-doors" aria-hidden="true">
-            <div class="cw-door"></div><div class="cw-door"></div>
-          </div>
-        </div>
-        <noscript>
-          <p>Certificates available: <a href="certificates/google-analytics.pdf">Google Analytics</a>,
-          <a href="certificates/google-ads.pdf">Google Ads Measurement</a>,
-          <a href="certificates/ibm-ai.pdf">IBM AI</a>,
-          <a href="certificates/ibm-cloud.pdf">IBM Cloud Computing</a>,
-          <a href="certificates/generative-ai.pdf">Generative AI Essentials</a>,
-          <a href="certificates/cisco-data-science.pdf">Cisco Data Science Essentials</a>,
-          <a href="certificates/kaggle-visualization.png">Kaggle Data Visualization</a>,
-          <a href="certificates/kaggle-python.pdf">Kaggle Python</a>,
-          <a href="certificates/be10x-ai.pdf">AI Tools and ChatGPT</a>,
-          <a href="certificates/ibm-genai-badge.pdf">IBM GenAI Badge</a>.</p>
-        </noscript>
+        <noscript><p class="body-sm">The six original published Medium articles are linked in the list above. Enable JavaScript to use the game-case shelf.</p></noscript>
+        <a class="ab-all-link" href="https://ruchirganatra.medium.com" target="_blank" rel="noopener noreferrer">Browse all writing on Medium ↗</a>
       </section>
     </div>
   </div>
 </section>
+
+<dialog id="articleReader" class="article-reader" aria-labelledby="articleReaderTitle">
+  <div class="article-reader-toolbar">
+    <span class="article-reader-edition">RG / WRITING ARCHIVE <span id="articleReaderNumber">01 / 06</span></span>
+    <button id="articleReaderClose" class="article-reader-close" type="button" aria-label="Return article to shelf">×</button>
+  </div>
+  <div class="article-reader-stage">
+    <div class="article-reader-cover">
+      <img id="articleReaderImage" alt="" decoding="async">
+      <div class="article-reader-artfallback" id="articleArtFallback" hidden>THE WRITING ARCHIVE</div>
+      <span id="articleReaderCategory" class="article-reader-category">Data analysis</span>
+    </div>
+    <div class="article-reader-content">
+      <p id="articleReaderDate" class="article-reader-date">AUG 2026</p>
+      <h2 id="articleReaderTitle">Article title</h2>
+      <h3 id="articleReaderHook" class="article-reader-hook"></h3>
+      <div class="article-reader-rule"></div>
+      <p id="articleReaderLead" class="article-reader-lead"></p>
+      <p id="articleReaderDescription" class="article-reader-description"></p>
+      <p class="article-reader-note">This is the reading preview. The complete published article is available at the original source.</p>
+      <a id="articleReaderLink" class="article-reader-link" href="https://ruchirganatra.medium.com" target="_blank" rel="noopener noreferrer">Read complete article ↗</a>
+    </div>
+  </div>
+  <div class="article-reader-foot">
+    <button id="articleReaderPrev" type="button" aria-label="Previous article">← Previous</button>
+    <span id="articleReaderCount">01 / 06</span>
+    <button id="articleReaderNext" type="button" aria-label="Next article">Next →</button>
+  </div>
+</dialog>
 
 <dialog id="certificateViewer" aria-labelledby="cwViewerTitle">
   <div class="cw-viewer-head">
