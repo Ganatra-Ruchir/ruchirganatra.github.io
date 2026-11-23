@@ -35,16 +35,16 @@ const server=http.createServer((req,res)=>{
   await p.locator('#articleBook').scrollIntoViewIfNeeded();
   await p.locator('#articleCover').click();
   assert.equal(await p.locator('#articleBook.is-open').count(),1,'Cover opens both pages');
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/,'Article title on left');
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/i,'Article title on left');
   assert.match(await p.locator('#articlePageRight').innerText(),/national literacy/,'Description on right');
   assert.equal(await p.locator('#articlePageLeft img').count(),1,'Article image on left');
   const bookScroll=await p.evaluate(()=>window.scrollY);
   await p.locator('#articleNext').click();
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Static Dashboard/,'Next turns a spread');
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Static Dashboard/i,'Next turns a spread');
   assert.ok(Math.abs((await p.evaluate(()=>window.scrollY))-bookScroll)<2,'Turning pages must not scroll the page');
   assert.match(await p.locator('#articlePageRight a').getAttribute('href'),/medium.com/,'Full article link');
   await p.locator('#articlePrev').click();
-  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/,'Previous restores the spread');
+  assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/i,'Previous restores the spread');
   const twoPageLayout=await p.evaluate(()=>{
     const left=document.querySelector('#articlePageLeft').getBoundingClientRect();
     const right=document.querySelector('#articlePageRight').getBoundingClientRect();
