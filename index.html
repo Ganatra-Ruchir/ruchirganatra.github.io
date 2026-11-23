@@ -1107,6 +1107,103 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 #work > .shell { padding-top:clamp(22px,3vw,40px) !important; }
 #work .work-head { margin-bottom:clamp(12px,2vw,24px); }
 #work .work-pin { margin-top:0; }
+/* First visit: one full-screen, wheel-stepped project at a time.
+   Subsequent visits: scroll page normally; arrows, drag and keyboard still work. */
+#work{padding-top:0;}
+#work .work-stage-head{padding:0 var(--gut);pointer-events:none;}
+#work .work-stage-head .sec-head{margin:0;}
+#work .work-stage-controls{display:none;}
+#work.horiz .work-pin{
+  height:100svh; min-height:0; padding:0; position:relative;
+  display:flex; align-items:center; overflow:hidden; isolation:isolate;
+  background:radial-gradient(ellipse at 52% 50%,var(--accent-soft),transparent 73%),var(--bg);
+}
+#work.horiz .work-stage-head{
+  position:absolute; left:0; right:0; z-index:5;
+  top:clamp(62px,9vh,100px); padding-inline:var(--gut);
+}
+#work.horiz .work-track{
+  position:relative; z-index:1;
+  width:100%; height:100%; box-sizing:border-box;
+  display:flex; flex-direction:row; align-items:center;
+  gap:clamp(20px,2.2vw,34px);
+  padding-inline:max(var(--gut),calc((100vw - min(1080px,82vw))/2));
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:none;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+}
+#work.horiz .work-track::-webkit-scrollbar{display:none;}
+#work.horiz .panel{
+  flex:0 0 min(1080px,82vw);
+  width:min(1080px,82vw);
+  scroll-snap-align:center;
+  align-self:center; min-height:0; height:auto; max-height:calc(100svh - 210px);
+  padding:clamp(20px,2.1vw,30px);
+  overflow:hidden;
+  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  gap:clamp(24px,2.8vw,40px);
+  opacity:1; transform:none; transition:border-color .25s ease,box-shadow .25s ease;
+}
+#work.horiz .panel.active{border-color:var(--hair-strong);}
+#work.horiz .panel .panel-copy > *,
+#work.horiz .panel .win{
+  opacity:1;transform:none;transition:none;
+}
+#work.horiz .panel-copy{justify-content:center;max-width:100%;align-self:center;}
+#work.horiz .win{width:100%;min-width:0;max-width:100%;align-self:center;justify-self:center;}
+#work.horiz .win-view{aspect-ratio:16/9.5;}
+#work.horiz .work-stage-controls{
+  position:absolute;z-index:6;left:var(--gut);right:var(--gut);bottom:clamp(14px,2.8vh,32px);
+  display:flex;justify-content:center;align-items:center;gap:18px;pointer-events:none;
+}
+#work.horiz .work-stage-controls>*{pointer-events:auto;}
+#work.horiz .work-stage-controls button{
+  display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--hair-strong);
+  background:var(--bg-elev);border-radius:50%;box-shadow:var(--card-shadow);
+  color:var(--fg);font-size:20px;line-height:1;
+  transition:border-color .2s,background .2s,transform .2s;
+}
+#work.horiz .work-stage-controls button:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
+#work.horiz .work-stage-controls button:disabled{opacity:.34;pointer-events:none;}
+#work.horiz .work-stage-status{text-align:center;display:grid;gap:4px;min-width:230px;}
+#work.horiz #workStageCount{font-family:var(--mono);letter-spacing:.18em;font-size:12px;color:var(--accent);}
+#work.horiz #workStageInstruction{font-family:var(--mono);letter-spacing:.05em;font-size:10px;color:var(--fg-faint);}
+#work .work-stage-head .sec-title-wrap{position:relative;padding-bottom:10px;}
+#work .work-stage-head .sec-title-wrap::after{
+  content:"";display:block;width:clamp(100px,10vw,160px);height:3px;
+  position:absolute;bottom:0;left:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--caramel),var(--choco),transparent);
+}
+#work .work-ambient iframe{opacity:.42;}
+#work .work-ambient::after{opacity:.63;}
+#work>.shell{padding-top:clamp(10px,1.8vw,22px)!important;}
+#work .work-prog{margin-top:0;}
+@media (min-width:1024px) and (max-height:760px){
+  #work.horiz .work-stage-head{top:clamp(54px,8vh,80px);}
+  #work.horiz .work-stage-head .display{font-size:clamp(30px,3.4vw,50px);}
+  #work.horiz .panel{max-height:calc(100svh - 158px);padding:18px;}
+  #work.horiz .panel-copy{gap:8px;}
+  #work.horiz .panel .txt{font-size:13px;line-height:1.45;}
+  #work.horiz .chip{padding:4px 8px;}
+  #work.horiz .win-view{aspect-ratio:16/8.8;}
+  #work.horiz .work-stage-controls{bottom:12px;}
+}
+@media(max-width:1023px){
+  #work .work-stage-head{position:static;padding:clamp(24px,4vw,46px) var(--gut) 6px;}
+  #work .work-stage-controls{display:none;}
+  #work .work-pin{height:auto;min-height:0;display:block;overflow:visible;padding:0;}
+  #work .work-track{overflow:visible;scroll-snap-type:none;flex-direction:column;height:auto;}
+  #work .panel{height:auto;max-height:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  #work.horiz .work-track{scroll-behavior:auto;}
+  #work.horiz .work-stage-controls button{transition:none;}
+}
+
 /* Portfolio polish: section-title anchor, content-fit projects and a live backdrop. */
 #toolkit .sec-title-wrap{position:relative; padding-bottom:14px;}
 #toolkit .sec-title-wrap::after{
@@ -1499,17 +1596,16 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 
 <!-- ============ 03 WORK (horizontal pinned) ============ -->
 <section class="work" id="work">
-  <div class="shell" style="padding-top:clamp(60px,12vh,108px);">
-    <div class="sec-head work-head">
-      <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
-        <span class="sec-num">03</span>
-        <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Selected work</h2></div>
-      </div>
-      <p class="body-sm" style="max-width:38ch;">Real projects, live tools and the problems they solve.</p>
-    </div>
-  </div>
-
   <div class="work-pin" id="workPin">
+    <div class="work-stage-head shell">
+      <div class="sec-head work-head">
+        <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+          <span class="sec-num">03</span>
+          <div class="sec-title-wrap"><h2 class="display d-md" data-split-h>Selected work</h2></div>
+        </div>
+        <p class="body-sm" style="max-width:38ch;">Real projects, live tools and the problems they solve.</p>
+      </div>
+    </div>
     <div class="work-ambient" aria-hidden="true">
       <iframe id="workAmbientFrame" title="Decorative live project backdrop" tabindex="-1" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <span class="ambient-label">Live project atmosphere</span>
@@ -1658,6 +1754,11 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
         </div>
       </article>
 
+    </div>
+    <div class="work-stage-controls" aria-label="Project gallery controls">
+      <button type="button" id="workPrev" aria-label="Previous project" title="Previous project">&#8592;</button>
+      <span class="work-stage-status"><span id="workStageCount" aria-live="polite">01 / 05</span><span id="workStageInstruction">Scroll to explore, one project at a time</span></span>
+      <button type="button" id="workNext" aria-label="Next project" title="Next project">&#8594;</button>
     </div>
   </div>
 
@@ -2436,221 +2537,181 @@ function initTicker(){
    9. WORK — horizontal pinned scroll (desktop) / stacked (mobile)
    ========================================================== */
 function initWork(){
-  var sec = $('#work'), track = $('#workTrack'), pin = $('#workPin');
-  if(!sec || !track) return;
-  var panels = $$('.panel', track);
-  var progEl = $('#workProg i'), countEl = $('#workCount'), hint = $('#workHintTxt');
-  var navBtns = $('#workNav button');
-  var ambient = $('#workAmbientFrame');
-  var ambientIndex = -1, ambientTimer = null;
-  var horiz = !!(G && ST && !RM && window.innerWidth >= 1024);
+  var sec=$('#work'),track=$('#workTrack'),pin=$('#workPin');
+  if(!sec||!track||!pin)return;
+  var panels=$$('.panel',track);
+  var progEl=$('#workProg i'), countEl=$('#workCount'),hint=$('#workHintTxt');
+  var navBtns=$$('#workNav button'),ambient=$('#workAmbientFrame');
+  var prev=$('#workPrev'), next=$('#workNext'),stageCount=$('#workStageCount'),stageHint=$('#workStageInstruction');
+  var horiz=!!(G&&ST&&!RM&&window.innerWidth>=1024);
+  var active=0,visited=false,completed=false,lastWheelStep=0,wheelSum=0;
+  var ambientIndex=-1,ambientTimer=null,scrollRaf=0;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function setBackdrop(i){
-    if(!horiz || !ambient || !pin || !panels[i]) return;
-    if(i === ambientIndex) return;
-    ambientIndex = i;
-    clearTimeout(ambientTimer);
-    ambientTimer = setTimeout(function(){
-      var preview = $('.win iframe[data-src]', panels[i]);
-      var source = preview && preview.getAttribute('data-src');
-      pin.classList.toggle('has-live-backdrop', !!source);
-      var previous = ambient.getAttribute('src');
-      if(source && previous !== source) ambient.setAttribute('src', source);
-      if(!source && previous !== 'about:blank') ambient.setAttribute('src','about:blank');
-    }, 140);
+    if(!horiz||!ambient||!panels[i]||i===ambientIndex)return;
+    ambientIndex=i;clearTimeout(ambientTimer);
+    ambientTimer=setTimeout(function(){
+      var preview=$('.win iframe[data-src]',panels[i]),source=preview&&preview.getAttribute('data-src');
+      pin.classList.toggle('has-live-backdrop',!!source);
+      var old=ambient.getAttribute('src');
+      if(source&&old!==source)ambient.setAttribute('src',source);
+      if(!source&&old!=='about:blank')ambient.setAttribute('src','about:blank');
+    },140);
   }
-  function setProgress(p, i){
-    if(progEl) progEl.style.width = Math.max(0, Math.min(100, p*100)) + '%';
-    if(countEl) countEl.textContent = ('0' + Math.min(panels.length, i+1)).slice(-2);
-    navBtns.forEach(function(b, n){
-      b.classList.toggle('on', n === i);
-      b.classList.toggle('done', n < i);
-    });
-    setBackdrop(i);
+  function update(i){
+    active=Math.max(0,Math.min(panels.length-1,i));
+    panels.forEach(function(p,n){p.classList.toggle('active',n===active);});
+    navBtns.forEach(function(b,n){b.classList.toggle('on',n===active);b.classList.toggle('done',n<active);});
+    if(progEl)progEl.style.width=(((active+1)/panels.length)*100)+'%';
+    if(countEl)countEl.textContent=('0'+(active+1)).slice(-2);
+    if(stageCount)stageCount.textContent=('0'+(active+1)).slice(-2)+' / '+('0'+panels.length).slice(-2);
+    if(prev)prev.disabled=active===0;
+    if(next)next.disabled=active===panels.length-1;
+    setBackdrop(active);
+    Previews.loadIn(panels[active]);
+    if(panels[active+1])Previews.loadIn(panels[active+1]);
+  }
+  function at(i,smooth){
+    update(i);
+    if(!horiz)return;
+    var panel=panels[active];
+    var target=panel.offsetLeft-(track.clientWidth-panel.offsetWidth)/2;
+    track.scrollTo({left:Math.max(0,target),behavior:(smooth&&!reduced.matches)?'smooth':'auto'});
+  }
+  function finish(){
+    if(completed)return;
+    completed=true;
+    pin.classList.add('manual-gallery');
+    document.body.classList.remove('in-work');
+    if(stageHint)stageHint.textContent='Browse freely with arrows, drag or keyboard';
+    if(hint)hint.textContent='Use arrows, drag or click a project to browse; scrolling the page stays normal';
   }
 
-  /* ---------- desktop: pinned horizontal gallery ---------- */
   if(horiz){
     sec.classList.add('horiz');
-    if(hint) hint.innerHTML = 'Scroll, drag, or press <span class="kbd">&larr;</span><span class="kbd">&rarr;</span> \u00b7 click a project below to jump';
+    if(hint)hint.textContent='First visit: scroll one project at a time. Return visits: manual browsing.';
+    update(0);
+    track.addEventListener('scroll',function(){
+      if(scrollRaf)return;
+      scrollRaf=requestAnimationFrame(function(){
+        scrollRaf=0;
+        var center=track.scrollLeft+track.clientWidth/2,best=active,closest=Infinity;
+        panels.forEach(function(p,i){
+          var d=Math.abs(p.offsetLeft+p.offsetWidth/2-center);
+          if(d<closest){closest=d;best=i;}
+        });
+        if(best!==active)update(best);
+      });
+    },{passive:true});
 
-    var amount = function(){ return Math.max(1, track.scrollWidth - window.innerWidth + 90); };
-
-    var travel = G.to(track, {
-      x: function(){ return -amount(); },
-      ease:'none',
-      scrollTrigger:{
-        trigger: pin,
-        start:'top top',
-        end: function(){ return '+=' + amount(); },
-        pin:true, scrub:1, anticipatePin:1, invalidateOnRefresh:true,
-        onUpdate:function(self){
-          setProgress(self.progress, Math.round(self.progress * (panels.length-1)));
-          if(!document.body.classList.contains('in-work')) document.body.classList.add('in-work');
-        },
-        onToggle:function(self){
-          document.body.classList.toggle('in-work', self.isActive);
-          if(self.isActive) setBackdrop(Math.round(self.progress * (panels.length-1)));
-        }
+    /* Capture wheel before the site's global smooth-scroll listener. Only first visit
+       steps horizontally; returning to this section never traps the mouse wheel. */
+    window.addEventListener('wheel',function(e){
+      if(completed||RM||reduced.matches||e.ctrlKey||e.metaKey||
+         document.body.classList.contains('is-locked')||
+         e.target.closest('input,textarea,select,[contenteditable],.studio-list,.studio-output,.studio-compare'))return;
+      var box=pin.getBoundingClientRect();
+      if(box.top>65||box.bottom<window.innerHeight*.78)return;
+      var dy=e.deltaY*(e.deltaMode===1?20:(e.deltaMode===2?window.innerHeight:1));
+      if(Math.abs(dy)<.5)return;
+      if(visited&&((active===0&&dy<0)||(active===panels.length-1&&dy>0))){
+        finish();return; /* Let the same wheel event resume native vertical scrolling. */
       }
-    });
-    var mainST = travel.scrollTrigger;
+      e.preventDefault();e.stopImmediatePropagation();
+      if(!visited){
+        visited=true;document.body.classList.add('in-work');
+        if(SS)SS.stop();
+        window.scrollTo({top:window.scrollY+box.top,behavior:'instant'});
+        wheelSum=0;lastWheelStep=performance.now();
+        return;
+      }
+      var now=performance.now();
+      if(now-lastWheelStep<460)return;
+      wheelSum+=dy;
+      if(Math.abs(wheelSum)<26)return;
+      var direction=wheelSum>0?1:-1;
+      wheelSum=0;lastWheelStep=now;
+      at(active+direction,true);
+    },{capture:true,passive:false});
 
-    /* hand the gallery's stop positions to the scroller so it settles on a project */
-    if(SS && mainST){
-      SS.setSnap(function(){
-        var span = mainST.end - mainST.start, n = panels.length - 1, pts = [];
-        for(var i=0;i<=n;i++) pts.push(Math.round(mainST.start + (i/n) * span));
-        return pts;
-      });
-    }
+    /* If a user leaves through links, scrollbar or keyboard, do not reactivate
+       the one-time wheel mode after they return. */
+    window.addEventListener('scroll',function(){
+      if(!visited||completed)return;
+      var r=pin.getBoundingClientRect();
+      if(r.bottom<window.innerHeight*.35||r.top>window.innerHeight*.65)finish();
+    },{passive:true});
 
-    /* per-panel choreography, driven by horizontal position inside the gallery */
-    panels.forEach(function(panel){
-      var win  = $('.win', panel);
-      var ghost = $('.panel-ghost', panel);
-
-      /* active state → CSS content stagger */
-      ST.create({
-        trigger: panel, containerAnimation: travel,
-        start:'left 78%', end:'right 22%',
-        onToggle:function(self){
-          panel.classList.toggle('active', self.isActive);
-          if(self.isActive){
-            setBackdrop(panels.indexOf(panel));
-            Previews.loadIn(panel);
-            Previews.loadIn(panel.nextElementSibling);   /* warm the next one */
-          }
-        }
-      });
-
-      /* depth: rise toward the centre of the viewport, recede on the way out */
-      G.fromTo(panel, { scale:0.9, opacity:0.35 }, {
-        scale:1, opacity:1, ease:'power2.out',
-        scrollTrigger:{ trigger:panel, containerAnimation:travel,
-          start:'left right', end:'left 32%', scrub:0.6 }
-      });
-      G.to(panel, {
-        scale:0.9, opacity:0.35, ease:'power2.in',
-        scrollTrigger:{ trigger:panel, containerAnimation:travel,
-          start:'right 68%', end:'right left', scrub:0.6 }
-      });
-
-      /* Keep previews squarely inside the card; only the background numeral drifts.
-         Horizontal preview parallax previously clipped the right-hand window. */
-      if(ghost) G.fromTo(ghost, { xPercent:22, yPercent:6 }, {
-        xPercent:-22, yPercent:-6, ease:'none',
-        scrollTrigger:{ trigger:panel, containerAnimation:travel, start:'left right', end:'right left', scrub:true }
-      });
-    });
-
-    /* click a segment to fly to that project */
     navBtns.forEach(function(b){
-      b.addEventListener('click', function(){
-        if(!mainST) return;
-        var i = +b.getAttribute('data-i');
-        var y = mainST.start + (i / (panels.length - 1)) * (mainST.end - mainST.start);
-        if(SS) SS.stop();
-        window.scrollTo({ top:y, behavior: RM ? 'auto' : 'smooth' });
+      b.addEventListener('click',function(){
+        finish();at(Number(b.getAttribute('data-i'))||0,true);
+        pin.scrollIntoView({block:'start',behavior:reduced.matches?'auto':'smooth'});
       });
     });
+    if(prev)prev.addEventListener('click',function(){finish();at(active-1,true);});
+    if(next)next.addEventListener('click',function(){finish();at(active+1,true);});
 
-    window.addEventListener('resize', function(){
-      clearTimeout(sec._r); sec._r = setTimeout(function(){ ST.refresh(); }, 220);
+    /* Mouse drag and trackpad horizontal swipe remain available on every visit. */
+    var dragging=false,dragStart=0,scrollStart=0,wasDragged=false;
+    track.addEventListener('pointerdown',function(e){
+      if(e.pointerType==='touch'||e.button!==0||e.target.closest('a,button,input,textarea,select'))return;
+      dragging=true;wasDragged=false;dragStart=e.clientX;scrollStart=track.scrollLeft;
+      track.setPointerCapture&&track.setPointerCapture(e.pointerId);
     });
-
-  /* ---------- narrow screens: vertical stack with its own entrance ---------- */
-  } else {
-    if(hint) hint.textContent = 'Swipe through the builds';
-    if(G && ST && !RM){
-      panels.forEach(function(panel, i){
-        G.fromTo(panel, { y:56, opacity:0, scale:0.97 }, {
-          y:0, opacity:1, scale:1, duration:0.9, ease:'power3.out',
-          scrollTrigger:{ trigger:panel, start:'top 88%',
-            onEnter:function(){ Previews.loadIn(panel); } },
-          onStart:function(){ panel.classList.add('active'); }
-        });
-        var ghost = $('.panel-ghost', panel);
-        if(ghost) G.fromTo(ghost, { yPercent:12 }, { yPercent:-12, ease:'none',
-          scrollTrigger:{ trigger:panel, start:'top bottom', end:'bottom top', scrub:true } });
+    track.addEventListener('pointermove',function(e){
+      if(!dragging)return;
+      var dx=e.clientX-dragStart;
+      if(Math.abs(dx)<5&&!wasDragged)return;
+      wasDragged=true;finish();document.body.classList.add('dragging');
+      track.scrollLeft=scrollStart-dx;
+    });
+    function stopDrag(){dragging=false;document.body.classList.remove('dragging');}
+    track.addEventListener('pointerup',stopDrag);
+    track.addEventListener('pointercancel',stopDrag);
+    track.addEventListener('click',function(e){
+      if(wasDragged){e.preventDefault();e.stopPropagation();wasDragged=false;}
+    },true);
+    document.addEventListener('keydown',function(e){
+      if(e.altKey||e.ctrlKey||e.metaKey||document.body.classList.contains('menu-open')||
+         e.target.closest('input,textarea,select,[contenteditable]'))return;
+      var delta=e.key==='ArrowRight'?1:(e.key==='ArrowLeft'?-1:0);
+      if(!delta)return;
+      var r=pin.getBoundingClientRect();
+      if(r.bottom<=0||r.top>=window.innerHeight)return;
+      e.preventDefault();finish();at(active+delta,true);
+    });
+  }else{
+    if(hint)hint.textContent='Scroll through the builds';
+    panels.forEach(function(p){p.classList.add('active');});
+    if(G&&ST&&!RM){
+      panels.forEach(function(p){
+        ST.create({trigger:p,start:'top 88%',onEnter:function(){Previews.loadIn(p);}});
       });
-    } else {
-      panels.forEach(function(p){ p.classList.add('active'); });
-      Previews.all();
+    }else Previews.all();
+    if('IntersectionObserver'in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){if(e.isIntersecting){
+          var i=panels.indexOf(e.target);
+          if(i>=0)update(i);
+        }});
+      },{threshold:.5});
+      panels.forEach(function(p){io.observe(p);});
     }
-    if('IntersectionObserver' in window){
-      var io = new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          if(e.isIntersecting){
-            var i = panels.indexOf(e.target);
-            setProgress((i+1)/panels.length, i);
-          }
-        });
-      }, { threshold:0.5 });
-      panels.forEach(function(p){ io.observe(p); });
-    }
-    setProgress(1/panels.length, 0);
+    update(0);
   }
-
-  /* ---------- keyboard: ← / → step between projects while the gallery is open ---------- */
-  if(horiz){
-    document.addEventListener('keydown', function(e){
-      if(document.body.classList.contains('menu-open')) return;
-      var dir = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
-      if(!dir) return;
-      var stMain = ST.getAll().filter(function(t){ return t.pin; })[0];
-      if(!stMain) return;
-      var y0 = window.pageYOffset;
-      if(y0 < stMain.start - 10 || y0 > stMain.end + 10) return;   /* only inside the gallery */
-      e.preventDefault();
-      var span = stMain.end - stMain.start, n = panels.length - 1;
-      var i = Math.round(((y0 - stMain.start) / span) * n);
-      i = Math.max(0, Math.min(n, i + dir));
-      if(SS) SS.stop();
-      window.scrollTo({ top: stMain.start + (i/n) * span, behavior: RM ? 'auto' : 'smooth' });
-    });
-
-    /* ---------- drag the gallery sideways ---------- */
-    var dragging = false, startX = 0, startY = 0, moved = false;
-    pin.addEventListener('pointerdown', function(e){
-      if(e.button !== 0 || e.target.closest('a, button')) return;
-      dragging = true; moved = false; startX = e.clientX; startY = window.pageYOffset;
-      pin.setPointerCapture && pin.setPointerCapture(e.pointerId);
-    });
-    pin.addEventListener('pointermove', function(e){
-      if(!dragging) return;
-      var dx = startX - e.clientX;
-      if(Math.abs(dx) < 5 && !moved) return;
-      moved = true;
-      document.body.classList.add('dragging');
-      if(SS) SS.stop();
-      window.scrollTo(0, startY + dx * 1.15);
-    });
-    function endDrag(){
-      if(!dragging) return;
-      dragging = false;
-      document.body.classList.remove('dragging');
-    }
-    pin.addEventListener('pointerup', endDrag);
-    pin.addEventListener('pointercancel', endDrag);
-    pin.addEventListener('pointerleave', endDrag);
-  }
-
-  /* ---------- 3D tilt on the live preview windows (desktop pointers only) ---------- */
-  if(CAN_HOVER && !RM){
+  /* Keep the existing light preview tilt, independent of the wheel gallery. */
+  if(CAN_HOVER&&!RM){
     $$('.win').forEach(function(win){
-      var view = $('.win-view', win);
-      if(!view) return;
+      if(!$('.win-view',win))return;
       win.classList.add('win-tilt');
-      win.addEventListener('mousemove', function(e){
-        var r = win.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        win.style.transform = 'perspective(1100px) rotateY(' + (px * 7).toFixed(2) + 'deg) rotateX(' +
-                              (-py * 7).toFixed(2) + 'deg) translateZ(12px)';
+      win.addEventListener('mousemove',function(e){
+        var r=win.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+        win.style.transform='perspective(1100px) rotateY('+(px*7).toFixed(2)+'deg) rotateX('+(-py*7).toFixed(2)+'deg) translateZ(12px)';
       });
-      win.addEventListener('mouseleave', function(){
-        win.style.transform = 'perspective(1100px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+      win.addEventListener('mouseleave',function(){
+        win.style.transform='perspective(1100px) rotateY(0deg) rotateX(0deg) translateZ(0)';
       });
     });
   }
