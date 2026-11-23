@@ -24,7 +24,7 @@ var items=all('.mini-row',source).filter(function(row){
  };
 });
 if(!items.length)return;
-var state=0,raf=0,ignoreUntil=0;
+var state=0,raf=0,manualOffset=0;
 var total=items.length;
 function render(index){
  var item=items[index],num=String(index+1).padStart(2,'0');
@@ -68,23 +68,29 @@ function setSize(){
  var unit=Math.max(270,Math.min(440,window.innerHeight*.43));
  story.style.height=Math.ceil((total+1)*unit+window.innerHeight*.55)+'px';
 }
-function updateFromScroll(){
- raf=0;if(performance.now()<ignoreUntil)return;
+function scrollChapter(){
  var rect=story.getBoundingClientRect(),vh=window.innerHeight;
- if(rect.top>vh*1.1||rect.bottom < -vh*.2)return;
- var start=window.scrollY+rect.top, travel=Math.max(1,story.offsetHeight-vh);
+ var start=window.scrollY+rect.top,travel=Math.max(1,story.offsetHeight-vh);
  var progress=Math.max(0,Math.min(1,(window.scrollY-start+vh*.12)/travel));
- apply(Math.max(0,Math.min(total,Math.floor(progress*(total+1)))));
+ return Math.max(0,Math.min(total,Math.floor(progress*(total+1))));
+}
+function updateFromScroll(){
+ raf=0;
+ var rect=story.getBoundingClientRect(),vh=window.innerHeight;
+ if(rect.top>vh*1.1||rect.bottom < -vh*.2){
+  /* Returning to the book restores its normal scroll-based chapter position. */
+  manualOffset=0;
+  return;
+ }
+ apply(Math.max(0,Math.min(total,scrollChapter()+manualOffset)));
 }
 function kick(){if(!raf)raf=requestAnimationFrame(updateFromScroll);}
 function jump(step){
+ /* Page arrows and keyboard navigation turn ONLY the book page.
+    Do not scroll the document or shift the sticky book out of view. */
  step=Math.max(0,Math.min(total,step));
+ manualOffset=step-scrollChapter();
  apply(step);
- var start=window.scrollY+story.getBoundingClientRect().top;
- var travel=story.offsetHeight-window.innerHeight;
- var fraction=(step+.15)/(total+1);
- ignoreUntil=performance.now()+850;
- window.scrollTo({top:Math.max(0,start+Math.max(0,travel)*fraction),behavior:canAnimate()?'smooth':'instant'});
 }
 prev?.addEventListener('click',function(){jump(state-1);});
 next?.addEventListener('click',function(){jump(state+1);});
