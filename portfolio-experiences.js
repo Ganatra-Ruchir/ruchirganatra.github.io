@@ -20,7 +20,14 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   lead=$('#articleReaderLead'),description=$('#articleReaderDescription'),
   link=$('#articleReaderLink'),previous=$('#articleReaderPrev'),
   next=$('#articleReaderNext'),close=$('#articleReaderClose');
- var items=all('.wrow',source).map(function(row){
+ /* Only published Medium story links are allowed here. Project links
+    belong in Selected Work and must never populate the article shelf. */
+ var items=all('.wrow',source).filter(function(row){
+  try{
+   var host=new URL(row.href,window.location.href).hostname.toLowerCase();
+   return host==='medium.com'||host.endsWith('.medium.com');
+  }catch(e){return false;}
+ }).map(function(row){
   function txt(selector){var el=$(selector,row);return el?el.textContent.trim():'';}
   return {title:txt('.wt'),spine:$('.wt',row)?.getAttribute('data-spine')||txt('.wt'),category:txt('.wcat'),date:txt('.wdate'),
    desc:row.getAttribute('data-description')||row.getAttribute('data-peek')||'',
@@ -29,7 +36,13 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
  });
  if(!items.length)return;
  var active=-1,lastCase=null;
- rack.style.setProperty('--dvd-total',String(items.length));
+ var total=items.length;
+ var bookcase=$('.dvd-bookcase');
+ if(bookcase)bookcase.style.setProperty('--dvd-rows',String(Math.ceil(total/6)));
+ rack.style.setProperty('--dvd-total',String(total));
+ var countDisplay=$('#dvdArticleCount'),statusDisplay=$('#dvdShelfStatus');
+ if(countDisplay)countDisplay.textContent=total+' PUBLISHED ARTICLES';
+ if(statusDisplay)statusDisplay.textContent=total+' STORIES · CHOOSE A CASE TO READ';
  var tones=['ochre','plum','sage','clay','midnight','teal'];
  function node(tag,klass,txt){
   var el=doc.createElement(tag);
