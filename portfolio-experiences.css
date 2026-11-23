@@ -310,3 +310,7 @@ body{overflow-x:clip;}
  .ab-book .ab-category,.ab-book .ab-page-date{font-size:9px;}
  .ab-book .wb-page-num{font-size:9px;}
 }
+
+/* The cover must remain clickable; base book styling disables pointer events. */
+.ab-book .ab-cover{pointer-events:auto;touch-action:manipulation;}
+.ab-book.is-open .ab-cover{pointer-events:none;}
