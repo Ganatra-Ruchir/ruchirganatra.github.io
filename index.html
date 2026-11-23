@@ -1047,32 +1047,78 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 #work > .shell { padding-top:clamp(22px,3vw,40px) !important; }
 #work .work-head { margin-bottom:clamp(12px,2vw,24px); }
 #work .work-pin { margin-top:0; }
-/* The horizontal gallery uses a full viewport pin so project cards are vertically
-   balanced instead of sitting at the top above a large empty area. */
-#work.horiz .work-pin {
-  height:100svh;
+/* Portfolio polish: section-title anchor, content-fit projects and a live backdrop. */
+#toolkit .sec-title-wrap{position:relative; padding-bottom:14px;}
+#toolkit .sec-title-wrap::after{
+  content:""; position:absolute; left:0; bottom:0;
+  width:clamp(98px,11vw,166px); height:3px; border-radius:99px;
+  background:linear-gradient(90deg,var(--caramel),var(--choco) 68%,transparent);
+  box-shadow:0 3px 13px var(--accent-soft); pointer-events:none;
+}
+#work .work-pin{isolation:isolate;}
+#work.horiz .work-pin{
+  height:clamp(520px,64svh,650px);
+  min-height:0; box-sizing:border-box;
+  display:flex; align-items:center;
+  padding-block:clamp(24px,3vh,40px);
+}
+#work.horiz .work-track{position:relative; z-index:1; align-items:center;}
+#work.horiz .panel{
+  width:min(1080px,80vw);
+  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  gap:clamp(22px,2.8vw,38px);
+  height:max-content;
   min-height:0;
+  max-height:none;
   align-items:center;
-  padding-block:clamp(68px,9vh,104px);
-  box-sizing:border-box;
+  align-self:center;
+  padding:clamp(22px,2.2vw,32px);
 }
-#work.horiz .work-track { align-items:center; }
-#work.horiz .panel {
-  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
-  align-items:center;
-  gap:clamp(26px,3vw,46px);
-  min-height:min(500px,68svh);
-  max-height:calc(100svh - 116px);
-  padding:clamp(22px,2.5vw,36px);
-}
-#work.horiz .panel-copy{min-width:0; max-width:100%; justify-content:center;}
-#work.horiz .win{width:100%; min-width:0; max-width:100%; justify-self:center;}
+#work.horiz .panel-copy{min-width:0; max-width:100%; justify-content:center; align-self:center;}
+#work.horiz .win{width:100%; min-width:0; max-width:100%; align-self:center; justify-self:center;}
+#work.horiz .win-view{aspect-ratio:16/9.5;}
 @media (min-width:1024px) and (max-height:650px){
-  #work.horiz .work-pin{padding-block:48px;}
-  #work.horiz .panel{min-height:0; max-height:calc(100svh - 90px); padding:22px;}
-  #work.horiz .panel-copy{gap:9px;}
-  #work.horiz .panel .txt{font-size:13.5px; line-height:1.45;}
+  #work.horiz .work-pin{height:clamp(440px,81svh,525px); padding-block:16px;}
+  #work.horiz .panel{padding:18px; gap:20px;}
+  #work.horiz .panel-copy{gap:8px;}
+  #work.horiz .panel .txt{font-size:13px; line-height:1.4;}
   #work.horiz .chip{padding:4px 8px;}
+  #work.horiz .panel-links .btn{padding:9px 13px;}
+}
+/* The ambient window uses each project's ACTUAL app URL. It is visual only;
+   the functional project preview and primary links remain in the cards. */
+#work .work-ambient{
+  position:absolute; inset:0; z-index:0; overflow:hidden;
+  pointer-events:none; opacity:0;
+  transition:opacity .6s ease;
+  background:radial-gradient(ellipse at 58% 46%,var(--accent-soft),transparent 66%);
+}
+#work.horiz .work-ambient{opacity:1;}
+#work .work-ambient iframe{
+  position:absolute; top:-28%; left:-18%; width:136%; height:156%;
+  border:0; filter:blur(19px) saturate(.8);
+  opacity:.28; pointer-events:none;
+}
+#work .work-ambient::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(90deg,var(--bg) 0%,transparent 32%,transparent 69%,var(--bg) 100%),
+             linear-gradient(180deg,var(--bg) 0%,transparent 30%,transparent 70%,var(--bg) 100%);
+  opacity:.78;
+}
+#work .work-ambient .ambient-label{
+  position:absolute; z-index:2; right:var(--gut); bottom:16px;
+  font:10px var(--mono); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--fg-faint); opacity:.75;
+}
+#work .work-pin:not(.has-live-backdrop) .work-ambient iframe{opacity:0;}
+@media (max-width:1023px){
+  #work .work-ambient{display:none;}
+  #work .work-pin{height:auto;}
+  #work .panel{height:auto; min-height:0; align-items:start;}
+  #work .panel-copy{justify-content:flex-start;}
+}
+@media (prefers-reduced-motion:reduce){
+  #work .work-ambient{transition:none;}
 }
 #work .work-nav { margin-top:clamp(14px,2vw,24px); }
 #work [style*="margin-top:clamp(50px,8vh,110px)"] { margin-top:clamp(20px,3vw,36px) !important; }
@@ -1397,6 +1443,10 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
   </div>
 
   <div class="work-pin" id="workPin">
+    <div class="work-ambient" aria-hidden="true">
+      <iframe id="workAmbientFrame" title="Decorative live project backdrop" tabindex="-1" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <span class="ambient-label">Live project atmosphere</span>
+    </div>
     <div class="work-track" id="workTrack">
 
       <!-- PANEL 1 — DocuSense AI -->
@@ -2323,8 +2373,25 @@ function initWork(){
   if(!sec || !track) return;
   var panels = $$('.panel', track);
   var progEl = $('#workProg i'), countEl = $('#workCount'), hint = $('#workHintTxt');
-  var navBtns = $$('#workNav button');
+  var navBtns = $('#workNav button');
+  var ambient = $('#workAmbientFrame');
+  var ambientIndex = -1, ambientTimer = null;
+  var horiz = !!(G && ST && !RM && window.innerWidth >= 1024);
 
+  function setBackdrop(i){
+    if(!horiz || !ambient || !pin || !panels[i]) return;
+    if(i === ambientIndex) return;
+    ambientIndex = i;
+    clearTimeout(ambientTimer);
+    ambientTimer = setTimeout(function(){
+      var preview = $('.win iframe[data-src]', panels[i]);
+      var source = preview && preview.getAttribute('data-src');
+      pin.classList.toggle('has-live-backdrop', !!source);
+      var previous = ambient.getAttribute('src');
+      if(source && previous !== source) ambient.setAttribute('src', source);
+      if(!source && previous !== 'about:blank') ambient.setAttribute('src','about:blank');
+    }, 140);
+  }
   function setProgress(p, i){
     if(progEl) progEl.style.width = Math.max(0, Math.min(100, p*100)) + '%';
     if(countEl) countEl.textContent = ('0' + Math.min(panels.length, i+1)).slice(-2);
@@ -2332,9 +2399,8 @@ function initWork(){
       b.classList.toggle('on', n === i);
       b.classList.toggle('done', n < i);
     });
+    setBackdrop(i);
   }
-
-  var horiz = !!(G && ST && !RM && window.innerWidth >= 1024);
 
   /* ---------- desktop: pinned horizontal gallery ---------- */
   if(horiz){
@@ -2357,6 +2423,7 @@ function initWork(){
         },
         onToggle:function(self){
           document.body.classList.toggle('in-work', self.isActive);
+          if(self.isActive) setBackdrop(Math.round(self.progress * (panels.length-1)));
         }
       }
     });
@@ -2383,6 +2450,7 @@ function initWork(){
         onToggle:function(self){
           panel.classList.toggle('active', self.isActive);
           if(self.isActive){
+            setBackdrop(panels.indexOf(panel));
             Previews.loadIn(panel);
             Previews.loadIn(panel.nextElementSibling);   /* warm the next one */
           }
