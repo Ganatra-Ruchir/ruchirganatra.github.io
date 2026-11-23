@@ -1,0 +1,231 @@
+/* Metallic article shelf — intentionally only for Medium writing, never Projects.
+   Six CD/DVD spines per row; new articles grow the filled left compartment.
+   The right bay is reserved and intentionally empty. */
+.archive-v4 .dvd-library .dvd-cabinet{
+  background:linear-gradient(125deg,#aeb6c0 0%,#555e6a 12%,#242c35 48%,#707985 89%,#c3cbd3 100%);
+  border:9px solid #8b959f;
+  border-radius:12px;
+  box-shadow:inset 0 1px 0 #f0f3f5,inset 0 -6px 10px #1c2129,0 20px 37px rgba(20,22,26,.25);
+  padding:clamp(10px,1.25vw,20px);
+  overflow:hidden;
+}
+.archive-v4 .dvd-library .dvd-cabinet::before{
+  inset:5px;border:1px solid rgba(232,239,245,.3);border-radius:5px;
+}
+.archive-v4 .dvd-library .dvd-cabinet-top{
+  color:#edf1f4;
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+  font:10px/1.4 var(--mono);
+  letter-spacing:.13em;
+  padding:0 5px;
+}
+.archive-v4 .dvd-library .dvd-bookcase{
+  --dvd-row-size:255px;
+  display:grid;
+  grid-template-columns:minmax(0,64fr) minmax(0,36fr);
+  min-height:0;
+  height:calc(var(--dvd-rows,2) * var(--dvd-row-size) + 38px);
+  margin:15px 0 0;
+  border:6px solid #828b95;
+  border-radius:4px;
+  background:linear-gradient(135deg,#343b45,#111720);
+  box-shadow:inset 0 10px 18px #10151d,inset 0 -8px 16px rgba(0,0,0,.48);
+}
+.archive-v4 .dvd-library .dvd-filled-bay{
+  position:relative;
+  overflow:hidden;
+  min-height:0;
+  border-right:9px solid #6b7782;
+  background:linear-gradient(100deg,#303944,#202933 70%,#19212a);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.45);
+}
+.archive-v4 .dvd-library .dvd-empty-bay{
+  display:block;
+  min-height:0;
+  border:0;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.016) 0 1px,transparent 1px 11px),
+             linear-gradient(130deg,#3b444e 0%,#222a34 48%,#151c25 100%);
+  box-shadow:inset 10px 0 16px rgba(0,0,0,.35),inset 0 0 35px rgba(0,0,0,.36);
+}
+.archive-v4 .dvd-library .dvd-filled-bay::before,
+.archive-v4 .dvd-library .dvd-empty-bay::before{
+  z-index:1;top:0;left:0;right:0;
+  height:13px;
+  background:linear-gradient(#aab4be,#535d68 65%,#29323d);
+  box-shadow:0 6px 10px rgba(0,0,0,.32);
+}
+.archive-v4 .dvd-library .dvd-empty-bay::after{
+  height:12px;background:linear-gradient(#b2bcc5,#616c78 45%,#333e49);
+  box-shadow:0 -4px 12px rgba(0,0,0,.4);
+}
+.archive-v4 .dvd-library .dvd-filled-bay::after{
+  content:"";
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,
+    transparent 0,
+    transparent calc(var(--dvd-row-size) - 16px),
+    #a4afb9 calc(var(--dvd-row-size) - 16px),
+    #58636e calc(var(--dvd-row-size) - 11px),
+    #2b3540 calc(var(--dvd-row-size) - 2px),
+    transparent var(--dvd-row-size));
+  filter:drop-shadow(0 -4px 5px rgba(0,0,0,.24));
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-rack{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  grid-template-rows:repeat(var(--dvd-rows,2),var(--dvd-row-size));
+  width:100%;height:auto;min-height:0;
+  justify-content:stretch;
+  align-items:stretch;
+  gap:0 clamp(5px,.68vw,11px);
+  padding:15px clamp(8px,1.3vw,20px) 0;
+  overflow:visible;scroll-snap-type:none;
+  perspective:900px;
+  position:relative;z-index:2;
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case{
+  display:flex;
+  flex:none;
+  width:100%;min-width:0;max-width:94px;
+  height:clamp(172px,16.7vw,218px);
+  min-height:0;
+  justify-self:center;
+  align-self:end;
+  position:relative;
+  margin:0 0 37px;
+  padding:0;
+  border:2px solid #c9d4df;
+  border-left:5px solid #c3d2e1;
+  border-radius:4px 6px 5px 4px;
+  background:linear-gradient(90deg,#e3e8eb 0%,#8999a8 9%,#394653 18%,#202c38 85%,#a5b6c6 99%);
+  box-shadow:3px 6px 7px rgba(0,0,0,.5),inset 1px 0 1px #fff,inset -4px 0 6px rgba(0,0,0,.42);
+  transform:perspective(600px) rotateY(-5deg);
+  transform-origin:bottom center;
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;
+  cursor:pointer;
+  overflow:hidden;
+}
+.archive-v4 .dvd-library .dvd-case.dvd-ochre{--dvd-tone:#b89155}
+.archive-v4 .dvd-library .dvd-case.dvd-plum{--dvd-tone:#b0a3c8}
+.archive-v4 .dvd-library .dvd-case.dvd-sage{--dvd-tone:#9bbdab}
+.archive-v4 .dvd-library .dvd-case.dvd-clay{--dvd-tone:#d39c88}
+.archive-v4 .dvd-library .dvd-case.dvd-midnight{--dvd-tone:#99b6d8}
+.archive-v4 .dvd-library .dvd-case.dvd-teal{--dvd-tone:#8fc8cc}
+.archive-v4 .dvd-library .dvd-case::before{
+  content:"";position:absolute;inset:0 0 auto;height:11px;z-index:2;
+  background:linear-gradient(90deg,#f2f7fb,#9aaab8,#485866);
+  border-bottom:1px solid rgba(244,250,255,.54);
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case-edge{
+  position:relative;
+  z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;height:100%;
+  min-width:0;
+  gap:8px;
+  padding:18px 3px 9px;
+  border:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.35),transparent 13%,var(--dvd-tone) 40%,rgba(0,0,0,.44) 100%);
+  color:#17232d;
+  text-shadow:0 1px rgba(255,255,255,.25);
+}
+.archive-v4 .dvd-library .dvd-case-serial{
+  writing-mode:horizontal-tb;
+  font:700 8px/1.15 var(--mono);
+  letter-spacing:0;
+  color:#1e2d37;
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case-title{
+  flex:1 1 auto;max-height:155px;min-height:0;max-width:100%;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;
+  font:800 clamp(10px,.95vw,14px)/1.13 var(--head);
+  letter-spacing:0;
+  color:#10202a;
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case-category{
+  display:block;writing-mode:horizontal-tb;
+  max-height:25px;max-width:100%;
+  white-space:nowrap;overflow:hidden;text-overflow:clip;
+  font:700 7px/1 var(--mono);
+  opacity:.8;
+}
+.archive-v4 .dvd-library .dvd-case-art{display:none}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case:hover,
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case:focus-visible{
+  z-index:5;
+  transform:translateY(-15px) rotateY(-2deg) scale(1.04);
+  box-shadow:7px 16px 14px rgba(0,0,0,.55);
+  border-color:#ecf6ff;
+}
+.archive-v4 .dvd-library .dvd-bookcase .dvd-case.is-selected{
+  z-index:6;
+  transform:translateY(-20px) rotateY(-2deg) scale(1.045);
+  border-color:#fff;
+}
+.archive-v4 .dvd-library .dvd-shelf-plinth{
+  border-top:13px solid #a4b0bb;
+  padding:13px 8px 1px;
+  margin:0;
+  color:#eff4fa;
+  text-shadow:0 1px 2px #1a2027;
+  font:9px/1.45 var(--mono);
+  letter-spacing:.12em;
+  background:linear-gradient(#64717d,#313c48);
+  box-shadow:inset 0 1px 0 #e5eef5,0 -5px 8px rgba(0,0,0,.25);
+}
+@media(max-width:850px){
+  .archive-v4 .dvd-library .dvd-bookcase{
+    grid-template-columns:1fr;
+    height:auto;
+    margin-top:12px;
+    border-width:5px;
+  }
+  .archive-v4 .dvd-library .dvd-filled-bay{
+    border-right:0;
+    border-bottom:9px solid #87939f;
+  }
+  .archive-v4 .dvd-library .dvd-empty-bay{
+    min-height:155px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-rack{
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-template-rows:repeat(var(--dvd-rows,2),var(--dvd-row-size));
+    gap:0 5px;
+    padding-inline:9px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case{
+    height:205px;
+    margin-bottom:36px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case-title{font-size:11px}
+}
+@media(max-width:480px){
+  .archive-v4 .dvd-library .dvd-cabinet{
+    padding:9px;border-width:6px;
+  }
+  .archive-v4 .dvd-library .dvd-cabinet-top,
+  .archive-v4 .dvd-library .dvd-shelf-plinth{font-size:8px;letter-spacing:.055em;}
+  .archive-v4 .dvd-library .dvd-bookcase{
+    --dvd-row-size:214px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-rack{
+    padding:12px 5px 0;
+    gap:0 3px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case{
+    height:175px;
+    margin:0 0 27px;
+    border-left-width:3px;
+  }
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case-edge{padding:14px 1px 5px;}
+  .archive-v4 .dvd-library .dvd-case-serial{font-size:6px;}
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case-title{font-size:9px;max-height:132px;}
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case-category{font-size:5px;}
+  .archive-v4 .dvd-library .dvd-shelf-plinth span:last-child{display:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  .archive-v4 .dvd-library .dvd-bookcase .dvd-case{transition:none;}
+}
