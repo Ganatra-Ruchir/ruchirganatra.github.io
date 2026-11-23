@@ -38,6 +38,7 @@ const server=http.createServer((req,res)=>{
   assert.match(await p.locator('#articlePageLeft').innerText(),/Classrooms/i,'Article title on left');
   assert.match(await p.locator('#articlePageRight').innerText(),/national literacy/,'Description on right');
   assert.equal(await p.locator('#articlePageLeft img').count(),1,'Article image on left');
+  await p.locator('#articleNext').scrollIntoViewIfNeeded();
   const bookScroll=await p.evaluate(()=>window.scrollY);
   await p.locator('#articleNext').click();
   assert.match(await p.locator('#articlePageLeft').innerText(),/Static Dashboard/i,'Next turns a spread');
