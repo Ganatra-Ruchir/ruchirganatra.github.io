@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -1305,12 +1305,12 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 .studio-toplink:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 @media(max-width:480px){.studio-toplink{font-size:10px;padding:8px 9px;}}
 </style>
-<link rel="stylesheet" href="portfolio-experiences.css">
-<link rel="stylesheet" href="portfolio-archive-v4.css">
-<link rel="stylesheet" href="portfolio-metal-shelf.css">
-<link rel="stylesheet" href="portfolio-metallic-shelf.css">
-<link rel="stylesheet" href="industrial-iron.css">
-<link rel="stylesheet" href="portfolio-industrial.css">
+<link rel="stylesheet" href="portfolio-experiences.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="portfolio-archive-v4.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="portfolio-metal-shelf.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="portfolio-metallic-shelf.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="industrial-iron.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="portfolio-industrial.css?v=metal-restored-20261124">
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
@@ -2227,17 +2227,17 @@ tickClock(); setInterval(tickClock, 20000);
    ========================================================== */
 (function(){
   var root = document.documentElement, saved = null;
-  try{ saved = localStorage.getItem('rg-theme'); }catch(e){}
+  try{ saved = localStorage.getItem('rg-theme-metal-restored'); }catch(e){}
   if(saved === 'light' || saved === 'dark'){
     root.setAttribute('data-theme', saved);
-  } else if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-    root.setAttribute('data-theme', 'dark');   /* light is the default otherwise */
+  } else {
+    root.setAttribute('data-theme', 'light'); /* original silver-steel appearance */
   }
   var btn = $('#themeBtn');
   if(btn) btn.addEventListener('click', function(){
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    try{ localStorage.setItem('rg-theme', next); }catch(e){}
+    try{ localStorage.setItem('rg-theme-metal-restored', next); }catch(e){}
     window.dispatchEvent(new Event('rg-theme'));
   });
 })();
