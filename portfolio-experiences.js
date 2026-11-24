@@ -8,8 +8,8 @@ function all(s,root){return Array.from((root||doc).querySelectorAll(s));}
 function canAnimate(){return !reduce.matches&&!doc.body.classList.contains('motion-paused');}
 function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0');}
 
-/* DVD-inspired article collection: actual published stories from #writingList.
-   Each case is keyboard-accessible and opens a native, focus-trapped reader. */
+/* Architectural bookcase: actual published stories from #writingList.
+   Each book is keyboard-accessible and opens a native, focus-trapped reader. */
 (function initArticleShelf(){
  var rack=$('#dvdRack'),source=$('#writingList'),reader=$('#articleReader');
  if(!rack||!source||!reader)return;
@@ -42,18 +42,35 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
  rack.style.setProperty('--dvd-total',String(total));
  var countDisplay=$('#dvdArticleCount'),statusDisplay=$('#dvdShelfStatus');
  if(countDisplay)countDisplay.textContent=total+' PUBLISHED ARTICLES';
- if(statusDisplay)statusDisplay.textContent=total+' STORIES · CHOOSE A CASE TO READ';
+ if(statusDisplay)statusDisplay.textContent=total+' STORIES · PICK A BOOK';
  var tones=['ochre','plum','sage','clay','midnight','teal'];
+ var cubby=null;
  function node(tag,klass,txt){
   var el=doc.createElement(tag);
   if(klass)el.className=klass;
   if(txt!==undefined)el.textContent=txt;
   return el;
  }
+ function decoration(kind){
+  var el=node('div','library-cubby library-decor library-'+kind);
+  el.setAttribute('aria-hidden','true');
+  if(kind==='plant'){
+   el.innerHTML='<svg viewBox="0 0 140 170" class="library-plant" aria-hidden="true"><defs><linearGradient id="lp-pot" x2="1" y2="1"><stop stop-color="#d4aa83"/><stop offset="1" stop-color="#8f4b32"/></linearGradient></defs><ellipse cx="70" cy="157" rx="43" ry="7" fill="#432719" opacity=".16"/><g stroke="#48603a" stroke-width="2.7" fill="none" stroke-linecap="round"><path d="M70 115Q60 54 70 10M70 115Q78 63 109 40M70 115Q50 76 23 55M70 115Q81 83 121 78M70 115Q48 95 14 90"/></g><g fill="#496e46"><path d="M69 52Q40 48 37 20Q68 21 69 52"/><path d="M70 33Q66 9 85 3Q99 26 70 33"/><path d="M79 77Q78 47 108 36Q116 63 79 77"/><path d="M54 77Q26 84 18 52Q43 49 54 77"/><path d="M83 94Q100 69 130 78Q121 105 83 94"/><path d="M53 104Q25 113 9 88Q39 78 53 104"/></g><g fill="#789266"><path d="M70 65Q88 40 103 48Q98 68 70 65"/><path d="M58 90Q29 93 31 70Q49 70 58 90"/><path d="M72 49Q50 30 58 13Q75 24 72 49"/></g><ellipse cx="70" cy="116" rx="32" ry="8" fill="#503326"/><path d="M37 116L45 153Q70 163 95 153L103 116Z" fill="url(#lp-pot)"/><ellipse cx="70" cy="116" rx="34" ry="8" fill="#bb8059"/><ellipse cx="70" cy="116" rx="27" ry="5" fill="#61402d"/></svg>';
+  }else{
+   el.innerHTML='<div class="library-still"><div class="library-frame"><svg viewBox="0 0 110 85" aria-hidden="true"><rect width="110" height="85" fill="#e9dcc6"/><circle cx="76" cy="22" r="11" fill="#c09260"/><path d="M0 62L28 29L55 60L78 42L110 68V85H0Z" fill="#b29673"/><path d="M0 73L27 54L58 71L87 56L110 71V85H0Z" fill="#74846a"/></svg></div><div class="library-stack"><i></i><i></i><i></i></div></div>';
+  }
+  return el;
+ }
  items.forEach(function(item,i){
+  if(i%3===0){
+   if(i===3)rack.appendChild(decoration('plant'));
+   if(i===9)rack.appendChild(decoration('print'));
+   cubby=node('div','library-cubby library-books');
+   rack.appendChild(cubby);
+  }
   var button=node('button','dvd-case');
   button.type='button';button.dataset.articleIndex=String(i);
-  button.setAttribute('aria-label','Pull out article '+(i+1)+': '+item.title);
+  button.setAttribute('aria-label','Open book '+(i+1)+': '+item.title);
   button.setAttribute('aria-haspopup','dialog');
   button.style.setProperty('--dvd-position',String(i));
   button.classList.add('dvd-'+tones[i%tones.length]);
@@ -62,19 +79,12 @@ function numbered(n,total){return String(n).padStart(2,'0')+' / '+String(total).
   var title=node('strong','dvd-case-title',item.spine);title.title=item.title;
   var footer=node('span','dvd-case-category',item.category);
   edge.append(serial,title,footer);
-  var art=node('span','dvd-case-art');
-  if(item.image){
-   var img=doc.createElement('img');
-   img.src=item.image;img.alt='';img.loading='lazy';img.decoding='async';
-   img.onerror=function(){img.remove();art.classList.add('no-banner');};
-   art.appendChild(img);
-  }
-  button.append(edge,art);
+  button.append(edge);
   button.addEventListener('click',function(){
    lastCase=button;
    openArticle(i);
   });
-  rack.appendChild(button);
+  cubby.appendChild(button);
  });
  function render(index){
   active=(index+items.length)%items.length;
