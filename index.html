@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="theme-color" content="#24333e">
+<meta name="theme-color" content="#f3eee5">
 <title>Ruchir Ganatra — Data & Digital Systems Analyst · Turning Noise Into Signal</title>
 <meta name="description" content="Ruchir Ganatra — Data & Digital Systems Analyst at Elixir Foundation, Ahmedabad. Dashboards, pipelines and full-stack tools that turn messy data into decisions people can act on.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23141110'/%3E%3Cpath d='M14 72 L34 52 L50 62 L86 26' fill='none' stroke='%23c08a4e' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -1305,12 +1305,10 @@ html:not([data-theme="dark"]) .work-nav button.on{ opacity:1; }
 .studio-toplink:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 @media(max-width:480px){.studio-toplink{font-size:10px;padding:8px 9px;}}
 </style>
-<link rel="stylesheet" href="portfolio-experiences.css?v=metal-restored-20261124">
-<link rel="stylesheet" href="portfolio-archive-v4.css?v=metal-restored-20261124">
-<link rel="stylesheet" href="portfolio-metal-shelf.css?v=metal-restored-20261124">
-<link rel="stylesheet" href="portfolio-metallic-shelf.css?v=metal-restored-20261124">
-<link rel="stylesheet" href="industrial-iron.css?v=metal-restored-20261124">
-<link rel="stylesheet" href="portfolio-industrial.css?v=metal-restored-20261124">
+<link rel="stylesheet" href="portfolio-experiences.css?v=brown-restored-20261124">
+<link rel="stylesheet" href="portfolio-archive-v4.css?v=brown-restored-20261124">
+<link rel="stylesheet" href="portfolio-metal-shelf.css?v=brown-restored-20261124">
+<link rel="stylesheet" href="portfolio-metallic-shelf.css?v=brown-restored-20261124">
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
@@ -2227,17 +2225,17 @@ tickClock(); setInterval(tickClock, 20000);
    ========================================================== */
 (function(){
   var root = document.documentElement, saved = null;
-  try{ saved = localStorage.getItem('rg-theme-metal-restored'); }catch(e){}
+  try{ saved = localStorage.getItem('rg-theme-brown-restored'); }catch(e){}
   if(saved === 'light' || saved === 'dark'){
     root.setAttribute('data-theme', saved);
   } else {
-    root.setAttribute('data-theme', 'light'); /* original silver-steel appearance */
+    root.setAttribute('data-theme', 'light'); /* original warm chocolate and cream appearance */
   }
   var btn = $('#themeBtn');
   if(btn) btn.addEventListener('click', function(){
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    try{ localStorage.setItem('rg-theme-metal-restored', next); }catch(e){}
+    try{ localStorage.setItem('rg-theme-brown-restored', next); }catch(e){}
     window.dispatchEvent(new Event('rg-theme'));
   });
 })();
@@ -3180,7 +3178,5 @@ setTimeout(function(){
 })();
 </script>
 <script src="portfolio-experiences.js" defer></script>
-<script src="industrial-accents.js" defer></script>
-<script src="portfolio-industrial.js" defer></script>
 </body>
 </html>
